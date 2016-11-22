@@ -1,0 +1,15 @@
+{# src/AppBundle/Resources/tabs/login.html.twig #}
+
+
+{% block profile %}
+
+  <h3>Profile</h3>
+  <div class="tab-content">
+    <div class="row">
+      <div class="col-xs-12">
+        {{ include("UserBundle:Security:login_content.html.twig") }}
+      </div>
+    </div>
+  </div>
+
+{% endblock profile %}

@@ -1,0 +1,130 @@
+<?php
+
+namespace AppBundle\Entity;
+
+/**
+ * Books
+ */
+class Books
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $info;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $Image;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Image = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Books
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     *
+     * @return Books
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \OC\PlatformBundle\Entity\Image $image
+     *
+     * @return Books
+     */
+    public function addImage(\OC\PlatformBundle\Entity\Image $image)
+    {
+        $this->Image[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \OC\PlatformBundle\Entity\Image $image
+     */
+    public function removeImage(\OC\PlatformBundle\Entity\Image $image)
+    {
+        $this->Image->removeElement($image);
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImage()
+    {
+        return $this->Image;
+    }
+}
+

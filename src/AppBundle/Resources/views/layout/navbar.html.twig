@@ -1,0 +1,21 @@
+{# src/tvBundle/Resources/incl/navbar.html.twig #}
+
+{% block navbar %}
+
+  <nav id="navbar">
+    <div id="brand">
+      <a href="#">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        Time-View
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </a>
+    </div>
+    <form class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+        <input type="text" class="form-control" placeholder="Recherche" aria-describedby="basic-addon1">
+      </div>
+    </form>
+  </nav>
+
+{% endblock navbar %}

@@ -1,0 +1,28 @@
+
+
+body {
+    background: #111;
+    color: #eee;
+}
+
+#map {
+    height: 200px;
+}
+
+/**** PANEL ****/
+.panel-default {
+    background-color: inherit;
+    border: 2px solid #222;
+}
+.panel-default > .panel-heading {
+    background-color: #222;
+    color: #eee;
+    border: 0;
+}
+.panel-body {
+    padding: 15px 2px;
+}
+
+button, input, optgroup, select, textarea {
+  color: #222;
+}

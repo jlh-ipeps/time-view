@@ -1,0 +1,28 @@
+# src/AppBundle/Resources/translations/messages.de.yml
+
+title:
+  user: Benutzer
+  search: Suche
+  book: Buch
+  account: Konto
+  picture: Bild
+
+sidebar:
+  mysearches: Meine Suche
+  mybooks: Meine Bücher
+  myaccount: Mein Konto
+  newbook: Neues buch
+
+tab:
+  books: bücher
+  gallery: Bilder
+  map: Karte
+  image: Bild
+  search: Suchen
+  talk: Gespräch
+  view: Ansicht
+
+file:
+  file: Datei
+  submit: Senden
+

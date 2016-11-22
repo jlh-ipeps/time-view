@@ -1,0 +1,27 @@
+# src/AppBundle/Resources/translations/messages.en.yml
+
+title:
+  user: Gebruiker
+  search: Zoeken
+  book: Boek
+  account: Rekening
+  picture: beeld
+
+sidebar:
+  mysearches: Mijn zoeken
+  mybooks: Mijn boeken
+  myaccount: Mijn rekening
+  newbook: Nieuw boek
+
+tab:
+  books: Boeken
+  gallery: galerij
+  map: Kaart
+  image: beeld
+  search: Zoek
+  talk: Praten
+  view: Uitzicht
+
+file:
+  file: File
+  submit: Stuur

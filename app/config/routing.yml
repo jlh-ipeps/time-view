@@ -1,0 +1,46 @@
+#user:
+#    resource: "@UserBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+#
+#app:
+#  resource: "@AppBundle/Controller/"
+#  type:     annotation
+
+
+time_view:
+  resource: "@AppBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}
+  requirements:
+    _locale: en|fr|de|nl
+
+user:
+  resource: "@UserBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}
+  requirements:
+    _locale: en|fr|de|nl
+
+
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+  prefix:   /{_locale}
+  requirements:
+    _locale: en|fr|de|nl
+
+fos_user_security:
+  resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+  prefix:   /{_locale}
+  requirements:
+    _locale: en|fr|de|nl
+
+
+catchAll:
+  path:     /{req}
+  requirements:
+    req: ".*"
+  defaults: 
+    _controller: FrameworkBundle:Redirect:urlRedirect
+#    path: /%locale%/Search/
+    path: /%locale%/book/1/
+    permanent: true
+        

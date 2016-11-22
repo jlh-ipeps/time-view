@@ -1,0 +1,16 @@
+{# src/tvBundle/Resources/content/albums.html.twig #}
+
+{% block books %}
+
+  <h3>{{ "tab.books"|trans }}</h3>
+  <div class="tab-content">
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="{{ base_url }}img/{{ picture }}.jpg" class="item">
+          <img src="{{ base_url }}img/{{ picture }}.jpg" alt="...">
+        </a>
+      </div>
+    </div>
+  </div>
+
+{% endblock books %}

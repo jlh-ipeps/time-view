@@ -1,0 +1,27 @@
+## YAML Template.
+---
+
+register:
+  path: /register/
+  defaults: 
+    _controller: UserBundle:Registration:register
+
+user_security_profile_show:
+  path: /profile/
+  defaults: 
+    _controller: UserBundle:Profile:show
+
+user_security_login:
+  path: /login/
+  defaults: 
+    _controller: UserBundle:Security:login
+
+user_security_check:
+  path: /login_check
+  defaults: 
+    _controller: UserBundle:Security:check
+
+user_security_logout:
+  path: /logout
+  defaults: 
+    _controller: UserBundle:Security:logout
