@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SearchController extends Controller
 {
@@ -23,7 +25,7 @@ class SearchController extends Controller
     ->add('submit', SubmitType::class)
     ->getForm();
       
-    return $this->render('AppBundle:layout:content.html.twig', array(
+    return $this->render('AppBundle:layout:default-content.html.twig', array(
       'title' => $title,
       'subtitle' => $subtitle,
       'tabs' => $tabs,

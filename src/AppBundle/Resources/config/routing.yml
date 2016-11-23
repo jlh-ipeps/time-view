@@ -1,4 +1,7 @@
-
+home:
+    path: /
+    defaults: 
+      _controller: AppBundle:Home:index
 search:
   path: /search/
   defaults: 

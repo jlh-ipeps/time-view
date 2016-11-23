@@ -50,7 +50,7 @@
       <div id="page-content-wrapper">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="content">
 
     {% block content %}
     {% endblock content %}
@@ -70,6 +70,7 @@
 $.fn.editable.defaults.mode = 'inline';
 $.fn.editable.defaults.anim = 'true';
 $(document).ready(function() {
+  {%if book is defined %}
   $('.editable').editable({
     type: 'text',
     pk: 1,
@@ -79,15 +80,16 @@ $(document).ready(function() {
       var data = {};
       data['id'] = params.pk;
       data[params.name] = params.value;
-      data['book'] = {{ book }};
+      data['book'] = {{ book is defined ? book : '""'|raw }};
       data.field = $(this).data('field');
       return data;
     },
     success:function(msg){
       console.log(msg);
-      $('[data-book={{book}}]').html(msg.data.value);
+      $('[data-book={{book is defined ? book : '' }}]').html(msg.data.value);
     }
   });
+  {%endif%}
 });
 
       </script>

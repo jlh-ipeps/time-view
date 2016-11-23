@@ -3,9 +3,9 @@
  */
 
 
-$( document ).ready( function() {
+//$( document ).ready( function() {
     
-    
+//    return;
     //Google Maps JS
     //Set Map
     function initialize() {
@@ -56,6 +56,6 @@ $( document ).ready( function() {
         
     }
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+    //google.maps.event.addDomListener(window, 'load', initialize);
 
-});
+//});

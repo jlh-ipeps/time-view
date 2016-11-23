@@ -1,9 +1,5 @@
-{# src/tvBundle/Resources/content/content.html.twig #}
-{% extends "AppBundle:layout:layout.html.twig" %}
 
-{% block title %}{{ parent() }} - {{ ('title.' ~ item)|trans }}{% endblock %}
 
-{% block content %}
 
   <h2>
     <i class="glyphicon glyphicon-{{ item }}"></i>
@@ -28,4 +24,3 @@
 
   </div>
 
-{% endblock content %}

@@ -18,7 +18,7 @@
                 <a href="#">Recherche 2</a>
               </li>
               <li class="active">
-                <a href="{{ path('search') }}">
+                <a href="#{{ path('search') }}">
                   Liège, Gare
                 </a>
               </li>
@@ -33,12 +33,12 @@
           <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }}</h3>
           <ul>
             {% for mybook in mybooks %}
-              <li class="{{ mybook.id == book ? "current" : "inactive" }}">
-                <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
+              <li class="{{ book is defined and mybook.id == book ? "current" : "inactive" }}">
+                <a href="#{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
               </li>
             {% endfor %}
             <li class="inactive">
-              <a href="{{ path('bookNew') }}">
+              <a href="#{{ path('bookNew') }}">
                 + {{ "sidebar.newbook"|trans }}
               </a>
             </li>
@@ -50,21 +50,21 @@
           <h3><span class="glyphicon glyphicon-user"></span> {{ "sidebar.myaccount"|trans }}</h3>
           <ul>
             <li class="inactive">
-              <a href="{{ path('user', {'user': "Jonathan"}) }}">
+              <a href="#{{ path('user', {'user': "Jonathan"}) }}">
                 Déconnection
               </a>
             </li>
             <li class="active">
-              <a href="{{path('user_security_profile_show')}}">Mon profile</a>
+              <a href="#{{path('user_security_profile_show')}}">Mon profile</a>
             </li>
             <li class="active">
-              <a href="{{path('user_security_login')}}">Login</a>
+              <a href="#{{path('user_security_login')}}">Login</a>
             </li>
             <li class="active">
-              <a href="{{path('user_security_logout')}}">Logout</a>
+              <a href="#{{path('user_security_logout')}}">Logout</a>
             </li>
             <li class="active">
-              <a href="{{path('register')}}">Register</a>
+              <a href="#{{path('register')}}">Register</a>
             </li>
           </ul>
         </li>
