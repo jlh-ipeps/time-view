@@ -9,5 +9,19 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class Book extends \Doctrine\ORM\EntityRepository {
+  public function findBooksByUser(int $user) {
+
+    $qb = $this->createQueryBuilder('b');
+    $qb
+      ->innerJoin('b.user', 'u')
+      ->addSelect('u')
+      ->where($qb->expr()->in('u.id', $user))
+    ;
+    return $qb
+      ->getQuery()
+      ->getResult()
+    ;
+
+  }
   
 }

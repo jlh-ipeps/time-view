@@ -14,9 +14,9 @@ class Book
 {
 
   /**
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", mappedBy="Book")
+   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", mappedBy="Books")
    */
-  private $images;
+  private $Images;
 
     /**
      * @var int
@@ -28,8 +28,13 @@ class Book
     private $id;
 
     /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $user;
+
+    /**
      * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
@@ -56,13 +61,10 @@ class Book
      * Set title
      *
      * @param string $title
-     *
      * @return book
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
-
         return $this;
     }
 
@@ -149,5 +151,53 @@ class Book
     public function getImages()
     {
         return $this->Images;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Book
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param \AppBundle\Entity\User $userId
+     *
+     * @return Book
+     */
+    public function setUserId(\AppBundle\Entity\User $userId = null)
+    {
+        $this->user_id = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
     }
 }

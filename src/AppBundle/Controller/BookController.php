@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Book;
 use AppBundle\Entity\Image;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,8 @@ class BookController extends Controller {
 
     $em = $this->getDoctrine()->getManager();
     $book = $em->getRepository('AppBundle:Book')->find($id);
-    $mybooks = $em->getRepository('AppBundle:Book')->findAll();
+//    $mybooks = $em->getRepository('AppBundle:Book')->findAll();
+    $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
 //    dump($mybooks);die();
     $item = "book";
     $tabs = ['gallery','map', 'talk'];
@@ -49,11 +51,10 @@ class BookController extends Controller {
   }
 
   public function newAction() {
-    $book = new book();
-//    $newbook = $this->get('translator')->trans('sidebar.newbook');
-//    $book->setTitle($newbook);
+    $book = new Book();
     $book->setTitle($this->get('translator')->trans('sidebar.newbook'));
-
+    $book->setUser($this->getUser());
+    
     $em = $this->getDoctrine()->getManager();
     $em->persist($book);
     $em->flush();
