@@ -13,6 +13,25 @@ class BookController extends Controller {
 
   public function viewAction($id, Request $request) {
 
+//        dump($request);die();
+//        dump($request->request->get('choose_locale'));die();
+
+    $session = $this->get('session');
+    $session->set('_locale', $request->getLocale());
+//        dump($request->getLocale());die();
+
+//    $newLocale = $request->request->get('choose_locale');
+//    if ($newLocale) {
+//        $request->setLocale($newLocale['locale']);
+//        $session->set('_locale', $newLocale['locale']);
+//    }
+//    dump($newLocale['locale']);die();
+
+//    $request->setLocale('fr');
+//    $locale = $request->getLocale();
+
+    $locale = $session->get('locale');
+    
     $em = $this->getDoctrine()->getManager();
     $book = $em->getRepository('AppBundle:Book')->find($id);
     if ($this->getUser() == NULL) {
@@ -21,13 +40,8 @@ class BookController extends Controller {
         $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
     }
 
-    $localeForm = $this->createForm(ChooseLocaleType::class, array(
-        'current' => 'nl'
-    ));
+    $localeForm = $this->createForm(ChooseLocaleType::class, array('locale' => $request->getLocale()));
 
-    $session = $this->get('session');
-    $session->set('_locale', $request->getLocale());
-//    dump($localeForm->createView());die();
 
     $item = "book";
     $tabs = ['gallery','map', 'talk'];
@@ -59,6 +73,7 @@ class BookController extends Controller {
       'pictures' => $pictures,
       'form' => $form->createView(),
       'localeForm' => $localeForm->createView(),
+      'locale' => $locale,
     ));
   }
 
