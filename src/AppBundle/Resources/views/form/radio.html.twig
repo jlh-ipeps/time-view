@@ -1,0 +1,19 @@
+{# Obtao/AcmeBundle/Resources/Form/obtao_form_layout.html.twig #}
+{% extends "form_div_layout.html.twig" %} {# we extends the Twig base layout as you usually do #}
+
+{% block form_radio %}
+{% spaceless %}
+        {% block choice_widget_expanded %}
+        <i></i>
+        {{ form_label(form) }}
+        <ul>
+        {% for child in form %}
+            <li class="radio inline">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+        </ul>
+        {% endblock choice_widget_expanded %}
+{% endspaceless %}
+{% endblock form_radio %}

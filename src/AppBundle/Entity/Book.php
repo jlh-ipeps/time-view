@@ -46,7 +46,6 @@ class Book
      */
     private $info;
 
-
     /**
      * Get id
      *
@@ -119,7 +118,7 @@ class Book
     public function addImage(\OC\PlatformBundle\Entity\Image $image)
     {
         $this->Image[] = $image;
-
+        $this->imagesCount++;
         return $this;
     }
 
@@ -131,6 +130,7 @@ class Book
     public function removeImage(\OC\PlatformBundle\Entity\Image $image)
     {
         $this->Image->removeElement($image);
+        $this->imagesCount--;
     }
 
     /**
@@ -199,5 +199,29 @@ class Book
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set imagesCount
+     *
+     * @param integer $imagesCount
+     *
+     * @return Book
+     */
+    public function setImagesCount($imagesCount)
+    {
+        $this->imagesCount = $imagesCount;
+
+        return $this;
+    }
+
+    /**
+     * Get imagesCount
+     *
+     * @return integer
+     */
+    public function getImagesCount()
+    {
+        return $this->imagesCount;
     }
 }

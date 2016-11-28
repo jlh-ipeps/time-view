@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Image;
 use AppBundle\Form\ImageType;
+use AppBundle\Form\ChooseLocaleType;
 use Symfony\Component\HttpFoundation\Request;
 
 class BookController extends Controller {
@@ -14,9 +15,20 @@ class BookController extends Controller {
 
     $em = $this->getDoctrine()->getManager();
     $book = $em->getRepository('AppBundle:Book')->find($id);
-//    $mybooks = $em->getRepository('AppBundle:Book')->findAll();
-    $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
-//    dump($mybooks);die();
+    if ($this->getUser() == NULL) {
+        $mybooks = NULL;
+    } else {
+        $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
+    }
+
+    $localeForm = $this->createForm(ChooseLocaleType::class, array(
+        'current' => 'nl'
+    ));
+
+    $session = $this->get('session');
+    $session->set('_locale', $request->getLocale());
+//    dump($localeForm->createView());die();
+
     $item = "book";
     $tabs = ['gallery','map', 'talk'];
 
@@ -24,7 +36,6 @@ class BookController extends Controller {
     
     $pictures = $em->getRepository('AppBundle:Image')->findImagesByBook($id);
         
-    
     $image = new Image();
     $form = $this->createForm(ImageType::class, $image);
     if ($request->isMethod('POST')) {
@@ -46,7 +57,8 @@ class BookController extends Controller {
       'title' => $title,
       'tabs' => $tabs,
       'pictures' => $pictures,
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'localeForm' => $localeForm->createView(),
     ));
   }
 
