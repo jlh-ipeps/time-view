@@ -72,12 +72,16 @@
         <li>
           <input type="checkbox" checked="checked">
           <i></i>
-          <h3><span class="glyphicon glyphicon-user"></span> Language</h3>
+          <h3><span class="glyphicon glyphicon-flag"></span> Language</h3>
 
-        
+{#      
 {% form_theme localeForm 'AppBundle:form:radio.html.twig' %}
 {{ form(localeForm) }}
-
+#}
+        {%for locale, localeName in locales %}
+              <li class="{{ app.request.locale == locale ? "current" : "inactive" }}">
+          <a href="{{path(app.request.get('_route'),app.request.get('_route_params')|merge({_locale: locale}))}}">{{localeName}}</a>
+          {%endfor%}
         </li>
       </ul>
     </div>
