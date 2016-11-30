@@ -44,8 +44,8 @@
   <div id="wrapper">
   
 
-  {{ include("AppBundle:layout:sidebar.html.twig") }}
-  
+  {#{ include("AppBundle:layout:sidebar.html.twig") }#}
+  {{ render(controller("AppBundle:Sidebar:view", {'id': book, 'originalRequest': app.request})) }}
   
       <!-- page Content-wrapper -->
       <div id="page-content-wrapper">

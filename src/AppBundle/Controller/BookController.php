@@ -6,31 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Image;
 use AppBundle\Form\ImageType;
-use AppBundle\Form\ChooseLocaleType;
 use Symfony\Component\HttpFoundation\Request;
 
 class BookController extends Controller {
 
   public function viewAction($id, Request $request) {
 
-//        dump($request);die();
-//        dump($request->request->get('choose_locale'));die();
-
     $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
-//        dump($request->getLocale());die();
-
-//    $newLocale = $request->request->get('choose_locale');
-//    if ($newLocale) {
-//        $request->setLocale($newLocale['locale']);
-//        $session->set('_locale', $newLocale['locale']);
-//    }
-//    dump($newLocale['locale']);die();
-
-//    $request->setLocale('fr');
-//    $locale = $request->getLocale();
-
-    $locale = $session->get('locale');
     
     $em = $this->getDoctrine()->getManager();
     $book = $em->getRepository('AppBundle:Book')->find($id);
@@ -39,8 +22,6 @@ class BookController extends Controller {
     } else {
         $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
     }
-
-    $localeForm = $this->createForm(ChooseLocaleType::class, array('locale' => $request->getLocale()));
 
 
     $item = "book";
@@ -72,8 +53,6 @@ class BookController extends Controller {
       'tabs' => $tabs,
       'pictures' => $pictures,
       'form' => $form->createView(),
-      'localeForm' => $localeForm->createView(),
-      'locale' => $locale,
     ));
   }
 
