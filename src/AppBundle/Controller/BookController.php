@@ -16,11 +16,12 @@ class BookController extends Controller {
     $session->set('_locale', $request->getLocale());
     
     $em = $this->getDoctrine()->getManager();
-    $book = $em->getRepository('AppBundle:Book')->find($id);
+    $bookRepo = $em->getRepository('AppBundle:Book');
+    $book = $bookRepo->find($id);
     if ($this->getUser() == NULL) {
         $mybooks = NULL;
     } else {
-        $mybooks = $em->getRepository('AppBundle:Book')->findBooksByUser($this->getUser()->getId());
+        $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
     }
 
 

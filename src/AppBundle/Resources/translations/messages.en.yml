@@ -12,6 +12,7 @@ sidebar:
   mybooks: My books
   myaccount: My account
   newbook: New book
+  language: Language
 
 tab:
   books: Books

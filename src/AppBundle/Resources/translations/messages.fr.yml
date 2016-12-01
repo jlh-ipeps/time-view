@@ -12,6 +12,7 @@ sidebar:
   mybooks: Mes albums
   myaccount: Mon compte
   newbook: Nouvel album
+  language: Langue
 
 tab:
   books: Albums

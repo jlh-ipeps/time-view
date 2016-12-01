@@ -53,7 +53,7 @@ ol, ul {
 }
 
 /***** ACTIVE SUBMENU *****/
-.sidebar-nav li.current a,
+.sidebar-nav li.current a, /* link url == page url */
 .sidebar-nav li.active a {
     color: #fa0;
 }
@@ -73,10 +73,10 @@ ol, ul {
     z-index: 1;
     opacity: 0;
 }
-/* hide content by default */
+/* hide content by default
 #accordion .inactive {
     display:block;
-}
+} */
 /* Show content boxes when the radio buttons are checked */
 #accordion input[type='checkbox']:checked ~ ul .inactive {
     display:none;

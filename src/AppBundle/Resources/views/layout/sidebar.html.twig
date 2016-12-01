@@ -32,12 +32,12 @@
           <i></i>
           <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }}</h3>
           <ul>
-            {% for mybook in mybooks %}
-              <li class="{{ mybook.id == book ? "current" : "inactive" }}">
-                <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
-              </li>
-            {% endfor %}
-            <li class="inactive">
+  {% for mybook in mybooks %}
+            <li class="{{ mybook.id == session.get('book') ? "active" : "inactive" }}">
+              <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
+            </li>
+  {% endfor %}
+            <li class="{{ mybooks > 0 ? "inactive" : "active" }}">
               <a href="{{ path('bookNew') }}">
                 + {{ "sidebar.newbook"|trans }}
               </a>
@@ -72,10 +72,10 @@
         <li>
           <input type="checkbox" checked="checked">
           <i></i>
-          <h3><span class="glyphicon glyphicon-flag"></span> Language</h3>
+          <h3><span class="glyphicon glyphicon-flag"></span> {{ "sidebar.language"|trans }}</h3>
           <ul>
   {%for locale, localeName in locales %}
-            <li class="{{ originalRequest.locale == locale ? "current" : "inactive" }}">
+            <li class="{{ originalRequest.locale == locale ? "active" : "inactive" }}">
               <a href="{{path(originalRequest.get('_route'),originalRequest.get('_route_params')|merge({_locale: locale}))}}">{{localeName}}</a>
             </li>
   {%endfor%}

@@ -45,7 +45,7 @@
   
 
   {#{ include("AppBundle:layout:sidebar.html.twig") }#}
-  {{ render(controller("AppBundle:Sidebar:view", {'id': book, 'originalRequest': app.request})) }}
+  {{ render(controller("AppBundle:Sidebar:view", {'originalRequest': app.request})) }}
   
       <!-- page Content-wrapper -->
       <div id="page-content-wrapper">

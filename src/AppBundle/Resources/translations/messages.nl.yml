@@ -12,6 +12,7 @@ sidebar:
   mybooks: Mijn boeken
   myaccount: Mijn rekening
   newbook: Nieuw boek
+  language: Taal
 
 tab:
   books: Boeken
