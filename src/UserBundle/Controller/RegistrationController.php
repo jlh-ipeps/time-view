@@ -11,6 +11,7 @@ class RegistrationController extends BaseController
     {
 //      dump($request);die();
         $response = parent::registerAction($request);
+//      dump($response);die();
 
         // ... do custom stuff
         return $response;
