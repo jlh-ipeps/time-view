@@ -39,7 +39,11 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        locales: %languages%
+        locales: 
+            de: "Deutch"
+            en: "English"
+            fr: "Français"
+            nl: "Nederlands"
 
 # Doctrine Configuration
 doctrine:
