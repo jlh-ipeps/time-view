@@ -27,4 +27,7 @@ function ajaxSubmit() {
 //      $('#content').html(response);
 //      $(document).trigger('ajaxContentLoaded');
 //    }
-  }
+
+
+
+}

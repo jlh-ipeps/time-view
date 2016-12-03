@@ -1,5 +1,6 @@
-{#% extends "AppBundle:layout:content.html.twig" %#}
+{% extends "AppBundle:layout:content.html.twig" %}
+{% set item='user' %}
+{% set book=1 %}
+{% set title='title' %}
+{% set tabs=['login','register','map','talk'] %}
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Registration:register_content.html.twig" %}
-{% endblock fos_user_content %}
