@@ -1,6 +1,7 @@
 # src/AppBundle/Resources/translations/messages.en.yml
 
 title:
+  home: Welkom
   user: Gebruiker
   search: Zoeken
   book: Boek
@@ -8,6 +9,11 @@ title:
   picture: beeld
 
 sidebar:
+  home: Welkom
+  popular: Meest bekeken
+  new : Laast geupload
+  here : close by me
+  random: Toevallig
   mysearches: Mijn zoeken
   mybooks: Mijn boeken
   myaccount: Mijn rekening

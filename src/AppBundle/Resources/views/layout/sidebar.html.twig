@@ -9,6 +9,18 @@
         <li>
           <input type="checkbox" checked="checked">
           <i></i>
+          <h3><span class="glyphicon glyphicon-home"></span> {{ "sidebar.home"|trans }}</h3>
+          <ul>
+  {%for home in homes %}
+            <li class="{{ home == session.get('home') ? "active" : "inactive" }}">
+              <a href="{{path('home', {'wich':home})}}">{{ concat('sidebar.',home)|trans }}</a>
+            </li>
+   {%endfor%}
+          </ul>
+        <li>
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
           <h3><span class="glyphicon glyphicon-search"></span> {{ "sidebar.mysearches"|trans }}</h3>
           <ul>
             <li class="inactive">
@@ -30,14 +42,14 @@
         <li>
           <input type="checkbox" checked="checked">
           <i></i>
-          <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }}</h3>
+          <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }} {{ session.get('book') }}</h3>
           <ul>
   {% for mybook in mybooks %}
             <li class="{{ mybook.id == session.get('book') ? "active" : "inactive" }}">
               <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
             </li>
   {% endfor %}
-            <li class="{{ mybooks > 0 ? "inactive" : "active" }}">
+  <li class="{{ session.get('book') == null ? "active" : "inactive" }}">
               <a href="{{ path('bookNew') }}">
                 + {{ "sidebar.newbook"|trans }}
               </a>
@@ -49,11 +61,6 @@
           <i></i>
           <h3><span class="glyphicon glyphicon-user"></span> {{ "sidebar.myaccount"|trans }}</h3>
           <ul>
-            <li class="inactive">
-              <a href="{{ path('user', {'user': "Jonathan"}) }}">
-                Déconnection
-              </a>
-            </li>
             <li class="active">
               <a href="{{path('user_security_profile_show')}}">Mon profile</a>
             </li>

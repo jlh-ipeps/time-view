@@ -7,11 +7,56 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SidebarController extends Controller {
 
     public function viewAction($originalRequest) {
+        
+        $homes = array(
+            'popular',
+            'new',
+            'here',
+            'random'
+        );
       
         $session = $this->get('session');
-        $session->set('_locale', $originalRequest->getLocale());
+        
+        if (!$this->getUser()) {
+            $defaultSession = $session;
+            $defaultSession->set('_locale', $originalRequest->getLocale());
+            $defaultSession->set('book', NULL);
+            $defaultSession->set('picture', NULL);
+            $defaultSession->set('mybooks', NULL);
+            $defaultSession->set('mysearches', NULL);
+            $defaultSession->set('home', 'popular');
 
-    //    dump($originalRequest->get('_route_params'), $originalRequest->get('_route_params')['id'], $originalRequest->get('_route'));die();
+            $session = $defaultSession;
+        }
+
+        
+        switch ($originalRequest->get('_route')) {
+            case 'book':
+                $session->set('book', $originalRequest->get('_route_params')['id']);
+                break;
+            case 'picture':
+                $session->set('picture', $originalRequest->get('_route_params')['id']);
+                break;
+            case 'home':
+                $session->set('home', $originalRequest->get('_route_params')['wich']);
+                break;
+        }
+
+
+//        dump(
+//                $originalRequest->get('_route_params'), 
+////                $originalRequest->get('_route_params')['id'], 
+//                $originalRequest->get('_route'),
+//                $session,
+//                $session->get('_locale'),
+//                $session->get('book'),
+//                $session->get('mybooks'),
+//                $session->get('mysearches'),
+//                $session->get('picture'),
+//                $session->get('home'),
+//                $this->getUser()
+//            );
+//        die();
 
         if ($originalRequest->get('_route') == 'book') {
             $session->set('book', $originalRequest->get('_route_params')['id']);
@@ -21,7 +66,6 @@ class SidebarController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $bookRepo = $em->getRepository('AppBundle:Book');
-
         if ($this->getUser() == NULL) {
             $mybooks = NULL;
         } else {
@@ -38,6 +82,7 @@ class SidebarController extends Controller {
             'mybooks' => $mybooks,
             'originalRequest' => $originalRequest,
             'session' => $session,
+            'homes' => $homes,
         ));
     }
 }

@@ -1,4 +1,9 @@
 
+home:
+  path: /home/{wich}/
+  defaults: 
+    _controller: AppBundle:Home:view
+  
 search:
   path: /search/
   defaults: 
@@ -24,8 +29,3 @@ picture:
   path: /picture/{id}/
   defaults: 
     _controller: AppBundle:Picture:view
-  
-user:
-  path: /account/{user}/
-  defaults: 
-    _controller: AppBundle:User:view
