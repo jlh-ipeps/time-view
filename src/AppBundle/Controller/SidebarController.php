@@ -3,86 +3,87 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\MySession;
 
 class SidebarController extends Controller {
 
     public function viewAction($originalRequest) {
         
-        $homes = array(
-            'popular',
-            'new',
-            'here',
-            'random'
-        );
-      
+        $user = $this->getUser();
         $session = $this->get('session');
+        $em = $this->getDoctrine()->getManager();
         
-        if (!$this->getUser()) {
-            $defaultSession = $session;
-            $defaultSession->set('_locale', $originalRequest->getLocale());
-            $defaultSession->set('book', NULL);
-            $defaultSession->set('picture', NULL);
-            $defaultSession->set('mybooks', NULL);
-            $defaultSession->set('mysearches', NULL);
-            $defaultSession->set('home', 'popular');
+        $homeRepo = $em->getRepository('AppBundle:Homes');
+        $homes = $homeRepo->findAll();
+        
+        $localeRepo = $em->getRepository('AppBundle:Languages');
+        $locales = $localeRepo->findAll();
 
-            $session = $defaultSession;
+
+        if ($user) {
+            $sessionRepo = $em->getRepository('AppBundle:MySession');
+            $mySession = $sessionRepo->find($user->getSession()->getId());
+
+//            $myLanguage = $mySession->getLocale()->getIso();
+//            dump($user, $mySession, $myLanguage);
+//            die();
+        } else {
+            $mySession = new MySession();
         }
-
         
+//        if (!$this->getUser()) {
+//            $defaultSession = $session;
+//            $defaultSession->set('_locale', $originalRequest->getLocale());
+//            $defaultSession->set('book', NULL);
+//            $defaultSession->set('picture', NULL);
+//            $defaultSession->set('mybooks', NULL);
+//            $defaultSession->set('mysearches', NULL);
+//            $defaultSession->set('home', 'popular');
+//
+//            $session = $defaultSession;
+//        }
+        
+        $locale = $mySession->getLocale();
+        $book = $mySession->getBook();
+        $wich_home = $mySession->getHome();
+        
+//        dump($user->getSession(), $locale, $book, $wich_home);
+//        die();
+
         switch ($originalRequest->get('_route')) {
             case 'book':
-                $session->set('book', $originalRequest->get('_route_params')['id']);
+                $book = $originalRequest->get('_route_params')['id'];
+                $session->set('book', $book);
+                $mySession->setBook($book);
+                break;
+            case 'wich_home':
+                $wich_home = $originalRequest->get('_route_params')['wich'];
+                $session->set('home', $wich_home);
                 break;
             case 'picture':
                 $session->set('picture', $originalRequest->get('_route_params')['id']);
                 break;
-            case 'home':
-                $session->set('home', $originalRequest->get('_route_params')['wich']);
-                break;
+        }
+        
+        if ($user) {
+            $em->persist($mySession);
+            $em->flush();
         }
 
-
-//        dump(
-//                $originalRequest->get('_route_params'), 
-////                $originalRequest->get('_route_params')['id'], 
-//                $originalRequest->get('_route'),
-//                $session,
-//                $session->get('_locale'),
-//                $session->get('book'),
-//                $session->get('mybooks'),
-//                $session->get('mysearches'),
-//                $session->get('picture'),
-//                $session->get('home'),
-//                $this->getUser()
-//            );
-//        die();
-
-        if ($originalRequest->get('_route') == 'book') {
-            $session->set('book', $originalRequest->get('_route_params')['id']);
-        } else {
-            $session->set('book', NULL);
-        }
-
-        $em = $this->getDoctrine()->getManager();
+        $mybooks = NULL;
         $bookRepo = $em->getRepository('AppBundle:Book');
-        if ($this->getUser() == NULL) {
-            $mybooks = NULL;
-        } else {
+        if ($this->getUser()) {
             $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
         }
 
         return $this->render('AppBundle:layout:sidebar.html.twig', array(
-            "locales" => array(
-                'de' => "Deutch",
-                'en' => "English",
-                'fr' => "Français",
-                'nl' => "Nederlands"
-            ),
+            'locales' => $locales,
             'mybooks' => $mybooks,
+            'book' => $book,
+            'wich_home' => $wich_home,
+            'homes' => $homes,
             'originalRequest' => $originalRequest,
             'session' => $session,
-            'homes' => $homes,
         ));
     }
 }

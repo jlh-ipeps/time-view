@@ -31,28 +31,4 @@ class User extends BaseUser
      */
     private $session;
 
-
-    /**
-     * Set session
-     *
-     * @param \AppBundle\Entity\MySession $session
-     *
-     * @return User
-     */
-    public function setSession(\AppBundle\Entity\MySession $session)
-    {
-        $this->session = $session;
-
-        return $this;
-    }
-
-    /**
-     * Get session
-     *
-     * @return \AppBundle\Entity\MySession
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
 }

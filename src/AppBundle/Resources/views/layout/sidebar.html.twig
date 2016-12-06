@@ -12,8 +12,11 @@
           <h3><span class="glyphicon glyphicon-home"></span> {{ "sidebar.home"|trans }}</h3>
           <ul>
   {%for home in homes %}
-            <li class="{{ home == session.get('home') ? "active" : "inactive" }}">
-              <a href="{{path('home', {'wich':home})}}">{{ concat('sidebar.',home)|trans }}</a>
+            <li class="
+                {{ home.name == session.get('home') ? "active" : "inactive" }}
+                {{ home.name == wich_home ? ", current" }}"
+                >
+              <a href="{{path('wich_home', {'wich':home.name})}}">{{ concat('sidebar.',home.name)|trans }}</a>
             </li>
    {%endfor%}
           </ul>
@@ -42,10 +45,13 @@
         <li>
           <input type="checkbox" checked="checked">
           <i></i>
-          <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }} {{ session.get('book') }}</h3>
+          <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }}</h3>
           <ul>
   {% for mybook in mybooks %}
-            <li class="{{ mybook.id == session.get('book') ? "active" : "inactive" }}">
+            <li class="
+                {{ mybook.id == session.get('book') ? "active" : "inactive" }}
+                {{ mybook.id == book ? ", current" }}
+                ">
               <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
             </li>
   {% endfor %}
@@ -81,9 +87,9 @@
           <i></i>
           <h3><span class="glyphicon glyphicon-flag"></span> {{ "sidebar.language"|trans }}</h3>
           <ul>
-  {%for locale, localeName in locales %}
-            <li class="{{ originalRequest.locale == locale ? "active" : "inactive" }}">
-              <a href="{{path(originalRequest.get('_route'),originalRequest.get('_route_params')|merge({_locale: locale}))}}">{{localeName}}</a>
+  {%for locale in locales %}
+            <li class="{{ originalRequest.locale == locale.iso ? "active" : "inactive" }}">
+              <a href="{{path(originalRequest.get('_route'),originalRequest.get('_route_params')|merge({_locale: locale.iso}))}}">{{locale.name}}</a>
             </li>
   {%endfor%}
           </ul>

@@ -1,5 +1,9 @@
 
-home:
+
+
+
+
+wich_home:
   path: /home/{wich}/
   defaults: 
     _controller: AppBundle:Home:view

@@ -40,7 +40,6 @@ catchAll:
     req: ".*"
   defaults: 
     _controller: FrameworkBundle:Redirect:urlRedirect
-#    path: /%locale%/Search/
-    path: /%locale%/book/1/
+    path: /%locale%/home/popular/
     permanent: true
         
