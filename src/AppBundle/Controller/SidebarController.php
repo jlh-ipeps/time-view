@@ -43,12 +43,16 @@ class SidebarController extends Controller {
 //            $session = $defaultSession;
 //        }
         
-        $locale = $mySession->getLocale();
-        $book = $mySession->getBook();
-        $wich_home = $mySession->getHome();
         
-//        dump($user->getSession(), $locale, $book, $wich_home);
-//        die();
+//        if ($mySession->getLocale()) {
+//            $originalRequest->setLocale($mySession->getLocale()->getIso());
+////            dump($session, $mySession->getLocale()->getIso(), $originalRequest->getLocale());die();
+//        }
+
+
+        $book = $mySession->getBook();
+        $session->set('book', $book);
+        $wich_home = $mySession->getHome();
 
         switch ($originalRequest->get('_route')) {
             case 'book':
@@ -57,13 +61,15 @@ class SidebarController extends Controller {
                 $mySession->setBook($book);
                 break;
             case 'wich_home':
-                $wich_home = $originalRequest->get('_route_params')['wich'];
+                $wich_home = $homeRepo->findOneByName($originalRequest->get('_route_params')['wich']);
                 $session->set('home', $wich_home);
+                $mySession->setHome($wich_home);
                 break;
             case 'picture':
                 $session->set('picture', $originalRequest->get('_route_params')['id']);
                 break;
         }
+//        dump($originalRequest);die();
         
         if ($user) {
             $em->persist($mySession);

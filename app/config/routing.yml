@@ -34,12 +34,12 @@ fos_user_security:
     _locale: en|fr|de|nl
 
 
-catchAll:
-  path:     /{req}
-  requirements:
-    req: ".*"
-  defaults: 
-    _controller: FrameworkBundle:Redirect:urlRedirect
-    path: /%locale%/home/popular/
-    permanent: true
-        
+#catchAll:
+#  path:     /{req}
+#  requirements:
+#    req: ".*"
+#  defaults: 
+#    _controller: FrameworkBundle:Redirect:urlRedirect
+#    path: /%locale%/home/popular/
+#    permanent: true
+#        

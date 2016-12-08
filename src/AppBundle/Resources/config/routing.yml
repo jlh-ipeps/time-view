@@ -3,6 +3,11 @@
 
 
 
+home:
+  path: /home/new/
+  defaults: 
+    _controller: AppBundle:Home:view
+  
 wich_home:
   path: /home/{wich}/
   defaults: 

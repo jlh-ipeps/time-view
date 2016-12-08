@@ -13,7 +13,7 @@
           <ul>
   {%for home in homes %}
             <li class="
-                {{ home.name == session.get('home') ? "active" : "inactive" }}
+                {{ home.id == session.get('home').id ? "active" : "inactive" }}
                 {{ home.name == wich_home ? ", current" }}"
                 >
               <a href="{{path('wich_home', {'wich':home.name})}}">{{ concat('sidebar.',home.name)|trans }}</a>
@@ -52,7 +52,7 @@
                 {{ mybook.id == session.get('book') ? "active" : "inactive" }}
                 {{ mybook.id == book ? ", current" }}
                 ">
-              <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
+              <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }} {{mybook.id}} {{book}} {{session.get('book')}}</a>
             </li>
   {% endfor %}
   <li class="{{ session.get('book') == null ? "active" : "inactive" }}">
