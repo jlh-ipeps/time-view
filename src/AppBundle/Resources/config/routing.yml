@@ -3,11 +3,14 @@
 
 
 
+
+# Symfony2: URLs with trailing slash and an optional parameter
+# http://stackoverflow.com/questions/10091518/symfony2-urls-with-trailing-slash-and-an-optional-parameter
 home:
-  path: /home/new/
+  path: /home/
   defaults: 
+    wich: 0
     _controller: AppBundle:Home:view
-  
 wich_home:
   path: /home/{wich}/
   defaults: 

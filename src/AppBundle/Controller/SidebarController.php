@@ -52,7 +52,7 @@ class SidebarController extends Controller {
 
         $book = $mySession->getBook();
         $session->set('book', $book);
-        $wich_home = $mySession->getHome();
+        $home_id = $mySession->getHome();
 
         switch ($originalRequest->get('_route')) {
             case 'book':
@@ -61,9 +61,12 @@ class SidebarController extends Controller {
                 $mySession->setBook($book);
                 break;
             case 'wich_home':
-                $wich_home = $homeRepo->findOneByName($originalRequest->get('_route_params')['wich']);
-                $session->set('home', $wich_home);
-                $mySession->setHome($wich_home);
+                $home_wich = $originalRequest->get('_route_params')['wich'];
+//                $home_wich = $homeRepo->findOneByName($originalRequest->get('_route_params')['wich']);
+                $home_id = $homeRepo->findOneByName($home_wich);
+//            dump($originalRequest, $home_wich, $originalRequest->get('_route_params')['wich']);die();
+                $session->set('home', $home_id);
+                $mySession->setHome($home_id);
                 break;
             case 'picture':
                 $session->set('picture', $originalRequest->get('_route_params')['id']);
@@ -86,7 +89,7 @@ class SidebarController extends Controller {
             'locales' => $locales,
             'mybooks' => $mybooks,
             'book' => $book,
-            'wich_home' => $wich_home,
+            'wich_home' => $home_id,
             'homes' => $homes,
             'originalRequest' => $originalRequest,
             'session' => $session,
