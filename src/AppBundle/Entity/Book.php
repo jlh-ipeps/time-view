@@ -23,9 +23,9 @@ class Book {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book_Image", mappedBy="book")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Picture", mappedBy="book")
      */
-    private $images;
+    private $files;
   
     /**
     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -52,7 +52,7 @@ class Book {
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     /**
@@ -116,11 +116,11 @@ class Book {
     /**
      * Add book
      *
-     * @param \AppBundle\Entity\Book_Image $book
+     * @param \AppBundle\Entity\Picture $book
      *
      * @return Book
      */
-    public function addBook(\AppBundle\Entity\Book_Image $book)
+    public function addBook(\AppBundle\Entity\Picture $book)
     {
         $this->books[] = $book;
 
@@ -130,9 +130,9 @@ class Book {
     /**
      * Remove book
      *
-     * @param \AppBundle\Entity\Book_Image $book
+     * @param \AppBundle\Entity\Picture $book
      */
-    public function removeBook(\AppBundle\Entity\Book_Image $book)
+    public function removeBook(\AppBundle\Entity\Picture $book)
     {
         $this->books->removeElement($book);
     }
@@ -140,9 +140,9 @@ class Book {
     /**
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getImages()
+    public function getFiles()
     {
-        return $this->images->toArray();
+        return $this->files->toArray();
     }
 
     /**

@@ -7,10 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FileRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Image {
+class File {
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -20,7 +20,7 @@ class Image {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Book_Image", mappedBy="image", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Picture", mappedBy="file", cascade={"remove"})
      */
     protected $books;
 
@@ -44,8 +44,8 @@ class Image {
   private $tempFilename;
 
   // On modifie le setter de File, pour prendre en compte l'upload d'un fichier lorsqu'il en existe déjà un autre
-  public function setFile(UploadedFile $file) {
-    $this->file = $file;
+  public function setFile(UploadedFile $uploadedFile) {
+    $this->file = $uploadedFile;
 
     // On vérifie si on avait déjà un fichier pour cette entité
     if (null !== $this->ext) {
@@ -149,7 +149,7 @@ class Image {
      *
      * @param string $ext
      *
-     * @return image
+     * @return File
      */
     public function setExt($ext)
     {
@@ -173,7 +173,7 @@ class Image {
      *
      * @param string $alt
      *
-     * @return image
+     * @return File
      */
     public function setAlt($alt)
     {
@@ -201,7 +201,7 @@ class Image {
     /**
      * Add book
      * @param \AppBundle\Entity\Book $book
-     * @return Image
+     * @return File
      */
     public function addBook(\AppBundle\Entity\Book $book) {
         $this->books[] = $book;
@@ -225,36 +225,36 @@ class Image {
     }
 
     /**
-     * Add image
+     * Add file
      *
-     * @param \AppBundle\Entity\Book_Image $image
+     * @param \AppBundle\Entity\Picture $file
      *
-     * @return Image
+     * @return File
      */
-    public function addImage(\AppBundle\Entity\Book_Image $image)
+    public function addFile(\AppBundle\Entity\Picture $file)
     {
-        $this->images[] = $image;
+        $this->files[] = $file;
 
         return $this;
     }
 
     /**
-     * Remove image
+     * Remove file
      *
-     * @param \AppBundle\Entity\Book_Image $image
+     * @param \AppBundle\Entity\Picture $file
      */
-    public function removeImage(\AppBundle\Entity\Book_Image $image)
+    public function removeFile(\AppBundle\Entity\Picture $file)
     {
-        $this->images->removeElement($image);
+        $this->files->removeElement($file);
     }
 
     /**
-     * Get images
+     * Get files
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getImages()
+    public function getFiles()
     {
-        return $this->images;
+        return $this->files;
     }
 }

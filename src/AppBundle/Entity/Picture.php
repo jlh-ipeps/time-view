@@ -11,26 +11,26 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Book_Image
+ * Picture
  *
- * @ORM\Table(name="book_image")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Book_ImageRepository")
+ * @ORM\Table(name="picture")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PictureRepository")
  */
-class Book_Image {
+class Picture {
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="Book_Image")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="Picture")
      * @ORM\JoinColumn(name="book_id", referencedColumnName="id", nullable=false) 
      */
     private $book;
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Image", inversedBy="Book_Image")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=false) 
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File", inversedBy="Picture")
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false) 
      */
-    private $image;
+    private $file;
 
 
     /**
@@ -38,7 +38,7 @@ class Book_Image {
      *
      * @param \AppBundle\Entity\Book $book
      *
-     * @return Book_Image
+     * @return Picture
      */
     public function setBook(\AppBundle\Entity\Book $book)
     {
@@ -58,26 +58,26 @@ class Book_Image {
     }
 
     /**
-     * Set image
+     * Set file
      *
-     * @param \AppBundle\Entity\Image $image
+     * @param \AppBundle\Entity\File $file
      *
-     * @return Book_Image
+     * @return Picture
      */
-    public function setImage(\AppBundle\Entity\Image $image)
+    public function setFile(\AppBundle\Entity\File $file)
     {
-        $this->image = $image;
+        $this->file = $file;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get file
      *
-     * @return \AppBundle\Entity\Image
+     * @return \AppBundle\Entity\File
      */
-    public function getImage()
+    public function getFile()
     {
-        return $this->image;
+        return $this->file;
     }
 }

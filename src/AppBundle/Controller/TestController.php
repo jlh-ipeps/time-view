@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Image;
-use AppBundle\Entity\Book_Image;
+use AppBundle\Entity\Picture;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,16 +18,16 @@ class TestController extends Controller {
     
     $bookRepo = $em->getRepository('AppBundle:Book');
     $book = $bookRepo->find(1);
-    $images = $bookRepo->find(1)->getImages();
+    $files = $bookRepo->find(1)->getFiles();
 
-    $bookImageRepo = $em->getRepository('AppBundle:Book_Image');
-    $bookImage = $bookImageRepo->findAll()[0]->getBook();
+    $pictureRepo = $em->getRepository('AppBundle:Picture');
+    $bookImage = $pictureRepo->findAll()[0]->getBook();
 
-    $imageRepo = $em->getRepository('AppBundle:Image');
-    $bookOwner = $imageRepo->findAll()[0];
-    $books = $imageRepo->findAll()[0]->getBooks();
+    $fileRepo = $em->getRepository('AppBundle:File');
+    $bookOwner = $fileRepo->findAll()[0];
+    $books = $fileRepo->findAll()[0]->getBooks();
             
-    dump($bookOwner, $book, $bookImage, $images);die();
+    dump($bookOwner, $book, $bookImage, $files);die();
     return $this->render('AppBundle::test.html.twig', array(
     ));
   }
