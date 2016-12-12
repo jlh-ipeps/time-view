@@ -6,22 +6,28 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Image")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Image {
 
-  /**
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Book", cascade={"persist"})
-   */
-  private $Books;
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-  /**
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * @ORM\OneToMany(targetEntity="Book_Image", mappedBy="image", cascade={"remove"})
+     */
+    protected $images;
+
+    public function _construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
 
   /**
    * @ORM\Column(name="ext", type="string", length=5)

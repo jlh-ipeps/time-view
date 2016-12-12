@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -11,17 +12,17 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Image {
 
-  /**
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Book", inversedBy="Images", cascade={"persist"})
-   */
-  private $Books;
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-  /**
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * @ORM\OneToMany(targetEntity="Book_Image", mappedBy="image", cascade={"remove"})
+     */
+    protected $books;
 
   /**
    * @ORM\Column(name="ext", type="string", length=5)
@@ -194,7 +195,7 @@ class Image {
      * Constructor
      */
     public function __construct() {
-        $this->Books = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     /**
@@ -203,7 +204,7 @@ class Image {
      * @return Image
      */
     public function addBook(\AppBundle\Entity\Book $book) {
-        $this->Books[] = $book;
+        $this->books[] = $book;
         return $this;
     }
 
@@ -212,7 +213,7 @@ class Image {
      * @param \AppBundle\Entity\Book $book
      */
     public function removeBook(\AppBundle\Entity\Book $book) {
-        $this->Books->removeElement($book);
+        $this->books->removeElement($book);
     }
 
     /**
@@ -220,6 +221,40 @@ class Image {
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getBooks() {
-        return $this->Books;
+        return $this->books->toArray();
+    }
+
+    /**
+     * Add image
+     *
+     * @param \AppBundle\Entity\Book_Image $image
+     *
+     * @return Image
+     */
+    public function addImage(\AppBundle\Entity\Book_Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \AppBundle\Entity\Book_Image $image
+     */
+    public function removeImage(\AppBundle\Entity\Book_Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

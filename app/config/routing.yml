@@ -1,12 +1,11 @@
-#user:
-#    resource: "@UserBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
-#
-#app:
-#  resource: "@AppBundle/Controller/"
-#  type:     annotation
 
+
+Test:
+  path:     /{req}
+  requirements:
+    req: ".*"
+  defaults: 
+    _controller: AppBundle:Test:view
 
 time_view:
   resource: "@AppBundle/Resources/config/routing.yml"

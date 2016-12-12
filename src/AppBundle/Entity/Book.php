@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Book
@@ -10,13 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="book")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookRepository")
  */
-class Book
-{
-
-  /**
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", mappedBy="Books")
-   */
-  private $Images;
+class Book {
 
     /**
      * @var int
@@ -27,6 +22,11 @@ class Book
      */
     private $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book_Image", mappedBy="book")
+     */
+    private $images;
+  
     /**
     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
     * @ORM\JoinColumn(nullable=false)
@@ -46,10 +46,19 @@ class Book
      */
     private $info;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -60,10 +69,13 @@ class Book
      * Set title
      *
      * @param string $title
-     * @return book
+     *
+     * @return Book
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
+
         return $this;
     }
 
@@ -82,7 +94,7 @@ class Book
      *
      * @param string $info
      *
-     * @return book
+     * @return Book
      */
     public function setInfo($info)
     {
@@ -100,57 +112,37 @@ class Book
     {
         return $this->info;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Image = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add image
+     * Add book
      *
-     * @param \OC\PlatformBundle\Entity\Image $image
+     * @param \AppBundle\Entity\Book_Image $book
      *
      * @return Book
      */
-    public function addImage(\OC\PlatformBundle\Entity\Image $image)
+    public function addBook(\AppBundle\Entity\Book_Image $book)
     {
-        $this->Image[] = $image;
-        $this->imagesCount++;
+        $this->books[] = $book;
+
         return $this;
     }
 
     /**
-     * Remove image
+     * Remove book
      *
-     * @param \OC\PlatformBundle\Entity\Image $image
+     * @param \AppBundle\Entity\Book_Image $book
      */
-    public function removeImage(\OC\PlatformBundle\Entity\Image $image)
+    public function removeBook(\AppBundle\Entity\Book_Image $book)
     {
-        $this->Image->removeElement($image);
-        $this->imagesCount--;
+        $this->books->removeElement($book);
     }
 
     /**
-     * Get image
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImage()
-    {
-        return $this->Image;
-    }
-
-    /**
-     * Get images
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
-        return $this->Images;
+        return $this->images->toArray();
     }
 
     /**
@@ -160,7 +152,7 @@ class Book
      *
      * @return Book
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(\AppBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -176,52 +168,5 @@ class Book
     {
         return $this->user;
     }
-
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\User $userId
-     *
-     * @return Book
-     */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * Set imagesCount
-     *
-     * @param integer $imagesCount
-     *
-     * @return Book
-     */
-    public function setImagesCount($imagesCount)
-    {
-        $this->imagesCount = $imagesCount;
-
-        return $this;
-    }
-
-    /**
-     * Get imagesCount
-     *
-     * @return integer
-     */
-    public function getImagesCount()
-    {
-        return $this->imagesCount;
-    }
+    
 }
