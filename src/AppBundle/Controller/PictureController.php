@@ -8,7 +8,7 @@ class PictureController extends Controller
 {
   public function viewAction($id) {
     $em = $this->getDoctrine()->getManager();
-    $image = $em->getRepository('AppBundle:Image')->find($id);
+    $file = $em->getRepository('AppBundle:File')->find($id);
 // to view sidebar 
     $mybooks = $em->getRepository('AppBundle:Book')->findAll();
 
@@ -22,9 +22,9 @@ class PictureController extends Controller
       'mybooks' => $mybooks,
       'book' => 1, // user variable
       'item' => $item,
-      'title' => $image->getAlt(),
+      'title' => $file->getAlt(),
       'tabs' => $tabs,
-      'picture' => $image->getId()
+      'picture' => $file->getId()
     ));
   }
 }

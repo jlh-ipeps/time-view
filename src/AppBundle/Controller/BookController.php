@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
-use AppBundle\Entity\Image;
+use AppBundle\Entity\File;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,16 +30,18 @@ class BookController extends Controller {
 
     $title = $book->getTitle();
     
-    $pictures = $em->getRepository('AppBundle:Image')->findImagesByBook($id);
+    $files = $em->getRepository('AppBundle:File')->findImagesByBook($id);
+    
+//    dump($files);die();
         
-    $image = new Image();
-    $form = $this->createForm(ImageType::class, $image);
+    $file = new File();
+    $form = $this->createForm(ImageType::class, $file);
     if ($request->isMethod('POST')) {
       $form->handleRequest($request);
       if ($form->isValid()) {
-        $image->addBook($book);
+        $file->addBook($book);
         $em->persist($book);
-        $em->persist($image);
+        $em->persist($file);
         $em->flush();
         $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
         return $this->redirectToRoute('book', array('id' => 1));
@@ -52,7 +54,7 @@ class BookController extends Controller {
       'item' => $item,
       'title' => $title,
       'tabs' => $tabs,
-      'pictures' => $pictures,
+      'pictures' => $files,
       'form' => $form->createView(),
     ));
   }

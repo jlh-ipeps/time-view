@@ -1,12 +1,12 @@
 
 
-Test:
-  path:     /{req}
-  requirements:
-    req: ".*"
-  defaults: 
-    _controller: AppBundle:Test:view
-
+#Test:
+#  path:     /{req}
+#  requirements:
+#    req: ".*"
+#  defaults: 
+#    _controller: AppBundle:Test:view
+#
 time_view:
   resource: "@AppBundle/Resources/config/routing.yml"
   prefix:   /{_locale}

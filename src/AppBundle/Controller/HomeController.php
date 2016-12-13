@@ -19,9 +19,9 @@ class HomeController extends Controller {
     }
     
     $em = $this->getDoctrine()->getManager();
-    $pixRepo = $em->getRepository('AppBundle:Image');
+    $fileRepo = $em->getRepository('AppBundle:File');
 //    db request must match $wich_home
-    $pictures = $pixRepo->findAll();
+    $pictures = $fileRepo->findAll();
 //    dump($pictures);die();
 
     $item = "home";

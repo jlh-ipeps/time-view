@@ -9,5 +9,22 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class FileRepository extends \Doctrine\ORM\EntityRepository {
+
+    public function findImagesByBook(int $id) {
+
+        $qb = $this->createQueryBuilder('i');
+        $qb
+          ->innerJoin('i.books', 'b')
+          ->addSelect('b')
+          ->where($qb->expr()->in('b.book', $id))
+          ->orderBy('i.id', 'DESC')
+        ;
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+
+    }
+ 
   
 }

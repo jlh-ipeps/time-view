@@ -30,7 +30,7 @@ class ImageType extends AbstractType {
               'class' => 'dropzone',
             ]
  */
-          'data_class' => 'AppBundle\Entity\Image',
+          'data_class' => 'AppBundle\Entity\File',
       ));
   }
 
