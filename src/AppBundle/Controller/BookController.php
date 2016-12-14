@@ -35,10 +35,10 @@ class BookController extends Controller {
     
 //    dump($files);die();
         
+    $file = new File();
     $form = $this->createForm(ImageType::class, $file);
     if ($request->isMethod('POST')) {
         $picture = new Picture();
-        $file = new File();
         $form->handleRequest($request);
         if ($form->isValid()) {
             $file->addPicture($picture);

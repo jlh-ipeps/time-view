@@ -25,7 +25,7 @@ class Book {
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Picture", mappedBy="book")
      */
-    private $files;
+    private $pictures;
   
     /**
     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -52,7 +52,7 @@ class Book {
      */
     public function __construct()
     {
-        $this->files = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     /**
@@ -140,9 +140,9 @@ class Book {
     /**
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFiles()
+    public function getPictures()
     {
-        return $this->files->toArray();
+        return $this->pictures->toArray();
     }
 
     /**

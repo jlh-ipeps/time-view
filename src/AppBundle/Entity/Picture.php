@@ -20,14 +20,14 @@ class Picture {
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="Picture")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="pictures")
      * @ORM\JoinColumn(name="book_id", referencedColumnName="id", nullable=false) 
      */
     private $book;
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File", inversedBy="Picture")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File", inversedBy="pictures")
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false) 
      */
     private $file;
