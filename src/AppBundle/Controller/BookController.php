@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Picture;
 use AppBundle\Entity\File;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,18 +35,21 @@ class BookController extends Controller {
     
 //    dump($files);die();
         
-    $file = new File();
     $form = $this->createForm(ImageType::class, $file);
     if ($request->isMethod('POST')) {
-      $form->handleRequest($request);
-      if ($form->isValid()) {
-        $file->addBook($book);
-        $em->persist($book);
-        $em->persist($file);
-        $em->flush();
-        $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-        return $this->redirectToRoute('book', array('id' => 1));
-      }
+        $picture = new Picture();
+        $file = new File();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $file->addPicture($picture);
+            $picture->setBook($book);
+            $picture->setFile($file);
+            $em->persist($picture);
+            $em->persist($file);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            return $this->redirectToRoute('book', array('id' => 1));
+        }
     }
     
     return $this->render('AppBundle:layout:content.html.twig', array(

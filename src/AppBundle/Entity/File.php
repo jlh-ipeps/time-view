@@ -22,117 +22,117 @@ class File {
     /**
      * @ORM\OneToMany(targetEntity="Picture", mappedBy="file", cascade={"remove"})
      */
-    protected $books;
+    protected $pictures;
 
-  /**
-   * @ORM\Column(name="ext", type="string", length=5)
-   */
-  private $ext;
+    /**
+     * @ORM\Column(name="ext", type="string", length=5)
+     */
+    private $ext;
 
-  /**
-   * @ORM\Column(name="alt", type="string", length=255)
-   */
-  private $alt;
+    /**
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
 
-  private $file;
+    private $file;
 
-  public function getFile()  {
-    return $this->file;
-  }
-
-  // On ajoute cet attribut pour y stocker le nom du fichier temporairement
-  private $tempFilename;
-
-  // On modifie le setter de File, pour prendre en compte l'upload d'un fichier lorsqu'il en existe déjà un autre
-  public function setFile(UploadedFile $uploadedFile) {
-    $this->file = $uploadedFile;
-
-    // On vérifie si on avait déjà un fichier pour cette entité
-    if (null !== $this->ext) {
-      // On sauvegarde l'extension du fichier pour le supprimer plus tard
-      $this->tempFilename = $this->ext;
-
-      // On réinitialise les valeurs des attributs ext et alt
-      $this->ext = null;
-      $this->alt = null;
-    }
-  }
-
-  /**
-   * @ORM\PrePersist()
-   * @ORM\PreUpdate()
-   */
-  public function preUpload() {
-    // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-    if (null === $this->file) {
-      return;
+    public function getFile()  {
+      return $this->file;
     }
 
-    // Le nom du fichier est son id, on doit juste stocker également son extension
-    // Pour faire propre, on devrait renommer cet attribut en « extension », plutôt que « ext »
-    $this->ext = $this->file->guessExtension();
+    // On ajoute cet attribut pour y stocker le nom du fichier temporairement
+    private $tempFilename;
 
-    // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
-    $this->alt = $this->file->getClientOriginalName();
-  }
+    // On modifie le setter de File, pour prendre en compte l'upload d'un fichier lorsqu'il en existe déjà un autre
+    public function setFile(UploadedFile $file) {
+        $this->file = $file;
 
-  /**
-   * @ORM\PostPersist()
-   * @ORM\PostUpdate()
-   */
-  public function upload() {
-    // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-    if (null === $this->file) {
-      return;
+        // On vérifie si on avait déjà un fichier pour cette entité
+        if (null !== $this->ext) {
+            // On sauvegarde l'extension du fichier pour le supprimer plus tard
+            $this->tempFilename = $this->ext;
+
+            // On réinitialise les valeurs des attributs ext et alt
+            $this->ext = null;
+            $this->alt = null;
+        }
     }
 
-    // Si on avait un ancien fichier, on le supprime
-    if (null !== $this->tempFilename) {
-      $oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-      if (file_exists($oldFile)) {
-        unlink($oldFile);
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload() {
+        // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
+        if (null === $this->file) {
+          return;
+        }
+
+      // Le nom du fichier est son id, on doit juste stocker également son extension
+      // Pour faire propre, on devrait renommer cet attribut en « extension », plutôt que « ext »
+      $this->ext = $this->file->guessExtension();
+
+      // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
+      $this->alt = $this->file->getClientOriginalName();
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload() {
+      // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
+      if (null === $this->file) {
+        return;
+      }
+
+      // Si on avait un ancien fichier, on le supprime
+      if (null !== $this->tempFilename) {
+        $oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
+        if (file_exists($oldFile)) {
+          unlink($oldFile);
+        }
+      }
+
+      // On déplace le fichier envoyé dans le répertoire de notre choix
+  //    dump($this->file);
+  //    die();
+      $this->file->move(
+        $this->getUploadRootDir(), // Le répertoire de destination
+        $this->id.'.'.$this->ext   // Le nom du fichier à créer, ici « id.extension »
+      );
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload() {
+      // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
+      $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->ext;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload() {
+      // En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
+      if (file_exists($this->tempFilename)) {
+        // On supprime le fichier
+        unlink($this->tempFilename);
       }
     }
 
-    // On déplace le fichier envoyé dans le répertoire de notre choix
-//    dump($this->file);
-//    die();
-    $this->file->move(
-      $this->getUploadRootDir(), // Le répertoire de destination
-      $this->id.'.'.$this->ext   // Le nom du fichier à créer, ici « id.extension »
-    );
-  }
-
-  /**
-   * @ORM\PreRemove()
-   */
-  public function preRemoveUpload() {
-    // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-    $this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->ext;
-  }
-
-  /**
-   * @ORM\PostRemove()
-   */
-  public function removeUpload() {
-    // En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
-    if (file_exists($this->tempFilename)) {
-      // On supprime le fichier
-      unlink($this->tempFilename);
+    public function getUploadDir() {
+      // On retourne le chemin relatif vers l'image pour un navigateur
+      return 'uploads/img';
     }
-  }
 
-  public function getUploadDir() {
-    // On retourne le chemin relatif vers l'image pour un navigateur
-    return 'uploads/img';
-  }
+    protected function getUploadRootDir() {
+      // On retourne le chemin relatif vers l'image pour notre code PHP
+      return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
 
-  protected function getUploadRootDir() {
-    // On retourne le chemin relatif vers l'image pour notre code PHP
-    return __DIR__.'/../../../web/'.$this->getUploadDir();
-  }
 
-  
 
     /**
      * Get id
@@ -195,33 +195,35 @@ class File {
      * Constructor
      */
     public function __construct() {
-        $this->books = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     /**
-     * Add book
-     * @param \AppBundle\Entity\Book $book
+     * Add picture
+     * @param \AppBundle\Entity\Picture $pictures
      * @return File
      */
-    public function addBook(\AppBundle\Entity\Book $book) {
-        $this->books[] = $book;
+    public function addPicture(\AppBundle\Entity\Picture $pictures) {
+//        dump($pictures);die();
+        
+        $this->pictures[] = $pictures;
         return $this;
     }
 
     /**
-     * Remove book
-     * @param \AppBundle\Entity\Book $book
+     * Remove picture
+     * @param \AppBundle\Entity\Picture $pictures
      */
-    public function removeBook(\AppBundle\Entity\Book $book) {
-        $this->books->removeElement($book);
+    public function removePicture(\AppBundle\Entity\Picture $pictures) {
+        $this->pictures->removeElement($pictures);
     }
 
     /**
-     * Get books
+     * Get pictures
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBooks() {
-        return $this->books->toArray();
+    public function getPictures() {
+        return $this->pictures->toArray();
     }
 
     /**

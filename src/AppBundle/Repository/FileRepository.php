@@ -14,9 +14,9 @@ class FileRepository extends \Doctrine\ORM\EntityRepository {
 
         $qb = $this->createQueryBuilder('i');
         $qb
-          ->innerJoin('i.books', 'b')
-          ->addSelect('b')
-          ->where($qb->expr()->in('b.book', $id))
+          ->innerJoin('i.pictures', 'p')
+          ->addSelect('p')
+          ->where($qb->expr()->in('p.book', $id))
           ->orderBy('i.id', 'DESC')
         ;
         return $qb
