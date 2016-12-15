@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Repository/PictureRepository.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Entity/File.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Repository/ImageRepository.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/BookController.php</file>
             <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Entity/Book.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/TestController.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Entity/Picture.php</file>
         </group>
     </open-files>
 </project-private>

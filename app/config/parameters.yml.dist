@@ -19,3 +19,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     languages: "(de|en|fr|nl)"
+    db.table_prefix: ""
