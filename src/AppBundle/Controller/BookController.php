@@ -34,22 +34,27 @@ class BookController extends Controller {
     $files = $em->getRepository('AppBundle:File')->findImagesByBook($id);
     
 //    dump($files);die();
-        
-    $file = new File();
-    $form = $this->createForm(ImageType::class, $file);
-    if ($request->isMethod('POST')) {
-        $picture = new Picture();
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $file->addPicture($picture);
-            $picture->setBook($book);
-            $picture->setFile($file);
-            $em->persist($picture);
-            $em->persist($file);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-            return $this->redirectToRoute('book', array('id' => 1));
+
+    if ($book->getUser() == $this->getUser()) {
+        $file = new File();
+        $form = $this->createForm(ImageType::class, $file);
+        $formview = $form->createView();
+        if ($request->isMethod('POST')) {
+            $picture = new Picture();
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $file->addPicture($picture);
+                $picture->setBook($book);
+                $picture->setFile($file);
+                $em->persist($picture);
+                $em->persist($file);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+                return $this->redirectToRoute('book', array('id' => 1));
+            }
         }
+    } else {
+        $formview = NULL;
     }
     
     return $this->render('AppBundle:layout:content.html.twig', array(
@@ -59,7 +64,7 @@ class BookController extends Controller {
       'title' => $title,
       'tabs' => $tabs,
       'pictures' => $files,
-      'form' => $form->createView(),
+      'form' => $formview,
     ));
   }
 

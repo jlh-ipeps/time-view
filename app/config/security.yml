@@ -29,13 +29,15 @@ security:
         
         # login success redirecting options (read further below)
         always_use_default_target_path: false
-        default_target_path:            "home"
-#        target_path_parameter:          _target_path
+#        default_target_path:            "home"
+        target_path_parameter:          _target_path
         use_referer:                    false
+        success_handler: user.handler.login_success_handler
         
       logout:
         path: user_security_logout
-        target: /
+        target: /en/home/random/
+        success_handler: user.handler.logout_success_handler
       remember_me:
         secret: "%secret%"
 

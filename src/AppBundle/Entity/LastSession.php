@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Session
  *
  * @ORM\Table(name="session")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MySessionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LastSessionRepository")
  */
-class MySession
+class LastSession
 {
     /**
      * @var int

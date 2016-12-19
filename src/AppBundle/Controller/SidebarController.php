@@ -3,11 +3,12 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\MySession;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class SidebarController extends Controller {
 
     public function viewAction($originalRequest) {
+        
         
         $user = $this->getUser();
         $session = $this->get('session');
@@ -18,81 +19,93 @@ class SidebarController extends Controller {
         
         $localeRepo = $em->getRepository('AppBundle:Languages');
         $locales = $localeRepo->findAll();
+        
 
-
+    /**
+     * for each null menu value
+     * set value default value
+     * then form lastsession
+     * 
+     * 
+     * for each routes
+     * update menu value
+     */    
+        
+        $mybooks = NULL;
         if ($user) {
-            $sessionRepo = $em->getRepository('AppBundle:MySession');
-            $mySession = $sessionRepo->find($user->getSession()->getId());
+            $bookRepo = $em->getRepository('AppBundle:Book');
+            $mybooks = new ArrayCollection($bookRepo->findBooksByUser($this->getUser()->getId()));
+//            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
+            
+            $sessionRepo = $em->getRepository('AppBundle:LastSession');
+            $lastSession = $sessionRepo->find($user->getSession());
+            
+            $session->set('book', $lastSession->getBook());
+            $session->set('home', $lastSession->getHome());
 
-//            $myLanguage = $mySession->getLocale()->getIso();
-//            dump($user, $mySession, $myLanguage);
-//            die();
-        } else {
-            $mySession = new MySession();
         }
-        
-//        if (!$this->getUser()) {
-//            $defaultSession = $session;
-//            $defaultSession->set('_locale', $originalRequest->getLocale());
-//            $defaultSession->set('book', NULL);
-//            $defaultSession->set('picture', NULL);
-//            $defaultSession->set('mybooks', NULL);
-//            $defaultSession->set('mysearches', NULL);
-//            $defaultSession->set('home', 'popular');
-//
-//            $session = $defaultSession;
-//        }
-        
-        
-//        if ($mySession->getLocale()) {
-//            $originalRequest->setLocale($mySession->getLocale()->getIso());
-////            dump($session, $mySession->getLocale()->getIso(), $originalRequest->getLocale());die();
-//        }
 
-
-        $book = $mySession->getBook();
-        $session->set('book', $book);
-        $home_id = $mySession->getHome();
+        if (!$session->get('home')) {
+            # set default value
+            $session->set('book', NULL);
+            $session->set('home', $homeRepo->find(1));
+        }
+            
+        
+        
+//        if ($lastSession->getLocale()) {
+//            $originalRequest->setLocale($lastSession->getLocale()->getIso());
+////            dump($session, $lastSession->getLocale()->getIso(), $originalRequest->getLocale());die();
+//        }
 
         switch ($originalRequest->get('_route')) {
             case 'book':
                 $book = $originalRequest->get('_route_params')['id'];
-                $session->set('book', $book);
-                $mySession->setBook($book);
+                # if book is mine
+                if ($this->in_mybooks($book, $mybooks)) {
+                    $session->set('book', $book);
+                }
                 break;
             case 'wich_home':
                 $home_wich = $originalRequest->get('_route_params')['wich'];
-//                $home_wich = $homeRepo->findOneByName($originalRequest->get('_route_params')['wich']);
-                $home_id = $homeRepo->findOneByName($home_wich);
-//            dump($originalRequest, $home_wich, $originalRequest->get('_route_params')['wich']);die();
-                $session->set('home', $home_id);
-                $mySession->setHome($home_id);
+                $home = $homeRepo->findOneByName($home_wich);
+/* ERROR if wich doesn't exist in db ! */
+                $session->set('home', $home);
                 break;
             case 'picture':
                 $session->set('picture', $originalRequest->get('_route_params')['id']);
                 break;
         }
-//        dump($originalRequest);die();
         
         if ($user) {
-            $em->persist($mySession);
+            $lastSession->setBook($session->get('book'));
+            $lastSession->setHome($session->get('home'));
+            $em->persist($lastSession);
             $em->flush();
         }
-
-        $mybooks = NULL;
-        $bookRepo = $em->getRepository('AppBundle:Book');
-        if ($this->getUser()) {
-            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
-        }
+//        dump($originalRequest);die();
 
         return $this->render('AppBundle:layout:sidebar.html.twig', array(
             'locales' => $locales,
             'mybooks' => $mybooks,
-            'book' => $book,
-            'wich_home' => $home_id,
             'homes' => $homes,
             'originalRequest' => $originalRequest,
             'session' => $session,
         ));
     }
+
+    # http://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array
+    function in_mybooks($book, $mybooks, $strict = false) {
+        if ($mybooks == NULL) {
+            return false;
+        }
+        foreach ($mybooks as $item) {
+            if (($strict ? $item->getId() === $book : $item->getId() == $book)) {
+                return true;
+            }
+        }
+        return false;
+    }    
+    
+    
 }

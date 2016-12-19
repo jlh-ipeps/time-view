@@ -26,7 +26,7 @@ class User extends BaseUser
     }
     
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\MySession")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\LastSession")
      * @ORM\JoinColumn(nullable=false)
      */
     private $session;
@@ -35,11 +35,11 @@ class User extends BaseUser
     /**
      * Set session
      *
-     * @param \AppBundle\Entity\MySession $session
+     * @param \AppBundle\Entity\LastSession $session
      *
      * @return User
      */
-    public function setSession(\AppBundle\Entity\MySession $session)
+    public function setSession(\AppBundle\Entity\LastSession $session)
     {
         $this->session = $session;
 
@@ -49,7 +49,7 @@ class User extends BaseUser
     /**
      * Get session
      *
-     * @return \AppBundle\Entity\MySession
+     * @return \AppBundle\Entity\LastSession
      */
     public function getSession()
     {

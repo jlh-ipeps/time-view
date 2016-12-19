@@ -13,9 +13,11 @@ class HomeController extends Controller {
     $session->set('_locale', $request->getLocale());
     
     $wich_home = $request->get('wich');
+    
+//    dump($session->all()    );
     if ($wich_home === 0) {
-//        return $this->redirectToRoute('wich_home', array('wich' => 'pupolar'));
-        return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'pupolar'], 307);
+//        return $this->redirectToRoute('wich_home', array('wich' => 'popular'));
+        return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);
     }
     
     $em = $this->getDoctrine()->getManager();
@@ -36,6 +38,7 @@ class HomeController extends Controller {
       'title' => $title,
       'tabs' => $tabs,
       'pictures' => $pictures,
+      'form' => NULL
     ));
       
   }
