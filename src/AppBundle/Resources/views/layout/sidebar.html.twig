@@ -12,11 +12,12 @@
           <h3><span class="glyphicon glyphicon-home"></span> {{ "sidebar.home"|trans }}</h3>
           <ul>
   {%for home in homes %}
-            <li class="
+            <li 
+              class="
                 {{ home == session.get('home') ? "active" : "inactive" }}
                 {{ originalRequest.pathInfo == '/'~ originalRequest.locale ~ '/home/' ~ home.name ~ '/' ? ", current" }}
-                ">
-              <a href="{{path('wich_home', {'wich':home.name})}}">{{ concat('sidebar.',home.name)|trans }}</a>
+              ">
+              <a href="{{path('wich_home', {'wich':home.name})}}" {{ home.name == 'here' ? 'id="geolocation"' : '' }}>{{ concat('sidebar.',home.name)|trans }}</a>
             </li>
    {%endfor%}
           </ul>
@@ -98,3 +99,4 @@
     </div>
     <!-- /#sidebar-wrapper -->
 {% endblock sidebar %}
+

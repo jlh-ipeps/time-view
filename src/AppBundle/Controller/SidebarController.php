@@ -20,22 +20,10 @@ class SidebarController extends Controller {
         $localeRepo = $em->getRepository('AppBundle:Languages');
         $locales = $localeRepo->findAll();
         
-
-    /**
-     * for each null menu value
-     * set value default value
-     * then form lastsession
-     * 
-     * 
-     * for each routes
-     * update menu value
-     */    
-        
         $mybooks = NULL;
         if ($user) {
             $bookRepo = $em->getRepository('AppBundle:Book');
-            $mybooks = new ArrayCollection($bookRepo->findBooksByUser($this->getUser()->getId()));
-//            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
+            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
             
             $sessionRepo = $em->getRepository('AppBundle:LastSession');
             $lastSession = $sessionRepo->find($user->getSession());
@@ -51,22 +39,21 @@ class SidebarController extends Controller {
             $session->set('home', $homeRepo->find(1));
         }
             
-        
-        
-//        if ($lastSession->getLocale()) {
-//            $originalRequest->setLocale($lastSession->getLocale()->getIso());
-////            dump($session, $lastSession->getLocale()->getIso(), $originalRequest->getLocale());die();
-//        }
-
         switch ($originalRequest->get('_route')) {
             case 'book':
                 $book = $originalRequest->get('_route_params')['id'];
                 # if book is mine
-                if ($this->in_mybooks($book, $mybooks)) {
+                if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
                     $session->set('book', $book);
                 }
                 break;
             case 'wich_home':
+                $home_wich = $originalRequest->get('_route_params')['wich'];
+                $home = $homeRepo->findOneByName($home_wich);
+/* ERROR if wich doesn't exist in db ! */
+                $session->set('home', $home);
+                break;
+            case 'home_here':
                 $home_wich = $originalRequest->get('_route_params')['wich'];
                 $home = $homeRepo->findOneByName($home_wich);
 /* ERROR if wich doesn't exist in db ! */
@@ -93,19 +80,5 @@ class SidebarController extends Controller {
             'session' => $session,
         ));
     }
-
-    # http://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array
-    function in_mybooks($book, $mybooks, $strict = false) {
-        if ($mybooks == NULL) {
-            return false;
-        }
-        foreach ($mybooks as $item) {
-            if (($strict ? $item->getId() === $book : $item->getId() == $book)) {
-                return true;
-            }
-        }
-        return false;
-    }    
-    
     
 }

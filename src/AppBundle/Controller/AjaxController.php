@@ -7,6 +7,39 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller {
+    
+    
+  public function geolocationAction(Request $request){
+      
+    $nelat = $request->get('nelat');
+    $nelng = $request->get('nelng');
+    $swlat = $request->get('swlat');
+    $swlng = $request->get('swlng');
+    
+    $newlat = rand($nelat * 1000, $swlat * 1000) / 1000;
+    $newlng = rand($nelng * 1000, $swlng * 1000) / 1000;
+      
+    try {
+
+        return new JsonResponse([
+            'success' => true,
+            'data'    => [
+                'newlat' => $newlat,
+                'newlng' => $newlng,
+                ]
+        ]);
+
+    } catch (\Exception $exception) {
+        return new JsonResponse([
+            'success' => false,
+            'code'    => $exception->getCode(),
+            'message' => $exception->getMessage(),
+        ]);
+    }
+  }
+
+      
+  
   
   public function bookAction($field,$value,$id){
     //Récupère $book

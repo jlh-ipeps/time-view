@@ -1,8 +1,10 @@
 
-
-
-
-
+ajax_geolocation:
+  path: /home/here/
+  defaults:
+    _controller: AppBundle:Ajax:geolocation
+  condition: "request.isXmlHttpRequest()"
+  
 
 # Symfony2: URLs with trailing slash and an optional parameter
 # http://stackoverflow.com/questions/10091518/symfony2-urls-with-trailing-slash-and-an-optional-parameter
@@ -11,10 +13,17 @@ home:
   defaults: 
     wich: 0
     _controller: AppBundle:Home:view
+home_here:
+  path: /home/{wich}/
+  defaults: 
+    _controller: AppBundle:Home:here
+  requirements:
+    wich: 'here'
 wich_home:
   path: /home/{wich}/
   defaults: 
     _controller: AppBundle:Home:view
+    
   
 search:
   path: /search/

@@ -65,6 +65,7 @@ class BookController extends Controller {
       'tabs' => $tabs,
       'pictures' => $files,
       'form' => $formview,
+      'map' => TRUE
     ));
   }
 
