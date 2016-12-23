@@ -18,6 +18,7 @@ $( document ).ready( function() {
         }
         
         
+        var delmarkers = [];
         var imagePath = imgBaseDir + 'Pin-location.png';
         var mapOptions = {
                 zoom: 13,
@@ -77,8 +78,8 @@ $( document ).ready( function() {
           $neLng = $bounds.getNorthEast().lng;
           $swLat = $bounds.getSouthWest().lat;        
           $swLng = $bounds.getSouthWest().lng;        
-        // https://gist.github.com/johnschimmel/5319511
-        if (localStorage.loc && window.location.href.indexOf("home/here") > -1) {
+
+          if (localStorage.loc && window.location.href.indexOf("home/here") > -1) {
 //          console.log($bounds);
         jQuery.ajax({
 //        	url : '/home/here/',
@@ -91,23 +92,24 @@ $( document ).ready( function() {
         		swlng : $swLng,
         	},
         	success : function(response){
-        		// success - for now just log it
-        		var newlat = response.data.newlat;
-        		var newlng = response.data.newlng;
-        		console.log(response);
-        		console.log(newlat);
-        		console.log(newlng);
-                
-                //define Marker
-                var testLatlng = new google.maps.LatLng(newlat, newlng);
-//                var testLatlng = new google.maps.LatLng(newlat, newlng);
-                var testmarker = new google.maps.Marker({
-                  position: testLatlng,
+              var markers = response.markers;
+              //Remove old markers from the Map
+              for (var i=0; i < delmarkers.length; i++) {
+                delmarkers[i].setMap(null);
+              }
+              delmarkers.length = 0;
+              // add mmarkers
+              for (var m in markers) {
+                var mLatlng = new google.maps.LatLng(markers[m][0], markers[m][1]);
+                var marker = new google.maps.Marker({
+                  position: mLatlng,
                   map: map,
                   icon: imagePath,
                   title: 'image title'
                 });
+                delmarkers.push(marker);
 
+              }
         	},
         	error : function(err){
         		// do error checking
@@ -121,5 +123,6 @@ $( document ).ready( function() {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
+    
 
 });

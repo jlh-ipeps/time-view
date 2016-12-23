@@ -16,17 +16,19 @@ class AjaxController extends Controller {
     $swlat = $request->get('swlat');
     $swlng = $request->get('swlng');
     
-    $newlat = rand($nelat * 1000, $swlat * 1000) / 1000;
-    $newlng = rand($nelng * 1000, $swlng * 1000) / 1000;
+    $markers = [];
+    for( $i = 0; $i<5; $i++ ) {
+        $markers[$i] = [
+            rand($nelat * 1000, $swlat * 1000) / 1000,
+            rand($nelng * 1000, $swlng * 1000) / 1000
+        ];
+    }
       
     try {
 
         return new JsonResponse([
             'success' => true,
-            'data'    => [
-                'newlat' => $newlat,
-                'newlng' => $newlng,
-                ]
+            'markers' => $markers
         ]);
 
     } catch (\Exception $exception) {
