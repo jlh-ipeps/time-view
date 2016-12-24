@@ -20,8 +20,9 @@ class SidebarController extends Controller {
         $localeRepo = $em->getRepository('AppBundle:Languages');
         $locales = $localeRepo->findAll();
         
-        $mybooks = NULL;
+        $mybooks = [];
         if ($user) {
+            
             $bookRepo = $em->getRepository('AppBundle:Book');
             $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
             
@@ -43,9 +44,7 @@ class SidebarController extends Controller {
             case 'book':
                 $book = $originalRequest->get('_route_params')['id'];
                 # if book is mine
-                if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
-                    $session->set('book', $book);
-                }
+                $session->set('book', $this->isMyBook($book, $mybooks, $session));
                 break;
             case 'wich_home':
                 $home_wich = $originalRequest->get('_route_params')['wich'];
@@ -79,6 +78,14 @@ class SidebarController extends Controller {
             'originalRequest' => $originalRequest,
             'session' => $session,
         ));
+    }
+
+    protected function isMyBook($book, $mybooks, $session) {
+        if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
+            return $book;
+        } else {
+            return $session->get('book');
+        }
     }
     
 }

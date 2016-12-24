@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/tabs/map.html.twig</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/public/js/map.js</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/config/routing.yml</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/SidebarController.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/layout/layout.html.twig</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/AjaxController.php</file>
-            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/layout/sidebar.html.twig</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/layout/content.html.twig</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/UserBundle/Controller/SecurityController.php</file>
         </group>
     </open-files>
 </project-private>

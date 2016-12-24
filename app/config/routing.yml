@@ -7,7 +7,7 @@
 #  defaults: 
 #    _controller: AppBundle:Test:view
 #
-time_view:
+app:
   resource: "@AppBundle/Resources/config/routing.yml"
   prefix:   /{_locale}
   requirements:
@@ -26,11 +26,11 @@ fos_user:
   requirements:
     _locale: en|fr|de|nl
 
-fos_user_security:
-  resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-  prefix:   /{_locale}
-  requirements:
-    _locale: en|fr|de|nl
+#fos_user_security:
+#  resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+#  prefix:   /{_locale}
+#  requirements:
+#    _locale: en|fr|de|nl
 
 
 catchAll:

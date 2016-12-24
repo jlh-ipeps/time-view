@@ -8,22 +8,17 @@ use FOS\UserBundle\Controller\SecurityController as BaseController;
 class SecurityController extends BaseController
 {
     public function loginAction(Request $request) {
-        
         $response = parent::loginAction($request);
         return $response;
     }
-        
+    
     protected function renderLogin(array $data) {
         
         $data['tabs'] = ['login', 'talk'];
         $data['item'] = 'user';
         $data['title'] = 'user';
-        $data['book'] = NULL;
 
-//        dump($data);die();
-//        return $this->render('FOSUserBundle:Security:login.html.twig', $data);
-            return $this->render('AppBundle:layout:content.html.twig', $data);
-
+        return $this->render('AppBundle:layout:content.html.twig', $data);
     }
 
     public function checkAction()

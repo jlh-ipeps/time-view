@@ -20,9 +20,6 @@ class ProfileController extends BaseController
         }
 
         return $this->render('AppBundle:layout:content.html.twig', array(
-//        return $this->render('FOSUserBundle:Profile:show.html.twig', array(
-            'mybooks' => $mybooks,
-            'book' => 1, // session variable
             'item' => 'user',
             'title' => $user->getUsername(),
             'tabs' => $tabs,
