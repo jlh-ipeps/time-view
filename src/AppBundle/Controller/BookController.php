@@ -33,7 +33,10 @@ class BookController extends Controller {
     
     $files = $em->getRepository('AppBundle:File')->findImagesByBook($id);
     
-//    dump($files);die();
+                
+    $session->set('book', $this->isMyBook($id, $mybooks, $session));
+    $session->set('lastURI', $request->getRequestURI());
+
 
     if ($book->getUser() == $this->getUser()) {
         $file = new File();
@@ -80,5 +83,13 @@ class BookController extends Controller {
     
     return $this->redirectToRoute('book', array('id' => $book->getId()));
   }
- 
+
+    protected function isMyBook($book, $mybooks, $session) {
+        if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
+            return $book;
+        } else {
+            return $session->get('book');
+        }
+    }
+
 }

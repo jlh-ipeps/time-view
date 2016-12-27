@@ -28,7 +28,7 @@ class LastSession
     private $locale;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Homes", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Homes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $home;

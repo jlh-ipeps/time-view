@@ -31,6 +31,17 @@ class HomeController extends Controller {
 
     $title = 'tranlate';
     
+    
+    $homeRepo = $em->getRepository('AppBundle:Homes');
+    $home_wich = $request->get('_route_params')['wich'];
+    $home = $homeRepo->findOneByName($home_wich);
+    // ERROR if wich doesn't exist in db !
+    if ($home) {
+        $session->set('home', $home);
+    } 
+    $session->set('lastURI', $request->getRequestURI());
+
+    
     return $this->render('AppBundle:layout:content.html.twig', array(
       'mybooks' => 1,
       'book' => 1,

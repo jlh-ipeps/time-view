@@ -20,66 +20,25 @@ class SidebarController extends Controller {
         $localeRepo = $em->getRepository('AppBundle:Languages');
         $locales = $localeRepo->findAll();
         
+        # set default value
         $mybooks = [];
-        if ($user) {
-            
-            $bookRepo = $em->getRepository('AppBundle:Book');
-            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
-            
-//            $sessionRepo = $em->getRepository('AppBundle:LastSession');
-//            $lastSession = $sessionRepo->find($user->getSession());
-//            
-//            $session->set('book', $lastSession->getBook());
-//            $session->set('home', $lastSession->getHome());
-
-//        dump($session);die();
-        }
-
         if (!$session->get('home')) {
-            # set default value
             $session->set('book', NULL);
             $session->set('home', $homeRepo->find(1));
         }
             
-        switch ($originalRequest->get('_route')) {
-            case 'book':
-                $book = $originalRequest->get('_route_params')['id'];
-                # if book is mine
-                $session->set('book', $this->isMyBook($book, $mybooks, $session));
-//                dump($session->get('book'));die();
-                $session->set('lastURI', $originalRequest->getRequestURI());
-//        dump($originalRequest);die();
-//        dump($originalRequest->getRequestURI());die();
-                break;
-            case 'wich_home':
-                $home_wich = $originalRequest->get('_route_params')['wich'];
-                $home = $homeRepo->findOneByName($home_wich);
-/* ERROR if wich doesn't exist in db ! */
-                $session->set('home', $home);
-                $session->set('lastURI', $originalRequest->getRequestURI());
-                break;
-            case 'home_here':
-                $home_wich = $originalRequest->get('_route_params')['wich'];
-                $home = $homeRepo->findOneByName($home_wich);
-/* ERROR if wich doesn't exist in db ! */
-                $session->set('home', $home);
-                $session->set('lastURI', $originalRequest->getRequestURI());
-                break;
-            case 'picture':
-                $session->set('picture', $originalRequest->get('_route_params')['id']);
-                $session->set('lastURI', $originalRequest->getRequestURI());
-                break;
-        }
-        
         if ($user) {
+            $bookRepo = $em->getRepository('AppBundle:Book');
+            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
+
+            $homesRepo = $em->getRepository('AppBundle:Homes');
             $sessionRepo = $em->getRepository('AppBundle:LastSession');
+
             $lastSession = $sessionRepo->find($user->getSession());
-            $lastSession->setHome($session->get('home'));
+            $lastSession->setHome($homesRepo->find($session->get('home')->getId()));
+//            $lastSession->setHome($session->get('home'));
             $lastSession->setBook($session->get('book'));
             $lastSession->setUri($session->get('lastURI'));
-
-        dump($session->get('home'));
-//        die();
 
             $em->persist($lastSession);
             $em->flush();
@@ -94,12 +53,12 @@ class SidebarController extends Controller {
         ));
     }
 
-    protected function isMyBook($book, $mybooks, $session) {
-        if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
-            return $book;
-        } else {
-            return $session->get('book');
-        }
-    }
+//    protected function isMyBook($book, $mybooks, $session) {
+//        if (in_array($book, array_map(function($b){return $b->getId();},$mybooks))) {
+//            return $book;
+//        } else {
+//            return $session->get('book');
+//        }
+//    }
     
 }

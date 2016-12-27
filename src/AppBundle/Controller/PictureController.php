@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class PictureController extends Controller
 {
-  public function viewAction($id) {
+  public function viewAction($id, Request $request) {
+      
     $em = $this->getDoctrine()->getManager();
     $file = $em->getRepository('AppBundle:File')->find($id);
 // to view sidebar 
@@ -16,6 +18,10 @@ class PictureController extends Controller
     $item = "picture";
     $tabs = ['image','map','albums','talk'];
     
+    $session = $this->get('session');
+    $session->set('_locale', $request->getLocale());
+    $session->set('picture', $id);
+    $session->set('lastURI', $request->getRequestURI());
     
       
     return $this->render('AppBundle:layout:content.html.twig', array(
