@@ -1,6 +1,6 @@
 
 ajax_geolocation:
-  path: /home/here/
+  path: /home/{wich}/
   defaults:
     _controller: AppBundle:Ajax:geolocation
   condition: "request.isXmlHttpRequest()"

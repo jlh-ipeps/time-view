@@ -2,6 +2,9 @@
 
 namespace UserBundle\Handler;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -11,18 +14,21 @@ use Symfony\Component\Routing\Router;
 
 class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-	
+    protected $tokenstorage;
+    protected $em;
+	protected $session;
 	protected $router;
 	protected $userManager;
 	
-	public function __construct(Router $router, UserManagerInterface $userManager)
-	{
+	public function __construct(Router $router, UserManagerInterface $userManager, Session $session, EntityManager $em) {
+        
+		$this->session = $session;
 		$this->router = $router;
 		$this->userManager = $userManager;
+        $this->em = $em;
 	}
 	
-	public function onAuthenticationSuccess(Request $request, TokenInterface $token)
-	{
+	public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
 		
 //		if ($this->security->isGranted('ROLE_SUPER_ADMIN'))
 //		{
@@ -40,14 +46,23 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 //			$response = new RedirectResponse($referer_url);
 //		}
 
+        $session = $this->session;
+        $em = $this->em;
         $user = $token->getUser();
-        $home = $user->getSession()->getHome();
-//        dump($request, $user);
-        
-			$referer_url = $request->headers->get('referer');
-						
-			$response = new RedirectResponse($referer_url);
 
+        $sessionRepo = $em->getRepository('AppBundle:LastSession');
+        $lastSession = $sessionRepo->find($user->getSession());
+
+        $session->set('book', $lastSession->getBook());
+        $session->set('home', $lastSession->getHome());
+
+        if ($session->get('lastURI')) {
+            $url = $session->get('lastURI');
+        } else {
+			$url = $request->headers->get('referer');
+        }
+        
+    	$response = new RedirectResponse($url);
 		return $response;
 	}
 	

@@ -2,6 +2,7 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
     user.handler.login_success_handler.class: UserBundle\Handler\LoginSuccessHandler
+    user.handler.logout_handler.class: UserBundle\Handler\LogoutHandler
     user.handler.logout_success_handler.class: UserBundle\Handler\LogoutSuccessHandler
     account.security_listener.class: UserBundle\Listener\SecurityListener
     
@@ -15,9 +16,14 @@ services:
 
     user.handler.login_success_handler:
         class:  %user.handler.login_success_handler.class%
-        arguments:  ['@router', '@fos_user.user_manager']
+        arguments:  ['@router', '@fos_user.user_manager', '@session', '@doctrine.orm.entity_manager']
         tags:
             - { name: 'monolog.logger', channel: 'security' } 
+    user.handler.logout_handler:
+        class:  %user.handler.logout_handler.class%
+        arguments:  ['@router', '@session', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
     user.handler.logout_success_handler:
         class:  %user.handler.logout_success_handler.class%
         arguments:  ['@router']

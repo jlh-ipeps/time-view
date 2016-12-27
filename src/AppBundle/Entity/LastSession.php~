@@ -28,7 +28,7 @@ class LastSession
     private $locale;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Homes", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Homes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $home;
@@ -128,29 +128,5 @@ class LastSession
     public function getHome()
     {
         return $this->home;
-    }
-
-    /**
-     * Set uri
-     *
-     * @param string $uri
-     *
-     * @return LastSession
-     */
-    public function setUri($uri)
-    {
-        $this->uri = $uri;
-
-        return $this;
-    }
-
-    /**
-     * Get uri
-     *
-     * @return string
-     */
-    public function getUri()
-    {
-        return $this->uri;
     }
 }

@@ -26,12 +26,13 @@ class SidebarController extends Controller {
             $bookRepo = $em->getRepository('AppBundle:Book');
             $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
             
-            $sessionRepo = $em->getRepository('AppBundle:LastSession');
-            $lastSession = $sessionRepo->find($user->getSession());
-            
-            $session->set('book', $lastSession->getBook());
-            $session->set('home', $lastSession->getHome());
+//            $sessionRepo = $em->getRepository('AppBundle:LastSession');
+//            $lastSession = $sessionRepo->find($user->getSession());
+//            
+//            $session->set('book', $lastSession->getBook());
+//            $session->set('home', $lastSession->getHome());
 
+//        dump($session);die();
         }
 
         if (!$session->get('home')) {
@@ -45,31 +46,44 @@ class SidebarController extends Controller {
                 $book = $originalRequest->get('_route_params')['id'];
                 # if book is mine
                 $session->set('book', $this->isMyBook($book, $mybooks, $session));
+//                dump($session->get('book'));die();
+                $session->set('lastURI', $originalRequest->getRequestURI());
+//        dump($originalRequest);die();
+//        dump($originalRequest->getRequestURI());die();
                 break;
             case 'wich_home':
                 $home_wich = $originalRequest->get('_route_params')['wich'];
                 $home = $homeRepo->findOneByName($home_wich);
 /* ERROR if wich doesn't exist in db ! */
                 $session->set('home', $home);
+                $session->set('lastURI', $originalRequest->getRequestURI());
                 break;
             case 'home_here':
                 $home_wich = $originalRequest->get('_route_params')['wich'];
                 $home = $homeRepo->findOneByName($home_wich);
 /* ERROR if wich doesn't exist in db ! */
                 $session->set('home', $home);
+                $session->set('lastURI', $originalRequest->getRequestURI());
                 break;
             case 'picture':
                 $session->set('picture', $originalRequest->get('_route_params')['id']);
+                $session->set('lastURI', $originalRequest->getRequestURI());
                 break;
         }
         
         if ($user) {
-            $lastSession->setBook($session->get('book'));
+            $sessionRepo = $em->getRepository('AppBundle:LastSession');
+            $lastSession = $sessionRepo->find($user->getSession());
             $lastSession->setHome($session->get('home'));
+            $lastSession->setBook($session->get('book'));
+            $lastSession->setUri($session->get('lastURI'));
+
+        dump($session->get('home'));
+//        die();
+
             $em->persist($lastSession);
             $em->flush();
         }
-//        dump($originalRequest);die();
 
         return $this->render('AppBundle:layout:sidebar.html.twig', array(
             'locales' => $locales,
