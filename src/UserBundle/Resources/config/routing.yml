@@ -1,0 +1,27 @@
+## YAML Template.
+---
+
+register:
+  path: /register/
+  defaults: 
+    _controller: FOSUserBundle:Registration:register
+
+user_security_profile_show:
+  path: /profile/
+  defaults: 
+    _controller: FOSUserBundle:Profile:show
+
+user_security_login:
+  path: /login/
+  defaults: 
+    _controller: FOSUserBundle:Security:login
+
+user_security_check:
+  path: /login_check
+  defaults: 
+    _controller: FOSUserBundle:Security:check
+
+user_security_logout:
+  path: /logout
+  defaults: 
+    _controller: FOSUserBundle:Security:logout

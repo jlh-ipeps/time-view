@@ -1,0 +1,44 @@
+{# src/tvBundle/Resources/incl/js.html.twig #}
+
+{% block js %}
+
+    <!-- DEBUG -->
+    <script src="{{ asset('bundles/app/js/debug.js') }}"></script>
+
+    <!-- jQuery -->
+    <script src="{{ asset('vendor/jquery/jquery.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+{#
+    <script src="{{ asset('vendor/dropzone/dropzone.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/mydropzone.js') }}"></script>
+#}
+
+    <script src="{{ asset('bundles/app/js/comments.js') }}"></script>
+
+    <!-- http://vitalets.github.io/x-editable/ -->
+    <script src="{{ asset('vendor/bootstrap-editable/bootstrap-editable.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/app/js/custom.js') }}"></script>
+    
+    <script src="{{ asset('bundles/app/js/map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0RXyR29OdBEeBBWwlz2TnT0qvnsgga3k"></script>
+    <!-- hens.bes-webdeveloper-seraing.be 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrqh6qTEzamxWl6Ljp-aMb9-K9HFE-GbQ&callback=myMap"></script>
+    -->
+    <script src="{{ asset('bundles/app/js/geolocation.js') }}"></script>
+    
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#brand").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    
+
+
+</script>
+
+{% endblock js %}

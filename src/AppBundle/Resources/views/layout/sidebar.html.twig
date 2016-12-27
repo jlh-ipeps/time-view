@@ -1,0 +1,102 @@
+{# src/AppBundle/Resources/incl/sidebar.html.twig #}
+
+{% block sidebar %}
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+
+      <ul id="accordion" class="sidebar-nav">
+
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
+          <h3><span class="glyphicon glyphicon-home"></span> {{ "sidebar.home"|trans }}</h3>
+          <ul>
+  {%for home in homes %}
+            <li 
+              class="
+                {{ home == session.get('home') ? "active" : "inactive" }}
+                {{ originalRequest.pathInfo == '/'~ originalRequest.locale ~ '/home/' ~ home.name ~ '/' ? ", current" }}
+              ">
+              <a href="{{path('wich_home', {'wich':home.name})}}" {{ home.name == 'here' ? 'id="geolocation"' : '' }}>{{ concat('sidebar.',home.name)|trans }}</a>
+            </li>
+   {%endfor%}
+          </ul>
+        <li>
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
+          <h3><span class="glyphicon glyphicon-search"></span> {{ "sidebar.mysearches"|trans }}</h3>
+          <ul>
+            <li class="inactive">
+              <a href="#">Recherche 1</a>
+              </li>
+              <li class="inactive">
+                <a href="#">Recherche 2</a>
+              </li>
+              <li class="active">
+                <a href="{{ path('search') }}">
+                  Liège, Gare
+                </a>
+              </li>
+              <li class="inactive">
+                <a href="#">Recherche 4</a>
+              </li>
+            </ul>
+          </li>
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
+          <h3><span class="glyphicon glyphicon-book"></span> {{ "sidebar.mybooks"|trans }}</h3>
+          <ul>
+  {% for mybook in mybooks %}
+            <li class="
+                {{ mybook.id == session.get('book') ? "active" : "inactive" }}
+                {{ originalRequest.pathInfo == '/'~ originalRequest.locale ~ '/book/' ~ mybook.id ~ '/' ? ", current" }}
+                ">
+              <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
+            </li>
+  {% endfor %}
+  <li class="{{ session.get('book') == null ? "active" : "inactive" }}">
+              <a href="{{ path('bookNew') }}">
+                + {{ "sidebar.newbook"|trans }}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
+          <h3><span class="glyphicon glyphicon-user"></span> {{ "sidebar.myaccount"|trans }}</h3>
+          <ul>
+            <li class="active">
+              <a href="{{path('user_security_profile_show')}}">Mon profile</a>
+            </li>
+            <li class="active">
+              <a href="{{path('user_security_login')}}">Login</a>
+            </li>
+            <li class="active">
+              <a href="{{path('user_security_logout')}}">Logout</a>
+            </li>
+            <li class="active">
+              <a id="registrationLink" href="{{path('register')}}">Register</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <input type="checkbox" checked="checked">
+          <i></i>
+          <h3><span class="glyphicon glyphicon-flag"></span> {{ "sidebar.language"|trans }}</h3>
+          <ul>
+  {%for locale in locales %}
+            <li class="{{ originalRequest.locale == locale.iso ? "active" : "inactive" }}">
+              <a href="{{path(originalRequest.get('_route'),originalRequest.get('_route_params')|merge({_locale: locale.iso}))}}">{{locale.name}}</a>
+            </li>
+  {%endfor%}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+{% endblock sidebar %}
+

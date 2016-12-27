@@ -1,0 +1,61 @@
+{# src/tvBundle/Resources/content/gallery.html.twig #}
+
+{% block gallery %}
+
+  <h3>{{ "tab.gallery"|trans }}</h3>
+  <div class="tab-content">
+    <div class="row gallery">
+      
+      {% if form %}
+        <div class="col-xs-6 col-md-3">
+          <span class="thumbnail">
+            {{ form(form) }}
+          </span>
+        </div>
+{#
+        <div class="col-xs-6 col-md-3">
+          <span class="thumbnail">
+            <form name="appbundle_image" method="post" class="dropzone" enctype="multipart/form-data">
+              <div id="appbundle_image" class="dropzone">
+                <div>
+<!--                  <label for="appbundle_image_file" class="required">
+                    File
+                  </label>-->
+                  {{ form_widget(form.file) }}
+<!--                  <input type="file" id="appbundle_image_file" name="appbundle_image[file]" required="required">-->
+                </div>
+                <div>
+                  {{ form_widget(form.send) }}
+<!--                  <button type="submit" id="appbundle_image_send" name="appbundle_image[send]">-->
+                    Send
+                  </button>
+                </div>
+                  {{ form_widget(form._token) }}
+<!--                <input type="hidden" id="appbundle_image__token" name="appbundle_image[_token]" value="1Kusq5UhZtXTq8sKn21EyDWbnpWnN3NoB95vocbloOY">-->
+              </div>
+            </form>
+          </span>
+        </div>
+#}
+      {% endif %}
+{#      
+      {% for picture in pictures %}  
+        <div class="col-xs-6 col-md-3">
+          <a href="{{ path('picture', {'picture': picture}) }}" class="thumbnail">
+            <img src="{{ base_url }}img/{{ picture }}.jpg" alt="...">
+          </a>
+        </div>
+      {% endfor %}
+#}
+      {% for picture in pictures %}  
+        <div class="col-xs-6 col-md-3">
+          <a href="{{ path('picture', {'id': picture.id}) }}" class="thumbnail">
+            <img src="{{ base_url }}uploads/img/{{ picture.id }}.jpeg" alt="...">
+          </a>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock gallery %}

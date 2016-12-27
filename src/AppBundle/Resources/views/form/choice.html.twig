@@ -1,0 +1,16 @@
+{# empty Twig template #}
+{% spaceless %}
+          <input type="checkbox" checked="checked">
+          <i></i>
+          {{ form_label(form) }}
+{% block choice_widget_expanded %}
+  <ul>
+{% for child in form %}
+            <li class="radio inline">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+{% endfor %}
+  </ul>
+{% endblock choice_widget_expanded %}
+{% endspaceless %}

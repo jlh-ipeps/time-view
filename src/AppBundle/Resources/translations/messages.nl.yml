@@ -1,0 +1,34 @@
+# src/AppBundle/Resources/translations/messages.en.yml
+
+title:
+  home: Welkom
+  user: Gebruiker
+  search: Zoeken
+  book: Boek
+  account: Rekening
+  picture: beeld
+
+sidebar:
+  home: Welkom
+  popular: Meest bekeken
+  new : Laast geupload
+  here : Dicht bij mij
+  random: Toevallig
+  mysearches: Mijn zoeken
+  mybooks: Mijn boeken
+  myaccount: Mijn rekening
+  newbook: Nieuw boek
+  language: Taal
+
+tab:
+  books: Boeken
+  gallery: galerij
+  map: Kaart
+  image: beeld
+  search: Zoek
+  talk: Praten
+  view: Uitzicht
+
+file:
+  file: File
+  submit: Stuur
