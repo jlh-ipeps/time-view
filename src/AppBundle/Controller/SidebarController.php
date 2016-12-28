@@ -14,8 +14,8 @@ class SidebarController extends Controller {
         $session = $this->get('session');
         $em = $this->getDoctrine()->getManager();
         
-        $homeRepo = $em->getRepository('AppBundle:Homes');
-        $homes = $homeRepo->findAll();
+        $homesRepo = $em->getRepository('AppBundle:Homes');
+        $homes = $homesRepo->findAll();
         
         $localeRepo = $em->getRepository('AppBundle:Languages');
         $locales = $localeRepo->findAll();
@@ -24,14 +24,13 @@ class SidebarController extends Controller {
         $mybooks = [];
         if (!$session->get('home')) {
             $session->set('book', NULL);
-            $session->set('home', $homeRepo->find(1));
+            $session->set('home', $homesRepo->find(1));
         }
             
         if ($user) {
             $bookRepo = $em->getRepository('AppBundle:Book');
             $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
 
-            $homesRepo = $em->getRepository('AppBundle:Homes');
             $sessionRepo = $em->getRepository('AppBundle:LastSession');
 
             $lastSession = $sessionRepo->find($user->getSession());

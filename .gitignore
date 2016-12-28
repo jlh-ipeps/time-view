@@ -16,3 +16,4 @@
 /web/bundles/
 *~
 /web/uploads/
+/web/phpinfo.php

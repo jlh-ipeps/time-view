@@ -37,7 +37,6 @@ security:
       logout:
         path: user_security_logout
 #        target: /en/home/random/
-        handlers: [user.handler.logout_handler]
         success_handler: user.handler.logout_success_handler
       remember_me:
         secret: "%secret%"
