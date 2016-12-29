@@ -17,3 +17,7 @@
 *~
 /web/uploads/
 /web/phpinfo.php
+/web/upload/
+/web/upload/image/*.*
+/web/upload/thumbnail/*.*
+!web/upload/thumbnail/.gitkeep

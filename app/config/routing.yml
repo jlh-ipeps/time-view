@@ -1,5 +1,13 @@
 
 
+country:
+  path: /country/
+  defaults:
+    _controller: AppBundle:Country:createProcess
+
+
+
+
 #Test:
 #  path:     /{req}
 #  requirements:

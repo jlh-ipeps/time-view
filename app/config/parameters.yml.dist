@@ -20,3 +20,14 @@ parameters:
 
     languages: "(de|en|fr|nl)"
     db.table_prefix: ""
+    image_upload:
+        image_upload_dir: /upload/image/
+        thumbnail_upload_dir: /upload/thumbnail/
+        valid_extensions:
+            - jpg
+            - jpeg
+            - gif
+            - png
+        thumbnail_defaults:
+            height: 320
+            width: 320

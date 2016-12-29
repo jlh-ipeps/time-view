@@ -43,18 +43,6 @@ class BookController extends Controller {
         $form = $this->createForm(ImageType::class, $file);
         $formview = $form->createView();
         if ($request->isMethod('POST')) {
-            $picture = new Picture();
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $file->addPicture($picture);
-                $picture->setBook($book);
-                $picture->setFile($file);
-                $em->persist($picture);
-                $em->persist($file);
-                $em->flush();
-                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                return $this->redirectToRoute('book', array('id' => 1));
-            }
         }
     } else {
         $formview = NULL;
@@ -90,6 +78,22 @@ class BookController extends Controller {
         } else {
             return $session->get('book');
         }
+    }
+    
+    protected function upload($request, $form) {
+        $picture = new Picture();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $file->addPicture($picture);
+            $picture->setBook($book);
+            $picture->setFile($file);
+            $em->persist($picture);
+            $em->persist($file);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            return $this->redirectToRoute('picture', array('id' => $picture->getFile()->getId()));
+        }
+
     }
 
 }
