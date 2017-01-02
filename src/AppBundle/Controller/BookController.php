@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BookController extends Controller {
 
-  public function viewAction($id, Request $request) {
+  public function viewAction($book_id, Request $request) {
 
     $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
     
     $em = $this->getDoctrine()->getManager();
     $bookRepo = $em->getRepository('AppBundle:Book');
-    $book = $bookRepo->find($id);
+    $book = $bookRepo->find($book_id);
     if ($this->getUser() == NULL) {
         $mybooks = NULL;
     } else {
@@ -28,13 +28,11 @@ class BookController extends Controller {
 
     $item = "book";
     $tabs = ['gallery','map', 'talk'];
-
-    $title = $book->getTitle();
     
-    $files = $em->getRepository('AppBundle:File')->findImagesByBook($id);
+    $pictures = $em->getRepository('AppBundle:File')->findImagesByBook($book_id);
     
                 
-    $session->set('book', $this->isMyBook($id, $mybooks, $session));
+    $session->set('book', $this->isMyBook($book_id, $mybooks, $session));
     $session->set('lastURI', $request->getRequestURI());
 
 
@@ -53,7 +51,7 @@ class BookController extends Controller {
                 $em->persist($file);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                return $this->redirectToRoute('picture', array('id' => $picture->getFile()->getId()));
+                return $this->redirectToRoute('picture', array('book_id' => $book_id, 'file_id' => $picture->getFile()->getId()));
             }
         }
     } else {
@@ -61,14 +59,14 @@ class BookController extends Controller {
     }
     
     return $this->render('AppBundle:layout:content.html.twig', array(
-      'mybooks' => $mybooks,
-      'book' => $id,
-      'item' => $item,
-      'title' => $title,
-      'tabs' => $tabs,
-      'pictures' => $files,
-      'form' => $formview,
-      'map' => TRUE
+        // content
+        'item' => $item,
+        'title' => $book->getTitle(),
+        'tabs' => $tabs,
+        // picture
+        'book_id' => $book_id,
+        'pictures' => $pictures,
+        'form' => $formview,
     ));
   }
 

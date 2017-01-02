@@ -31,6 +31,18 @@ class Picture {
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false) 
      */
     private $file;
+    
+    /**
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    
+    /**
+     * @ORM\Column(name="info", type="text", nullable=true)
+     */
+    private $info;
+    
 
 
     /**
@@ -79,5 +91,53 @@ class Picture {
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Picture
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     *
+     * @return Picture
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
     }
 }

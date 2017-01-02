@@ -1,4 +1,12 @@
 {# src/tvBundle/Resources/content/content.html.twig #}
+
+{#
+item : string (glyphicon)
+title : string
+tabs : array (layouts)
+#}
+
+
 {% extends "AppBundle:layout:layout.html.twig" %}
 
 {% block title %}{{ parent() }} - {{ ('title.' ~ item)|trans }}{% endblock %}

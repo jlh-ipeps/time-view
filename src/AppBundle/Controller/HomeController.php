@@ -43,14 +43,15 @@ class HomeController extends Controller {
 
     
     return $this->render('AppBundle:layout:content.html.twig', array(
-      'mybooks' => 1,
-      'book' => 1,
-      'item' => $item,
-      'title' => $title,
-      'tabs' => $tabs,
-      'pictures' => $pictures,
-      'form' => NULL,
-      'map' => TRUE
+        // content
+        'item' => $item,
+        'title' => $title,
+        'tabs' => $tabs,
+        // home
+        'pictures' => $pictures,
+        'form' => NULL,
+        
+        'book_id' => 1,
     ));
       
   }
@@ -81,14 +82,15 @@ class HomeController extends Controller {
 
     
     return $this->render('AppBundle:layout:content.html.twig', array(
-      'mybooks' => 1,
-      'book' => 1,
-      'item' => $item,
-      'title' => $title,
-      'tabs' => $tabs,
-      'pictures' => $pictures,
-      'form' => NULL,
-      'map' => TRUE
+        // content
+        'item' => $item,
+        'title' => $title,
+        'tabs' => $tabs,
+        // home
+        'pictures' => $pictures,
+        'form' => NULL,
+        
+        'book_id' => 1,
     ));
       
   }

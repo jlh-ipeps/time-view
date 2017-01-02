@@ -43,7 +43,7 @@ search:
 #    _format: json|xml|html
   
 book:
-  path: /book/{id}/
+  path: /book/{book_id}/
   defaults: 
     _controller: AppBundle:Book:view
   
@@ -53,6 +53,6 @@ bookNew:
     _controller: AppBundle:Book:new
   
 picture:
-  path: /picture/{id}/
+  path: /picture/{book_id}-{file_id}/
   defaults: 
     _controller: AppBundle:Picture:view

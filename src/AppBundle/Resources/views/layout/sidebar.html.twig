@@ -53,7 +53,7 @@
                 {{ mybook.id == session.get('book') ? "active" : "inactive" }}
                 {{ originalRequest.pathInfo == '/'~ originalRequest.locale ~ '/book/' ~ mybook.id ~ '/' ? ", current" }}
                 ">
-              <a href="{{ path('book', { 'id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
+              <a href="{{ path('book', { 'book_id':mybook.id }) }}" data-book="{{mybook.id}}">{{ mybook.title }}</a>
             </li>
   {% endfor %}
   <li class="{{ session.get('book') == null ? "active" : "inactive" }}">

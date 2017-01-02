@@ -1,0 +1,20 @@
+{# src/tvBundle/Resources/content/image.html.twig #}
+
+{#
+picture : entity
+#}
+
+{% block picture %}
+
+  <h3>{{ "tab.image"|trans }}</h3>
+  <div class="tab-content">
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="{{ base_url }}uploads/img/{{ picture.file.id }}.jpeg" class="item">
+          <img src="{{ base_url }}uploads/img/{{ picture.file.id }}.jpeg" alt="...">
+        </a>
+      </div>
+    </div>
+  </div>
+
+{% endblock picture %}

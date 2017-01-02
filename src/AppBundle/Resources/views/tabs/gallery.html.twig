@@ -1,5 +1,11 @@
 {# src/tvBundle/Resources/content/gallery.html.twig #}
 
+{#
+book_id : int !! to change for home !!!
+pictures : collection
+form : imageType view or NULL
+#}
+
 {% block gallery %}
 
   <h3>{{ "tab.gallery"|trans }}</h3>
@@ -49,7 +55,7 @@
 #}
       {% for picture in pictures %}  
         <div class="col-xs-6 col-md-3">
-          <a href="{{ path('picture', {'id': picture.id}) }}" class="thumbnail">
+          <a href="{{ path('picture', {'book_id': book_id, 'file_id': picture.id}) }}" class="thumbnail">
             <img src="{{ ('/uploads/img/' ~ picture.id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
           </a>
         </div>

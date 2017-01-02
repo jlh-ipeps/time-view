@@ -7,30 +7,35 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PictureController extends Controller
 {
-  public function viewAction($id, Request $request) {
+  public function viewAction($book_id, $file_id, Request $request) {
       
     $em = $this->getDoctrine()->getManager();
-    $file = $em->getRepository('AppBundle:File')->find($id);
+    
+    $picture = $em->getRepository('AppBundle:Picture')->find(array("book" => $book_id, "file" => $file_id));
+    
+    $book = $em->getRepository('AppBundle:Book')->find($book_id);
+    $file = $em->getRepository('AppBundle:File')->find($file_id);
 // to view sidebar 
     $mybooks = $em->getRepository('AppBundle:Book')->findAll();
 
+    
 //    dump($image);die();
     $item = "picture";
-    $tabs = ['image','map','albums','talk'];
+    $tabs = ['picture','map','books','talk'];
     
     $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
-    $session->set('picture', $id);
+    $session->set('picture', $file_id);
     $session->set('lastURI', $request->getRequestURI());
     
       
     return $this->render('AppBundle:layout:content.html.twig', array(
-      'mybooks' => $mybooks,
-      'book' => 1, // user variable
-      'item' => $item,
-      'title' => $file->getAlt(),
-      'tabs' => $tabs,
-      'picture' => $file->getId()
+        // content
+        'item' => $item,
+        'title' => $picture->getTitle(),
+        'tabs' => $tabs,
+        // picture
+        'picture' => $picture,
     ));
   }
 }
