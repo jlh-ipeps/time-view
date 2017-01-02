@@ -42,17 +42,10 @@ search:
 #    _controller: AppBundle:Ajax:ajax
 #    _format: json|xml|html
   
-upload:
-  path: /book/{id}/
-  defaults: 
-    _controller: AppBundle:Upload:process
-  methods:  [POST]
-
 book:
   path: /book/{id}/
   defaults: 
     _controller: AppBundle:Book:view
-  methods:  [GET]
   
 bookNew:
   path: /book/

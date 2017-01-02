@@ -75,3 +75,20 @@ fos_user:
   db_driver: orm
   firewall_name: main
   user_class: AppBundle\Entity\User
+
+liip_imagine:
+    resolvers:
+        default:
+            # use the default web path
+            web_path:
+                web_root: "%kernel.root_dir%/../web"
+                cache_prefix: "."
+    filter_sets:
+        # use the default cache configuration
+        cache: ~
+        thumb:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [320, 320]
+                    mode: inset

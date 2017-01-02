@@ -12,10 +12,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    appbundle.service.image_upload:
-        class: AppBundle\Service\ImageUploadService
-        arguments: [%kernel.root_dir%, %image_upload%]
-        
     user.handler.login_success_handler:
         class:  %user.handler.login_success_handler.class%
         arguments:  ['@router', '@fos_user.user_manager', '@session', '@doctrine.orm.entity_manager']

@@ -95,12 +95,22 @@ class File {
       }
 
       // On déplace le fichier envoyé dans le répertoire de notre choix
-  //    dump($this->file);
-  //    die();
+//      dump($this->file);
+//      die();
       $this->file->move(
         $this->getUploadRootDir(), // Le répertoire de destination
         $this->id.'.'.$this->ext   // Le nom du fichier à créer, ici « id.extension »
       );
+//      if (file_exists($this->getUploadRootDir() . '/' . $this->id.'.'.$this->ext) {
+//dump($this->getUploadRootDir() . '/' . $this->id.'.'.$this->ext, 'test');die();
+////          $this->createThumb(
+////            $this->getUploadRootDir() . $this->id.'.'.$this->ext,
+////            $this->getThumbDir() . $this->id.'.'.$this->ext
+////        );
+////
+//      }
+
+      
     }
 
     /**
@@ -125,6 +135,10 @@ class File {
     public function getUploadDir() {
       // On retourne le chemin relatif vers l'image pour un navigateur
       return 'uploads/img';
+    }
+
+    public function getThumbDir() {
+      return 'uploads/thmb';
     }
 
     protected function getUploadRootDir() {
@@ -259,4 +273,82 @@ class File {
     {
         return $this->files;
     }
+    
+//    
+//    /**
+//     * Resizes image without adding padding to short edge.
+//     * Transparency of image is preserved.
+//     *
+//     * @param $sourceImage
+//     * @param $targetImage
+//     * @return bool
+//     */
+//    private function createThummb($sourceImage, $targetImage) {
+//        list($sourceWidth, $sourceHeight, $sourceType) = getimagesize($sourceImage);
+//
+//        switch ($sourceType) {
+//            case IMAGETYPE_GIF:
+//                $sourceGdImage = imagecreatefromgif($sourceImage);
+//                break;
+//            case IMAGETYPE_JPEG:
+//                $sourceGdImage = imagecreatefromjpeg($sourceImage);
+//                break;
+//            case IMAGETYPE_PNG:
+//                $sourceGdImage = imagecreatefrompng($sourceImage);
+//                break;
+//        }
+//
+//        if ($sourceGdImage === false) {
+//            return false;
+//        }
+//
+//        $sourceAspectRatio = ($sourceWidth / $sourceHeight);
+//        $thumbnailAspectRatio = ($this->thumbnailDefaults['width'] / $this->thumbnailDefaults['height']);
+//
+//        if ($sourceWidth <= $this->thumbnailDefaults['width'] && $sourceHeight <= $this->thumbnailDefaults['height']) {
+//            $thumbnailWidth = $sourceWidth;
+//            $thumbnailHeight = $sourceHeight;
+//        } elseif ($thumbnailAspectRatio > $sourceAspectRatio) {
+//            $thumbnailWidth = (int) ($this->thumbnailDefaults['height'] * $sourceAspectRatio);
+//            $thumbnailHeight = $this->thumbnailDefaults['height'];
+//        } else {
+//            $thumbnailWidth = $this->thumbnailDefaults['width'];
+//            $thumbnailHeight = (int) ($this->thumbnailDefaults['width'] / $sourceAspectRatio);
+//        }
+//
+//        $thumbnailGdImage = imagecreatetruecolor($thumbnailWidth, $thumbnailHeight);
+//
+//        imagecopyresampled(
+//            $thumbnailGdImage,
+//            $sourceGdImage,
+//            0,
+//            0,
+//            0,
+//            0,
+//            $thumbnailWidth,
+//            $thumbnailHeight,
+//            $sourceWidth,
+//            $sourceHeight
+//        );
+//
+//        //clearstatcache();
+//
+//        switch ($sourceType) {
+//            case IMAGETYPE_GIF:
+//                imagegif($thumbnailGdImage, $targetImage, 90);
+//                break;
+//            case IMAGETYPE_JPEG:
+//                imagejpeg($thumbnailGdImage, $targetImage, 90);
+//                break;
+//            case IMAGETYPE_PNG:
+//                imagepng($thumbnailGdImage, $targetImage, 9);
+//                break;
+//        }
+//
+//        imagedestroy($sourceGdImage);
+//        imagedestroy($thumbnailGdImage);
+//
+//        return true;
+//    }
 }
+

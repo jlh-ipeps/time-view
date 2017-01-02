@@ -36,3 +36,7 @@ monolog:
 twig:
   globals:
     base_url: "http://localhost:8080/web/"
+    
+# http://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+web_profiler:
+    intercept_redirects: false
