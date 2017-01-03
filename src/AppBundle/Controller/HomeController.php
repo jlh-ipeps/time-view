@@ -36,6 +36,7 @@ class HomeController extends Controller {
     $home_wich = $request->get('_route_params')['wich'];
     $home = $homeRepo->findOneByName($home_wich);
     // ERROR if wich doesn't exist in db !
+//    dump($session->all(), $wich_home);die();
     if ($home) {
         $session->set('home', $home);
     } 
@@ -63,7 +64,15 @@ class HomeController extends Controller {
     
     $wich_home = $request->get('wich');
     
-//    dump($session->all()    );
+    $em = $this->getDoctrine()->getManager();
+    $homeRepo = $em->getRepository('AppBundle:Homes');
+    $home_wich = $request->get('_route_params')['wich'];
+    $home = $homeRepo->findOneByName($home_wich);
+    // ERROR if wich doesn't exist in db !
+    if ($home) {
+        $session->set('home', $home);
+    } 
+//    dump($session->all(), $wich_home);die();
     if ($wich_home === 0) {
 //        return $this->redirectToRoute('wich_home', array('wich' => 'popular'));
         return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);

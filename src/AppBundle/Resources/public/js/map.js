@@ -2,8 +2,8 @@
 $( document ).ready( function() {
     
   function initialize() {
-    
-    if (document.getElementById('map') !== null) {
+  
+    function map_gallery() {
       console.log(document.getElementById('map'));
       if (localStorage.loc) {
         var homeIcon = BaseDir + 'img/home.png';
@@ -115,6 +115,17 @@ $( document ).ready( function() {
           }
         });
       });
+    }
+
+    function map_gallery() {
+      alert('input');
+    }
+
+    
+    if (document.getElementById('map') !== null) {
+      map_gallery();
+    } else if (document.getElementById('map_input') !== null) {
+      map_gallery();
     }
   }
   
