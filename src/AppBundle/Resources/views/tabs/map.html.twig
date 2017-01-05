@@ -4,7 +4,13 @@
 
   <h3>{{ "tab.map"|trans }}</h3>
   <div class="tab-content">
-    <div id="map_input"></div>
+    <div id="map_canvas"></div>
   </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&language={{ app.request.locale }}"></script>
+    <!-- hens.bes-webdeveloper-seraing.be 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrqh6qTEzamxWl6Ljp-aMb9-K9HFE-GbQ&callback=myMap"></script>
+    -->
+  <script src="{{ asset('bundles/app/js/map.js') }}"></script>
 
 {% endblock map %}

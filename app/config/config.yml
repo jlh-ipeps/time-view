@@ -36,11 +36,13 @@ framework:
 
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
-    globals:
-    form_themes:
-        - 'bootstrap_3_layout.html.twig'
+  debug:            "%kernel.debug%"
+  strict_variables: "%kernel.debug%"
+  globals:
+    google_api_key: "%google_api_key%"
+  form_themes:
+    - 'bootstrap_3_layout.html.twig'
+    
 # Doctrine Configuration
 doctrine:
   dbal:
@@ -92,3 +94,10 @@ liip_imagine:
                 thumbnail:
                     size: [320, 320]
                     mode: inset
+
+ivory_google_map:
+    debug: "%kernel.debug%"
+    api_key: "%google_api_key%"
+    language: "%locale%"
+#    language: "fr"
+

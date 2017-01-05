@@ -3,13 +3,11 @@ _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
 
-#Test:
-#  path:     /{req}
-#  requirements:
-#    req: ".*"
-#  defaults: 
-#    _controller: AppBundle:Test:view
-#
+Test:
+  path:     /map
+  defaults: 
+    _controller: AppBundle:Map:view
+
 app:
   resource: "@AppBundle/Resources/config/routing.yml"
   prefix:   /{_locale}

@@ -8,6 +8,8 @@ use AppBundle\Entity\Picture;
 use AppBundle\Entity\File;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
+use Ivory\GoogleMap\Map;
+use Ivory\GoogleMap\Base\Coordinate;
 
 class BookController extends Controller {
 
@@ -34,7 +36,6 @@ class BookController extends Controller {
                 
     $session->set('lastURI', $request->getRequestURI());
 
-
     if ($book->getUser() == $this->getUser()) {
         $session->set('book', $this->isMyBook($book_id, $mybooks, $session));
         $file = new File();
@@ -58,6 +59,15 @@ class BookController extends Controller {
         $formview = NULL;
     }
     
+
+    $map = new Map();
+    $map->setVariable('map');
+    
+//$map = $this->get('ivory_google_map.map');
+    $map->setAutoZoom(false);
+    $map->setCenter(new Coordinate(5, 50));
+    $map->setMapOption('zoom', 7);
+    
     return $this->render('AppBundle:layout:content.html.twig', array(
         // content
         'item' => $item,
@@ -67,6 +77,7 @@ class BookController extends Controller {
         'book_id' => $book_id,
         'pictures' => $pictures,
         'form' => $formview,
+        'map' => $map
     ));
   }
 

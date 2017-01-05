@@ -30,7 +30,9 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/intl": "^3.1",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "liip/imagine-bundle": "^1.6"
+        "liip/imagine-bundle": "^1.6",
+        "egeloen/google-map": "2.0.x-dev",
+        "egeloen/google-map-bundle": "~3.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

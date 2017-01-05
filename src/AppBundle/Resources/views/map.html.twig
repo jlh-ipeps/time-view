@@ -1,0 +1,11 @@
+{% block test %}
+    Test
+    
+    {{ ivory_google_map(map) }}
+    
+
+      {% autoescape false %}
+      {{ map_api }}
+      {% endautoescape %}
+{#{ ivory_google_api([map]) }#}
+{% endblock test %}

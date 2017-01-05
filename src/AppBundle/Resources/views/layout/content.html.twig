@@ -29,7 +29,7 @@ tabs : array (layouts)
   <div class="tabPanel-widget">
     
     {% for tab in tabs %}
-      <input name="tabs" id="tab-{{ loop.index }}"
+      <input name="tabs" id="tab-{{ loop.index }}" class="tab_{{ tab }}"
         {% if loop.index == 1 %}
               checked="checked"
         {% endif %}

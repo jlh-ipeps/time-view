@@ -18,6 +18,9 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
+    # IvoryGoogleMapBundle
+    google_api_key: "AIzaSyD0RXyR29OdBEeBBWwlz2TnT0qvnsgga3k"
+
     languages: "(de|en|fr|nl)"
     db.table_prefix: ""
     image_upload:
