@@ -1,6 +1,4 @@
 
-function initMap(maplat, maplng, mapmarker) {
-
 // set map center
 if (localStorage.loc) {
   var myCenter = new google.maps.LatLng(localStorage.lat, localStorage.lng);
@@ -58,4 +56,47 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
   }, 100);
 });
 
-}
+// fill the map by ajax
+// http://stackoverflow.com/questions/20555582/google-maps-getbounds-returns-undefined
+google.maps.event.addListener(map, 'bounds_changed', function() {
+  $bounds = map.getBounds();
+  $neLat = $bounds.getNorthEast().lat;
+  $neLng = $bounds.getNorthEast().lng;
+  $swLat = $bounds.getSouthWest().lat;        
+  $swLng = $bounds.getSouthWest().lng;        
+
+  jQuery.ajax({
+    dataType : 'json',
+    type : 'POST',
+    data : {
+        nelat : $neLat,
+        nelng : $neLng,
+        swlat : $swLat,
+        swlng : $swLng,
+    },
+    success : function(response){
+      var markers = response.markers;
+      //Remove old markers from the Map
+      for (var i=0; i < delmarkers.length; i++) {
+        delmarkers[i].setMap(null);
+      }
+      delmarkers.length = 0;
+      // add mmarkers
+      for (var m in markers) {
+        var mLatlng = new google.maps.LatLng(markers[m][0], markers[m][1]);
+        var marker = new google.maps.Marker({
+          position: mLatlng,
+          map: map,
+          icon: BaseDir + 'img/Pin-location.png',
+          title: 'image title'
+        });
+        delmarkers.push(marker);
+      }
+    },
+    error : function(err){
+        // do error checking
+//          alert("something went wrong");
+        console.error(err);
+    }
+  });
+});

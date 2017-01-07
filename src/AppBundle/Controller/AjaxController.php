@@ -70,6 +70,25 @@ class AjaxController extends Controller {
     }
   }
 
+public function pictureAction(Request $request){
+    
+    $mlat = $request->get('mlat');
+    $mlng = $request->get('mlng');
+    try {
+        return new JsonResponse([
+            'success' => true,
+            'lat' => $mlat,
+            'lng' => $mlng
+        ]);
+    } catch (\Exception $exception) {
+        return new JsonResponse([
+            'success' => false,
+            'code'    => $exception->getCode(),
+            'message' => $exception->getMessage(),
+        ]);
+    }
+}
+
       
 //  
 //  

@@ -77,7 +77,12 @@ class BookController extends Controller {
         'book_id' => $book_id,
         'pictures' => $pictures,
         'form' => $formview,
-        'map' => $map
+        // map
+        'map' => $map,
+        'mapjs' => 'map.js',
+        'maplat' => 50,
+        'maplng' => 5,
+        'mapmaker' => 0
     ));
   }
 

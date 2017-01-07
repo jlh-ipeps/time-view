@@ -44,6 +44,17 @@ class Picture {
     private $info;
     
 
+    /**
+     * @ORM\Column(name="lat", type="float", nullable=true)
+     */
+    private $lat;
+    
+    /**
+     * @ORM\Column(name="lng", type="float", nullable=true)
+     */
+    private $lng;
+    
+
 
     /**
      * Set book
@@ -139,5 +150,53 @@ class Picture {
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     *
+     * @return Picture
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     *
+     * @return Picture
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float
+     */
+    public function getLng()
+    {
+        return $this->lng;
     }
 }

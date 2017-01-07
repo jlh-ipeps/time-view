@@ -53,6 +53,8 @@ class HomeController extends Controller {
         'form' => NULL,
         
         'book_id' => 1,
+        // map
+        'mapjs' => 'map.js'
     ));
       
   }
@@ -100,6 +102,8 @@ class HomeController extends Controller {
         'form' => NULL,
         
         'book_id' => 1,
+        // map
+        'mapjs' => 'map_myhome.js'
     ));
       
   }
