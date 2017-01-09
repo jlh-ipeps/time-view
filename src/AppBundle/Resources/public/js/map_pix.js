@@ -1,5 +1,5 @@
 
-function initMap(maplat, maplng, mapmarker) {
+function initMap(maplat, maplng, mapmarker, mapmarkers) {
 
 var myCenter = new google.maps.LatLng(maplat, maplng);
 

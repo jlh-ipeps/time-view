@@ -20,6 +20,9 @@ sidebar:
   newbook: Nouvel album
   language: Langues
 
+navbar:
+  search: Recherche
+  
 tab:
   books: Albums
   gallery: Galerie

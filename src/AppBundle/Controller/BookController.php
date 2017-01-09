@@ -31,8 +31,7 @@ class BookController extends Controller {
     $item = "book";
     $tabs = ['gallery','map', 'talk'];
     
-    $pictures = $em->getRepository('AppBundle:File')->findImagesByBook($book_id);
-    
+    $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id);
                 
     $session->set('lastURI', $request->getRequestURI());
 
@@ -73,8 +72,7 @@ class BookController extends Controller {
         'item' => $item,
         'title' => $book->getTitle(),
         'tabs' => $tabs,
-        // picture
-        'book_id' => $book_id,
+        // gallery
         'pictures' => $pictures,
         'form' => $formview,
         // map
@@ -82,7 +80,8 @@ class BookController extends Controller {
         'mapjs' => 'map.js',
         'maplat' => 50,
         'maplng' => 5,
-        'mapmaker' => 0
+        'mapmarker' => 0,
+        'mapmarkers' => []
     ));
   }
 

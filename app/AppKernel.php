@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
-            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle()
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

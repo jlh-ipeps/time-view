@@ -1,11 +1,5 @@
 {# src/tvBundle/Resources/content/gallery.html.twig #}
 
-{#
-book_id : int !! to change for home !!!
-pictures : collection
-form : imageType view or NULL
-#}
-
 {% block gallery %}
 
   <h3>{{ "tab.gallery"|trans }}</h3>
@@ -44,19 +38,10 @@ form : imageType view or NULL
         </div>
 #}
       {% endif %}
-{#      
       {% for picture in pictures %}  
         <div class="col-xs-6 col-md-3">
-          <a href="{{ path('picture', {'picture': picture}) }}" class="thumbnail">
-            <img src="{{ base_url }}img/{{ picture }}.jpg" alt="...">
-          </a>
-        </div>
-      {% endfor %}
-#}
-      {% for picture in pictures %}  
-        <div class="col-xs-6 col-md-3">
-          <a href="{{ path('picture', {'book_id': book_id, 'file_id': picture.id}) }}" class="thumbnail">
-            <img src="{{ ('/uploads/img/' ~ picture.id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
+          <a href="{{ path('picture', {'book_id': picture.book.id, 'file_id': picture.file.id}) }}" class="thumbnail">
+            <img src="{{ ('/uploads/img/' ~ picture.file.id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
           </a>
         </div>
       {% endfor %}

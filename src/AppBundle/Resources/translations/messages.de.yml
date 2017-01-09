@@ -19,6 +19,9 @@ sidebar:
   myaccount: Mein Konto
   newbook: Neues buch
   language: Sprachen
+  
+navbar:
+  search: Suche
 
 tab:
   books: bücher

@@ -15,8 +15,9 @@
   <script>
     var maplat = {{ maplat }};
     var maplng = {{ maplng }};
-    var mapmaker = {{ mapmaker }};
-    initMap(maplat, maplng, mapmaker);
+    var mapmarker = {{ mapmarker }};
+    var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
+    initMap(maplat, maplng, mapmarker, mapmarkers);
   </script>
 
 {% endblock map %}

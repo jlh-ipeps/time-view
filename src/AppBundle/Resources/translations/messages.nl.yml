@@ -20,6 +20,9 @@ sidebar:
   newbook: Nieuw boek
   language: Talen
 
+navbar:
+  search: Zoeken
+
 tab:
   books: Boeken
   gallery: galerij

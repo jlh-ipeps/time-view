@@ -10,21 +10,21 @@ namespace AppBundle\Repository;
  */
 class FileRepository extends \Doctrine\ORM\EntityRepository {
 
-    public function findImagesByBook(int $id) {
-
-        $qb = $this->createQueryBuilder('i');
-        $qb
-          ->innerJoin('i.pictures', 'p')
-          ->addSelect('p')
-          ->where($qb->expr()->in('p.book', $id))
-          ->orderBy('i.id', 'DESC')
-        ;
-        return $qb
-          ->getQuery()
-          ->getResult()
-        ;
-
-    }
- 
+//    public function findImagesByBook(int $id) {
+//
+//        $qb = $this->createQueryBuilder('i');
+//        $qb
+//          ->innerJoin('i.pictures', 'p')
+//          ->addSelect('p')
+//          ->where($qb->expr()->in('p.book', $id))
+//          ->orderBy('i.id', 'DESC')
+//        ;
+//        return $qb
+//          ->getQuery()
+//          ->getResult()
+//        ;
+//
+//    }
+// 
   
 }

@@ -10,5 +10,63 @@ namespace AppBundle\Repository;
  */
 class PictureRepository extends \Doctrine\ORM\EntityRepository {
 
+    public function findPicturesByBook(int $id) {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+          ->innerJoin('p.file', 'f')
+          ->Select('p')
+          ->where($qb->expr()->in('p.book', $id))
+          ->orderBy('f.id', 'ASC')
+        ;
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+    }
     
+    public function findNewImages() {
+        $limit = 100;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+          ->innerJoin('p.file', 'f')
+          ->Select('p')
+          ->orderBy('f.id', 'ASC')
+          ->setMaxResults( $limit );
+        ;
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+  }
+
+    public function findRandomImages() {
+        $limit = 100;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->innerJoin('p.file', 'f')
+            ->Select('p')
+            ->orderBy('RAND()')
+            ->setMaxResults( $limit );
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+  }
+
+    public function findPopularImages() {
+        $limit = 100;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+          ->innerJoin('p.file', 'f')
+          ->Select('p')
+          ->orderBy('f.id', 'ASC')
+          ->setMaxResults( $limit );
+        ;
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+  }
+
 }
