@@ -1,6 +1,7 @@
 
 function initMap(maplat, maplng, mapmarker, mapmarkers) {
 
+
 // set map center
 if (localStorage.loc) {
   var myCenter = new google.maps.LatLng(localStorage.lat, localStorage.lng);
@@ -57,6 +58,24 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
     map.setCenter(myCenter);
   }, 100);
 });
+
+
+    for (var m in mapmarkers) {
+        var ratio = mapmarkers[m].file.width / mapmarkers[m].file.height;
+        var mIcon = {
+          url: '/web/thumb/uploads/img/' + mapmarkers[m].file.id + '.jpeg',
+          scaledSize: new google.maps.Size(50 * ratio, 50),
+          origin: new google.maps.Point(0,0),
+          anchor: new google.maps.Point(0, 0)
+        };
+        var mLatlng = new google.maps.LatLng(mapmarkers[m].lat, mapmarkers[m].lng);
+        var marker = new google.maps.Marker({
+          position: mLatlng,
+          map: map,
+          icon: mIcon,
+          title: 'image title'
+        });
+    }
 
 
 }

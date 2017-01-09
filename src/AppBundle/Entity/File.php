@@ -34,6 +34,16 @@ class File {
      */
     private $alt;
 
+    /**
+     * @ORM\Column(name="width", type="integer", nullable=true)
+     */
+    private $width;
+
+    /**
+     * @ORM\Column(name="height", type="integer", nullable=true)
+     */
+    private $height;
+
     private $file;
 
     public function getFile()  {
@@ -74,6 +84,11 @@ class File {
 
       // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
       $this->alt = $this->file->getClientOriginalName();
+
+      // set width
+      list($width, $height) = getimagesize($this->file);
+      $this->width = $width;
+      $this->height = $height;
     }
 
     /**
@@ -260,5 +275,52 @@ class File {
         return $this->files;
     }
 
-}
 
+    /**
+     * Set width
+     *
+     * @param \int $width
+     *
+     * @return File
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get width
+     *
+     * @return \int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set height
+     *
+     * @param \int $height
+     *
+     * @return File
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get height
+     *
+     * @return \int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+}

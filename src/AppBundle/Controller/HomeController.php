@@ -20,7 +20,6 @@ class HomeController extends Controller {
         // add $pitures to map
         $mapmarkers = array_values(array_filter($pictures, function($p){return $p->getLat();})); 
         // http://stackoverflow.com/questions/13928729/
-//        dump($mapmarkers[0]->getFile()->getId());die();
         $serializer = $this->get('serializer');
         $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
 
@@ -51,7 +50,7 @@ class HomeController extends Controller {
             'pictures' => $pictures,
             'form' => NULL,
             // map
-            'mapjs' => 'map.js',
+            'mapjs' => 'map_book.js',
             'maplat' => 50,
             'maplng' => 5,
             'mapmarker' => 0,

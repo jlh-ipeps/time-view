@@ -51,7 +51,8 @@ class PictureController extends Controller
         'mapjs' => $mapjs,
         'maplat' => $mapLat,
         'maplng' => $mapLng,
-        'mapmaker' => $mapMarker
+        'mapmarker' => $mapMarker,
+        'mapmarkers' => NULL
     ));
     
     

@@ -32,6 +32,12 @@ class BookController extends Controller {
     $tabs = ['gallery','map', 'talk'];
     
     $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id);
+    
+    // add $pitures to map
+    $mapmarkers = array_values(array_filter($pictures, function($p){return $p->getLat();})); 
+    $serializer = $this->get('serializer');
+    $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
+
                 
     $session->set('lastURI', $request->getRequestURI());
 
@@ -77,11 +83,11 @@ class BookController extends Controller {
         'form' => $formview,
         // map
         'map' => $map,
-        'mapjs' => 'map.js',
+        'mapjs' => 'map_book.js',
         'maplat' => 50,
         'maplng' => 5,
         'mapmarker' => 0,
-        'mapmarkers' => []
+        'mapmarkers' => $jsonMapMarkers
     ));
   }
 
