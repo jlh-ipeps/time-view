@@ -31,10 +31,9 @@
         "symfony/intl": "^3.1",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "liip/imagine-bundle": "^1.6",
-        "egeloen/google-map": "2.0.x-dev",
-        "egeloen/google-map-bundle": "~3.0@dev",
         "beberlei/DoctrineExtensions": "^1.0",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "willdurand/geocoder-bundle": "^4.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -92,9 +92,12 @@ liip_imagine:
                     size: [320, 320]
                     mode: inset
 
-ivory_google_map:
-    debug: "%kernel.debug%"
-    api_key: "%google_api_key%"
-    language: "%locale%"
-#    language: "fr"
-
+bazinga_geocoder:
+    fake_ip: 193.190.122.60
+    providers:
+        google_maps:
+#            key:    "%google_api_key%"
+            locale:               ~
+            region:               ~
+            use_ssl:              false
+        free_geo_ip:          []

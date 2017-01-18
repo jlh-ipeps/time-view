@@ -35,12 +35,12 @@ class File {
     private $alt;
 
     /**
-     * @ORM\Column(name="width", type="integer", nullable=true)
+     * @ORM\Column(name="width", type="integer")
      */
     private $width;
 
     /**
-     * @ORM\Column(name="height", type="integer", nullable=true)
+     * @ORM\Column(name="height", type="integer")
      */
     private $height;
 

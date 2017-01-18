@@ -20,6 +20,14 @@ var mapOptions = {
 // map instantiate
 var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
+var geocoder = new google.maps.Geocoder();
+   geocoder.geocode( { 'address': 'belgium'}, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        map.fitBounds(results[0].geometry.viewport);
+      }
+    });
+
 //Add Home to map
 if (localStorage.loc) {
   var marker = new google.maps.Marker({

@@ -29,7 +29,7 @@ class BookController extends Controller {
 
 
     $item = "book";
-    $tabs = ['gallery','map', 'talk'];
+    $tabs = ['gallery','map', 'tag', 'talk'];
     
     $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id);
     
@@ -64,14 +64,6 @@ class BookController extends Controller {
         $formview = NULL;
     }
     
-
-    $map = new Map();
-    $map->setVariable('map');
-    
-//$map = $this->get('ivory_google_map.map');
-    $map->setAutoZoom(false);
-    $map->setCenter(new Coordinate(5, 50));
-    $map->setMapOption('zoom', 7);
     
     return $this->render('AppBundle:layout:content.html.twig', array(
         // content
@@ -82,7 +74,6 @@ class BookController extends Controller {
         'pictures' => $pictures,
         'form' => $formview,
         // map
-        'map' => $map,
         'mapjs' => 'map_book.js',
         'maplat' => 50,
         'maplng' => 5,

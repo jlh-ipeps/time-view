@@ -8,12 +8,16 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends Controller {
 
     public function viewAction(Request $request) {
-        $wich_home = $request->get('wich');
-        if ($wich_home === 0) {
-            return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);
-        }
+        
+        $session = $this->get('session');
+        $session->set('_locale', $request->getLocale());
 
         $em = $this->getDoctrine()->getManager();
+
+        $wich_home = $request->get('wich');
+        if ($em->getRepository('AppBundle:Homes')->findByName($wich_home) == []) {
+            return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);
+        }
         $findByHome = 'find' . $wich_home . 'Images';
         $pictures = $em->getRepository('AppBundle:Picture')->$findByHome();
         
@@ -26,16 +30,13 @@ class HomeController extends Controller {
         $item = "home";
         $tabs = ['gallery','map'];
 
-        $translator = $this->get('translator');
-        $title = $translator->trans('sidebar.' . $wich_home);
+        $title = $this->translate('sidebar.' . $wich_home);
 
         $homeRepo = $em->getRepository('AppBundle:Homes');
         $home_wich = $request->get('_route_params')['wich'];
         $home = $homeRepo->findOneByName($home_wich);
         // ERROR if wich doesn't exist in db !
-    //    dump($session->all(), $wich_home);die();
-        $session = $this->get('session');
-    //    $session->set('_locale', $request->getLocale());
+
         if ($home) {
             $session->set('home', $home);
         } 
@@ -87,7 +88,7 @@ class HomeController extends Controller {
     $item = "home";
     $tabs = ['map', 'gallery'];
 
-    $title = 'tranlate';
+    $title = $this->translate('sidebar.' . $wich_home);
 
     
     return $this->render('AppBundle:layout:content.html.twig', array(
@@ -96,14 +97,20 @@ class HomeController extends Controller {
         'title' => $title,
         'tabs' => $tabs,
         // home
-        'pictures' => $pictures,
+        'pictures' => NULL,
         'form' => NULL,
-        
-        'book_id' => 1,
         // map
-        'mapjs' => 'map_myhome.js'
+        'mapjs' => 'map_myhome.js',
+        'maplat' => 50,
+        'maplng' => 5,
+        'mapmarker' => 0,
+        'mapmarkers' => null
     ));
   }
 
-  
+  protected function translate($string) {
+        $translator = $this->get('translator');
+        return $translator->trans($string);
+
+  }
 }

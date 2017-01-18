@@ -8,17 +8,17 @@ services:
     appbundle.tblprefix_subscriber:
         class: AppBundle\Subscriber\TablePrefixSubscriber
         # set the db table prefix in config
-        arguments: [%db.table_prefix%]
+        arguments: ['%db.table_prefix%']
         tags:
             - { name: doctrine.event_subscriber }
 
     user.handler.login_success_handler:
-        class:  %user.handler.login_success_handler.class%
+        class:  '%user.handler.login_success_handler.class%'
         arguments:  ['@router', '@fos_user.user_manager', '@session', '@doctrine.orm.entity_manager']
         tags:
             - { name: 'monolog.logger', channel: 'security' } 
     user.handler.logout_success_handler:
-        class:  %user.handler.logout_success_handler.class%
+        class:  '%user.handler.logout_success_handler.class%'
         arguments:  ['@router']
         tags:
             - { name: 'monolog.logger', channel: 'security' }

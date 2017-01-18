@@ -42,6 +42,19 @@ class SidebarController extends Controller {
             $em->persist($lastSession);
             $em->flush();
         }
+        
+        if (!$session->get('latitude')) {
+            $addr = $this->container
+                ->get('bazinga_geocoder.geocoder')
+                ->using('free_geo_ip')
+                ->geocode($originalRequest->server->get('REMOTE_ADDR'))
+            ;
+            $session->set('country', $addr->first()->getCountry()->getName());
+            $session->set('latitude', $addr->first()->getLatitude());
+            $session->set('longitude', $addr->first()->getLongitude());
+//            dump($addr);die();
+//            dump($session->get('latitude'));die();
+        }
 
         return $this->render('AppBundle:layout:sidebar.html.twig', array(
             'locales' => $locales,

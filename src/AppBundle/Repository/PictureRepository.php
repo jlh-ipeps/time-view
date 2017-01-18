@@ -16,7 +16,7 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
           ->innerJoin('p.file', 'f')
           ->Select('p')
           ->where($qb->expr()->in('p.book', $id))
-          ->orderBy('f.id', 'ASC')
+          ->orderBy('f.id', 'DESC')
         ;
         return $qb
           ->getQuery()

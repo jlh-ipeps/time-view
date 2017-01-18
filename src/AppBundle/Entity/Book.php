@@ -45,7 +45,11 @@ class Book {
      * @ORM\Column(name="info", type="text", nullable=true)
      */
     private $info;
-
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", cascade={"persist"})
+    */
+    private $tags;
 
     /**
      * Constructor
@@ -53,6 +57,7 @@ class Book {
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -169,4 +174,47 @@ class Book {
         return $this->user;
     }
     
+
+    /**
+     * Add picture
+     *
+     * @param \AppBundle\Entity\Picture $picture
+     *
+     * @return Book
+     */
+    public function addPicture(\AppBundle\Entity\Picture $picture)
+    {
+        $this->pictures[] = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Remove picture
+     *
+     * @param \AppBundle\Entity\Picture $picture
+     */
+    public function removePicture(\AppBundle\Entity\Picture $picture)
+    {
+        $this->pictures->removeElement($picture);
+    }
+
+    
+    // Notez le singulier, on ajoute une seule catégorie à la fois
+    public function addtag(Tag $tag) {
+        $this->tags[] = $tag;
+    }
+
+    public function removeTag(Tag $tag) {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags() {
+        return $this->tags;
+    }
+
 }

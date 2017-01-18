@@ -10,11 +10,12 @@ class PictureController extends Controller
 {
   public function viewAction($book_id, $file_id, Request $request) {
       
+    $session = $this->get('session');
     $em = $this->getDoctrine()->getManager();
     
     $picture = $em->getRepository('AppBundle:Picture')->find(array("book" => $book_id, "file" => $file_id));
-    $mapLat = null !== $picture->getLat() ? $picture->getLat() : 0;
-    $mapLng = null !== $picture->getLng() ? $picture->getLng() : 0;
+    $mapLat = null !== $picture->getLat() ? $picture->getLat() : $session->get('latitude');
+    $mapLng = null !== $picture->getLng() ? $picture->getLng() : $session->get('longitude');
     $mapMarker = null !== $picture->getLat() ? true : 0;
     
     $book = $em->getRepository('AppBundle:Book')->find($book_id);
@@ -34,7 +35,6 @@ class PictureController extends Controller
     $item = "picture";
     $tabs = ['picture','map','books','talk'];
     
-    $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
     $session->set('picture', $file_id);
     $session->set('lastURI', $request->getRequestURI());
