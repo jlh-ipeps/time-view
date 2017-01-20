@@ -102,8 +102,6 @@ google.maps.event.addListener(map, 'bounds_changed', function() {
       }
     },
     error : function(err){
-        // do error checking
-//          alert("something went wrong");
         console.error(err);
     }
   });

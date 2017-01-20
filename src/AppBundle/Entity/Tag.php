@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tag
@@ -27,6 +28,7 @@ class Tag
      * @ORM\Column(name="tagName", type="string", length=255, unique=true)
      */
     private $tagName;
+    
 
 
     /**

@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Picture;
 use AppBundle\Entity\File;
+use AppBundle\Entity\Tag;
 use AppBundle\Form\ImageType;
 use Symfony\Component\HttpFoundation\Request;
-use Ivory\GoogleMap\Map;
-use Ivory\GoogleMap\Base\Coordinate;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BookController extends Controller {
 
@@ -26,6 +26,9 @@ class BookController extends Controller {
     } else {
         $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
     }
+    
+    $serializer = $this->get('serializer');
+    $jsonTags = $serializer->serialize($book->getTags(), 'json');
 
 
     $item = "book";
@@ -35,7 +38,6 @@ class BookController extends Controller {
     
     // add $pitures to map
     $mapmarkers = array_values(array_filter($pictures, function($p){return $p->getLat();})); 
-    $serializer = $this->get('serializer');
     $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
 
                 
@@ -73,6 +75,8 @@ class BookController extends Controller {
         // gallery
         'pictures' => $pictures,
         'form' => $formview,
+        //tags
+        'listTags' => $jsonTags,
         // map
         'mapjs' => 'map_book.js',
         'maplat' => 50,
@@ -100,6 +104,68 @@ class BookController extends Controller {
             return $book_id;
         } else {
             return $session->get('book');
+        }
+    }
+    
+    
+    public function tagAction($book_id, Request $request) {
+
+        $action = $request->get('action');        
+        $tag = $request->get('tag');
+        
+        switch ($action) {
+            case 'beforeItemAdd':
+                return $this->addTag($book_id, $tag);
+            case 'itemRemoved':
+                return $this->removeTag($book_id, $tag);
+        }
+    }
+    
+    protected function removeTag($book_id, $tag) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository('AppBundle:Book');
+            $tagRepo = $em->getRepository('AppBundle:Tag');
+            $tagEntity = $tagRepo->findOneByTagName($tag);
+            $book = $bookRepo->find($book_id);
+            $book->removeTag($tagEntity);
+            $em->persist($book);
+            $em->flush();
+            return new JsonResponse([
+                'success' => 'ok',
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
+
+    protected function addTag($book_id, $tag) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository('AppBundle:Book');
+            $book = $bookRepo->find($book_id);
+            $tagRepo = $em->getRepository('AppBundle:Tag');
+            $tagEntity = $tagRepo->findOneByTagName($tag);
+            if (!$tagEntity) {
+                $tagEntity = new Tag;
+                $tagEntity->setTagname($tag);
+            }
+            $book->addTag($tagEntity);
+            $em->persist($book);
+            $em->flush();
+            return new JsonResponse([
+                'success' => 'ok',
+            ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
         }
     }
 

@@ -3,6 +3,16 @@
 
 <h3>Tags</h3>
 <div class="tab-content">     
+  
+  <div class="form-group">
+    <label for="tagsinput">tagsinput</label>
+    <input data-role="tagsinput" type="text" id="tagsinput" name="test" required="required" />
+  </div>
+  
+  <script>
+    var alreadyTags = eval({{ listTags|json_encode|raw }});
+  </script>
+  
 </div>
 
 {% endblock tag %}

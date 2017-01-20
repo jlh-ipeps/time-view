@@ -5,11 +5,11 @@ ajax_geolocation:
     _controller: AppBundle:Ajax:geolocation
   condition: "request.isXmlHttpRequest()"
   
-ajax_book:
-  path: /book/{id}/
-  defaults: 
-    _controller: AppBundle:Ajax:book
-  condition: "request.isXmlHttpRequest()"
+#ajax_book:
+#  path: /book/{id}/
+#  defaults: 
+#    _controller: AppBundle:Ajax:book
+#  condition: "request.isXmlHttpRequest()"
   
 
 # Symfony2: URLs with trailing slash and an optional parameter
@@ -43,6 +43,11 @@ search:
 #    _format: json|xml|html
   
   
+book_ajax:
+  path: /book/{book_id}/
+  defaults: 
+    _controller: AppBundle:Book:tag
+  condition: "request.isXmlHttpRequest()"
 book:
   path: /book/{book_id}/
   defaults: 

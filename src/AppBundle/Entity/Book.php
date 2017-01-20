@@ -47,8 +47,12 @@ class Book {
     private $info;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", cascade={"persist"})
-    */
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="books", cascade={"persist"})
+     * @ORM\JoinTable(name="book_tag",
+     *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     */
     private $tags;
 
     /**
