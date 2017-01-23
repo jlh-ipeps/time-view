@@ -1,4 +1,5 @@
 
+
 function initMap(maplat, maplng, mapmarker, mapmarkers) {
 
 var myCenter = new google.maps.LatLng(maplat, maplng);
@@ -11,9 +12,31 @@ var mapOptions = {
   mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 
-// map instantiate
 var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-
+var geocoder = new google.maps.Geocoder();
+var address = {
+    LatLng: null,
+    street: null,
+    postalCode: null,
+    locality: null,
+    country: null
+};
+var geoform;
+var marker;
+$(document).ready(function() {
+    geoform = {
+        street: document.getElementById('appbundle_picture_route'),
+        postalCode: document.getElementById('appbundle_picture_postalCode'),
+        locality: document.getElementById('appbundle_picture_locality'),
+        country: document.getElementById('appbundle_picture_country'),
+        lat: document.getElementById('appbundle_picture_lat'),
+        lng: document.getElementById('appbundle_picture_lng'),
+    };
+    $("#geoform").submit(function(e){
+        e.preventDefault();
+        geocodeAddr();
+    });
+});
 // recenter on map resize
 google.maps.event.addDomListener(window, "resize", function() {
   myCenter = map.getCenter();
@@ -32,9 +55,6 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
 });
 
 
-
-var marker;
-
   if (mapmarker) {
      marker = new google.maps.Marker({
       position: myCenter,
@@ -48,61 +68,116 @@ var marker;
     placeMarker(event.latLng);
   });
 
-  google.maps.event.addListener(marker, 'drag', function(event) {
+  google.maps.event.addListener(marker, 'dragend', function(event) {
     placeMarker(event.latLng);
   });
 
-  function placeMarker(location) {
+  function placeMarker(latLng) {
+    map.setCenter(latLng);
     if (marker) {
-      marker.setPosition(location);
+      marker.setPosition(latLng);
     } else {
        marker = new google.maps.Marker({
-        position: location,
+        position: latLng,
         map: map,
         draggable: true
       });
-      google.maps.event.addListener(marker, "drag", function (mEvent) {
-        ajaxSend(mEvent.latLng);
+      google.maps.event.addListener(marker, "dragend", function (mEvent) {
+          geocodeLoc(mEvent.latLng);
       });
     }
-    ajaxSend(location);
+    geocodeLoc(latLng);
   }
+  
+    function geocodeLoc(latLng) {
+        address.LatLng = latLng;
+        geoform.lat.value = latLng.lat();
+        geoform.lng.value = latLng.lng();
+        geocoder.geocode({'location': latLng}, function(results, status) {
+            if (status === 'OK') {
+                var components = results[0].address_components;
+                for(i=0; i < components.length; i++) {
+                    if (components[i].types[0] === 'route') {
+                      address.street = components[i].long_name;
+                      geoform.street.value = address.street;
+                    }
+                    if (components[i].types[0] === 'postal_code') {
+                      address.postalCode = components[i].long_name;
+                      geoform.postalCode.value = address.postalCode;
+                    }
+                    if (components[i].types[0] === 'locality') {
+                      address.locality = components[i].long_name;
+                      geoform.locality.value = address.locality;
+                    }
+                    if (components[i].types[0] === 'country') {
+                      address.country = components[i].short_name;
+                      geoform.country.value = address.country;
+                    }
+                }
+                ajaxSendForm();
+//    ajaxSend(latLng);
 
-//// JQuery Ajax 
-//function ajaxSend(pos) {
-//  jQuery.ajax({
-//    dataType : 'json',
-//    type : 'POST',
-//    data : {
-//      mlat: pos.lat(),
-//      mlng: pos.lng()
-//    },
-//    success : function(response){
-//      console.log(response);
-//    },
-//    error : function(error){
-//        console.error(error);
-//    }
-//  });
-//}
-
-function ajaxSend(pos) {
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE ) {
-      if (xhr.status === 200) {
-        console.log(xhr.responseText);
-      } else if (xhr.status === 400) {
-           alert('There was an error 400');
-      } else {
-           alert('something else other than 200 was returned');
-      }
+            } else {
+                console.log(status);
+            }
+        });
     }
-  };
-  var url = '?mlat=' + pos.lat() + '&mlng=' + pos.lng()
-  xhr.open("POST", url );
-  xhr.send();
-}
+    
+    function geocodeAddr() {
+        var latLng = {};
+        var request = {
+            address: geoform.street.value,
+            componentRestrictions: {
+                postalCode: geoform.postalCode.value,
+                locality: geoform.locality.value,
+                country: geoform.country.value
+            }
+        };
+        geocoder.geocode(request, function(results, status) {
+            if (status === 'OK') {
+                latLng = results[0].geometry.location;
+                if (request.address) {
+                    placeMarker(latLng);
+                } else {
+                    map.setCenter(latLng);
+                    marker.setPosition(latLng);
+//                    marker.setMap(null);
+                    geoform.lat.value = latLng.lat();
+                    geoform.lng.value = latLng.lng();
+                    ajaxSendForm();
+                }
+            } else {
+                console.log(status);
+            }
+        });
+    }
 
+
+
+//    function ajaxSend(latLng)  {
+//        $.ajax({
+//            dataType : 'json',
+//            method: 'POST',
+//            data : {
+//                mlat : latLng.lat(),
+//                mlng : latLng.lng(),
+//            },
+//            success: function(success) {
+//                console.log(success);
+//            },
+//            error : function(err){
+//                console.error(err);
+//                console.log(err);
+//            }
+//        });
+//    }
+    
+    function ajaxSendForm()  {
+        var formSerialize = $("#geoform").serialize();
+        $.post('', formSerialize, function(response){
+            console.log(response);
+        },'JSON');
+    }
   
 }
+

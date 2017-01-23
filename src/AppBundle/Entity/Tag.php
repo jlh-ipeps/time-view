@@ -29,6 +29,20 @@ class Tag
      */
     private $tagName;
     
+    /**
+     * Inverse Side
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Book", mappedBy="tags")
+     */
+    private $books;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
 
 
     /**
@@ -63,5 +77,39 @@ class Tag
     public function getTagName()
     {
         return $this->tagName;
+    }
+
+    /**
+     * Add book
+     *
+     * @param \AppBundle\Entity\Book $book
+     *
+     * @return Tag
+     */
+    public function addBook(\AppBundle\Entity\Book $book)
+    {
+        $this->books[] = $book;
+
+        return $this;
+    }
+
+    /**
+     * Remove book
+     *
+     * @param \AppBundle\Entity\Book $book
+     */
+    public function removeBook(\AppBundle\Entity\Book $book)
+    {
+        $this->books->removeElement($book);
+    }
+
+    /**
+     * Get books
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooks()
+    {
+        return $this->books;
     }
 }

@@ -54,6 +54,26 @@ class Picture {
      */
     private $lng;
     
+    /**
+     * @ORM\Column(name="route", type="string", length=255, nullable=true)
+     */
+    private $route;
+    
+    /**
+     * @ORM\Column(name="postal_code", type="string", length=25, nullable=true)
+     */
+    private $postalCode;
+    
+    /**
+     * @ORM\Column(name="locality", type="string", length=255, nullable=true)
+     */
+    private $locality;
+    
+    /**
+     * @ORM\Column(name="country", type="string", length=2, nullable=true)
+     */
+    private $country;
+    
 
 
     /**
@@ -198,5 +218,125 @@ class Picture {
     public function getLng()
     {
         return $this->lng;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return Picture
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set locality
+     *
+     * @param string $locality
+     *
+     * @return Picture
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Get locality
+     *
+     * @return string
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Picture
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set route
+     *
+     * @param string $route
+     *
+     * @return Picture
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param string $postalCode
+     *
+     * @return Picture
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
     }
 }

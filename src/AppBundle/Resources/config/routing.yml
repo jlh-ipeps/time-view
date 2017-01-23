@@ -58,6 +58,11 @@ bookNew:
   defaults: 
     _controller: AppBundle:Book:new
   
+#picture_ajax:
+#  path: /picture/{book_id}-{file_id}/
+#  defaults: 
+#    _controller: AppBundle:Picture:ajax
+#  condition: "request.isXmlHttpRequest()"
 picture:
   path: /picture/{book_id}-{file_id}/
   defaults: 
