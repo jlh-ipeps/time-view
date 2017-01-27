@@ -36,3 +36,5 @@ file:
   file: Datei
   submit: Senden
 
+registration:
+  required: Verpflicht

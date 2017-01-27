@@ -35,3 +35,6 @@ tab:
 file:
   file: Fichier
   submit: Envoyer
+
+registration:
+  required: Obligatoire

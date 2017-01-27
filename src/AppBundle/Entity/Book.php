@@ -56,12 +56,18 @@ class Book {
     private $tags;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Talk", mappedBy="book")
+     */
+    private $talks;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->talks = new ArrayCollection();
     }
 
     /**
@@ -221,4 +227,52 @@ class Book {
         return $this->tags;
     }
 
+
+    /**
+     * Set talks
+     *
+     * @param \AppBundle\Entity\Talk $talks
+     *
+     * @return Book
+     */
+    public function setTalks(\AppBundle\Entity\Talk $talks = null)
+    {
+        $this->talks = $talks;
+
+        return $this;
+    }
+
+    /**
+     * Get talks
+     *
+     * @return \AppBundle\Entity\Talk
+     */
+    public function getTalks()
+    {
+        return $this->talks;
+    }
+
+    /**
+     * Add talk
+     *
+     * @param \AppBundle\Entity\Talk $talk
+     *
+     * @return Book
+     */
+    public function addTalk(\AppBundle\Entity\Talk $talk)
+    {
+        $this->talks[] = $talk;
+
+        return $this;
+    }
+
+    /**
+     * Remove talk
+     *
+     * @param \AppBundle\Entity\Talk $talk
+     */
+    public function removeTalk(\AppBundle\Entity\Talk $talk)
+    {
+        $this->talks->removeElement($talk);
+    }
 }

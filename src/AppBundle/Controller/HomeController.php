@@ -9,6 +9,7 @@ class HomeController extends Controller {
 
     public function viewAction(Request $request) {
         
+        $maxThumbNbr = 100;
         $session = $this->get('session');
         $session->set('_locale', $request->getLocale());
 
@@ -16,13 +17,20 @@ class HomeController extends Controller {
 
         $wich_home = $request->get('wich');
         if ($em->getRepository('AppBundle:Homes')->findByName($wich_home) == []) {
-            return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);
+            throw $this->createNotFoundException('This home page does not exist');
+//            return $this->redirectToRoute('wich_home', ['request' => $request, 'wich' => 'popular'], 307);
         }
-        $findByHome = 'find' . $wich_home . 'Images';
-        $pictures = $em->getRepository('AppBundle:Picture')->$findByHome();
         
+        // select pictures by calling $wich_home repository function
+        $findByHome = 'find' . $wich_home . 'Images';
+        $pictures = $em->getRepository('AppBundle:Picture')->$findByHome($maxThumbNbr);
+//        $pictures = $em->getRepository('AppBundle:Picture')->$findByHome(
+//            $request->query->getInt('page', 1),
+//            5
+//        );
+
         // add $pitures to map
-        $mapmarkers = array_values(array_filter($pictures, function($p){return $p->getLat();})); 
+        $mapmarkers = array_values(array_filter($pictures, function($p){return $p['lat'];})); 
         // http://stackoverflow.com/questions/13928729/
         $serializer = $this->get('serializer');
         $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');

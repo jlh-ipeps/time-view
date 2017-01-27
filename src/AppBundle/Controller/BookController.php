@@ -7,40 +7,79 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\Picture;
 use AppBundle\Entity\File;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\Talk;
 use AppBundle\Form\ImageType;
+use AppBundle\Form\TalkType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BookController extends Controller {
 
   public function viewAction($book_id, Request $request) {
-
+     
+    $user = $this->getUser();
     $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
     
     $em = $this->getDoctrine()->getManager();
     $bookRepo = $em->getRepository('AppBundle:Book');
     $book = $bookRepo->find($book_id);
+    // sidebar books
     if ($this->getUser() == NULL) {
         $mybooks = NULL;
     } else {
-        $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId());
+        $mybooks = $bookRepo->findBooksByUser($user->getId());
     }
     
-    $serializer = $this->get('serializer');
-    $jsonTags = $serializer->serialize($book->getTags(), 'json');
+    
+    $talk = new Talk();
+    $talk_form = $this->createForm(TalkType::class, $talk);
+    $talk_formview = $talk_form->createView();
+    if ($request->isMethod('POST')) {
+        $talk_form->handleRequest($request);
+        if ($talk_form->isValid()) {
+            $talk->setUser($user);
+            $talk->setBook($book);
+            $em->persist($talk);
+            $em->flush();
+        }
+    }
+    $talkRepo = $em->getRepository('AppBundle:Talk');
+    $talks = $talkRepo->findMessagesByBook($book_id);
 
+//    $tooManyQueries = $book->getTags();
+    $tooManyQueries = $bookRepo->findTagsByBook($book_id);
+    
 
     $item = "book";
     $tabs = ['gallery','map', 'tag', 'talk'];
     
     $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id);
     
-    // add $pitures to map
-    $mapmarkers = array_values(array_filter($pictures, function($p){return $p->getLat();})); 
-    $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
+    
+    $bounds = array(
+        'south' => 0,
+        'west' => 0,
+        'north' => 0,
+        'east' => 0,
+    );
+    $mapmarkers = [];
+    for ($i = 0; $i < count($pictures); ++$i) {
+        if ($pictures[$i]['lat']) {
+            $mapmarkers[$i] = $pictures[$i];
+            $bounds['south'] = min(array_filter(array($bounds['south'], $pictures[$i]['lat'])));
+            $bounds['west'] = min(array_filter(array($bounds['west'], $pictures[$i]['lng'])));
+            $bounds['north'] = max(array_filter(array($bounds['north'], $pictures[$i]['lat'])));
+            $bounds['east'] = max(array_filter(array($bounds['east'], $pictures[$i]['lng'])));
+        }
+    }
 
-                
+    // add $pitures to map if lat is defined
+//    $mapmarkers = array_values(array_filter($pictures, function($p){return $p['lat'];})); 
+    $serializer = $this->get('serializer');
+    $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
+//dump($pictures, $mapmarkers);die();
+
     $session->set('lastURI', $request->getRequestURI());
 
     if ($book->getUser() == $this->getUser()) {
@@ -76,7 +115,10 @@ class BookController extends Controller {
         'pictures' => $pictures,
         'form' => $formview,
         //tags
-        'listTags' => $jsonTags,
+        'repoTags' => $tooManyQueries,
+        // talk
+        'talks' => $talks,
+        'talk_form' => $talk_formview,
         // map
         'mapjs' => 'map_book.js',
         'maplat' => 50,

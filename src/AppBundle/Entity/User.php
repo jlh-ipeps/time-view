@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +23,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->talks = new ArrayCollection();
     }
     
     /**
@@ -30,6 +31,11 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=false)
      */
     private $session;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Talk", mappedBy="user")
+     */
+    private $talks;
 
 
     /**
@@ -54,5 +60,39 @@ class User extends BaseUser
     public function getSession()
     {
         return $this->session;
+    }
+
+    /**
+     * Add talk
+     *
+     * @param \AppBundle\Entity\Talk $talk
+     *
+     * @return User
+     */
+    public function addTalk(\AppBundle\Entity\Talk $talk)
+    {
+        $this->talks[] = $talk;
+
+        return $this;
+    }
+
+    /**
+     * Remove talk
+     *
+     * @param \AppBundle\Entity\Talk $talk
+     */
+    public function removeTalk(\AppBundle\Entity\Talk $talk)
+    {
+        $this->talks->removeElement($talk);
+    }
+
+    /**
+     * Get talks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTalks()
+    {
+        return $this->talks;
     }
 }

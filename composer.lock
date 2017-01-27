@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c6f0f1918cff3ec5866019d32feb325b",
-    "content-hash": "10d2430ac88def87e50b98f22a74352d",
+    "hash": "9863d1436e8f1dd264e0599860b8f72b",
+    "content-hash": "cc719e9162e454000bfd9b4a7db89988",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -209,28 +209,29 @@
         },
         {
             "name": "doctrine/collections",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a"
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
-                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "doctrine/coding-standard": "~0.1@dev",
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -271,7 +272,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2017-01-03 10:49:41"
         },
         {
             "name": "doctrine/common",
@@ -348,16 +349,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.8",
+            "version": "v2.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e"
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/6314d55f60f85f0295c90688397b75c13faf9f0e",
-                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fc376f7a61498e18520cd6fa083752a4ca08072b",
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b",
                 "shasum": ""
             },
             "require": {
@@ -415,20 +416,20 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-01-17 17:48:38"
+            "time": "2017-01-23 23:17:10"
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.6.6",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "0f0c4df366bd1d36d38a27e2f5ff128e118ac969"
+                "reference": "a01d99bc6c9a6c8a8ace0012690099dd957ce9b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/0f0c4df366bd1d36d38a27e2f5ff128e118ac969",
-                "reference": "0f0c4df366bd1d36d38a27e2f5ff128e118ac969",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/a01d99bc6c9a6c8a8ace0012690099dd957ce9b9",
+                "reference": "a01d99bc6c9a6c8a8ace0012690099dd957ce9b9",
                 "shasum": ""
             },
             "require": {
@@ -496,7 +497,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2017-01-07 21:47:22"
+            "time": "2017-01-16 12:01:26"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -922,12 +923,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b"
+                "reference": "b0a7a5c038934ef73d2bf18dc4c042242b0cd70c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/90628acfec2dcd105f47ab6eddcf14d28f60962b",
-                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/b0a7a5c038934ef73d2bf18dc4c042242b0cd70c",
+                "reference": "b0a7a5c038934ef73d2bf18dc4c042242b0cd70c",
                 "shasum": ""
             },
             "require": {
@@ -990,7 +991,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-16 09:31:32"
+            "time": "2017-01-27 10:48:45"
         },
         {
             "name": "igorw/get-in",
@@ -1428,16 +1429,16 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "2b0e6c614be4a79026a3b64d32bc5e9735de35e0"
+                "reference": "d653f4d22b33c2c2870cb87df8a32508186a799a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/2b0e6c614be4a79026a3b64d32bc5e9735de35e0",
-                "reference": "2b0e6c614be4a79026a3b64d32bc5e9735de35e0",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/d653f4d22b33c2c2870cb87df8a32508186a799a",
+                "reference": "d653f4d22b33c2c2870cb87df8a32508186a799a",
                 "shasum": ""
             },
             "require": {
@@ -1482,7 +1483,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -1506,7 +1507,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2017-01-08 18:53:27"
+            "time": "2017-01-20 01:55:04"
         },
         {
             "name": "monolog/monolog",
@@ -2691,6 +2692,52 @@
             "time": "2017-01-12 20:44:00"
         },
         {
+            "name": "tinymce/tinymce",
+            "version": "4.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "7b45b6de0b8835d5b54dafbd4a3c5a0e11abc3d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/7b45b6de0b8835d5b54dafbd4a3c5a0e11abc3d6",
+                "reference": "7b45b6de0b8835d5b54dafbd4a3c5a0e11abc3d6",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2017-01-04 13:58:37"
+        },
+        {
             "name": "twig/twig",
             "version": "v2.1.0",
             "source": {
@@ -2869,16 +2916,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.3.9",
+            "version": "1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "d5d74ca5548753e0e427fcffca89b134943bac89"
+                "reference": "83e8d98b9915de76c659ce27d683c02a0f99fa90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/d5d74ca5548753e0e427fcffca89b134943bac89",
-                "reference": "d5d74ca5548753e0e427fcffca89b134943bac89",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/83e8d98b9915de76c659ce27d683c02a0f99fa90",
+                "reference": "83e8d98b9915de76c659ce27d683c02a0f99fa90",
                 "shasum": ""
             },
             "require": {
@@ -2915,7 +2962,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-01-17 16:18:33"
+            "time": "2017-01-23 04:53:24"
         }
     ],
     "packages-dev": [

@@ -12,7 +12,7 @@ class ProfileController extends BaseController
                 
         $em = $this->getDoctrine()->getManager();
         $mybooks = $em->getRepository('AppBundle:Book')->findAll();
-        $tabs = ['profile','talk'];
+        $tabs = ['account'];
 
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {

@@ -115,8 +115,6 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
                     }
                 }
                 ajaxSendForm();
-//    ajaxSend(latLng);
-
             } else {
                 console.log(status);
             }
@@ -152,26 +150,6 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
         });
     }
 
-
-
-//    function ajaxSend(latLng)  {
-//        $.ajax({
-//            dataType : 'json',
-//            method: 'POST',
-//            data : {
-//                mlat : latLng.lat(),
-//                mlng : latLng.lng(),
-//            },
-//            success: function(success) {
-//                console.log(success);
-//            },
-//            error : function(err){
-//                console.error(err);
-//                console.log(err);
-//            }
-//        });
-//    }
-    
     function ajaxSendForm()  {
         var formSerialize = $("#geoform").serialize();
         $.post('', formSerialize, function(response){

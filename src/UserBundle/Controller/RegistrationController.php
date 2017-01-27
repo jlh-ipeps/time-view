@@ -36,8 +36,6 @@ class RegistrationController extends BaseController {
 
         $form->handleRequest($request);
         
-        dump($form);
-        
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);

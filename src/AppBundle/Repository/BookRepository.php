@@ -24,4 +24,18 @@ class BookRepository extends \Doctrine\ORM\EntityRepository {
 
   }
   
+  public function findTagsByBook(int $book) {
+      
+    $qb = $this->createQueryBuilder('b');
+    $qb
+      ->innerJoin('b.tags', 't')
+      ->Select('t.tagName')
+      ->where($qb->expr()->in('b.id', $book))
+    ;
+    return $qb
+      ->getQuery()
+      ->getResult()
+    ;
+
+  }
 }

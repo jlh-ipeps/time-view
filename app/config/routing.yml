@@ -33,7 +33,7 @@ fos_user:
 #  requirements:
 #    _locale: en|fr|de|nl
 
-
+    
 catchAll:
   path:     /{req}
   requirements:

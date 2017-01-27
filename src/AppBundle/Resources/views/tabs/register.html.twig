@@ -1,7 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-  <h3>{{ 'registration.submit'|trans }}</h3>
+  <h3>{{ 'registration.required'|trans({}, 'messages') }}</h3>
   <div class="tab-content">
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(form) }}

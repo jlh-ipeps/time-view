@@ -50,11 +50,16 @@ $('#tagsinput').on('itemRemoved', function(event) {
     }
 });
 
-if (typeof alreadyTags !== 'undefined') {
-    for (i=0; i < alreadyTags.length; i++) {
-        $('#tagsinput').tagsinput('add', alreadyTags[i].tag_name, {preventPost: true});
+if (typeof repoTags !== 'undefined') {
+    for (i=0; i < repoTags.length; i++) {
+        $('#tagsinput').tagsinput('add', repoTags[i].tagName, {preventPost: true});
     }
 }
+//if (typeof alreadyTags !== 'undefined') {
+//    for (i=0; i < alreadyTags.length; i++) {
+//        $('#tagsinput').tagsinput('add', alreadyTags[i].tag_name, {preventPost: true});
+//    }
+//}
 
 /*
 

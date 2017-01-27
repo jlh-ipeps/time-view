@@ -17,6 +17,7 @@
     var maplng = {{ maplng }};
     var mapmarker = {{ mapmarker }};
     var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
+//console.log(mapmarkers);
     initMap(maplat, maplng, mapmarker, mapmarkers);
   </script>
 

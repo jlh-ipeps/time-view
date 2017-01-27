@@ -13,8 +13,16 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
     public function findPicturesByBook(int $id) {
         $qb = $this->createQueryBuilder('p');
         $qb
-          ->innerJoin('p.file', 'f')
-          ->Select('p')
+          ->Join('p.file', 'f')
+          ->Join('p.book', 'b')
+          ->Select('p.title')
+          ->AddSelect('p.info')
+          ->AddSelect('p.lat')
+          ->AddSelect('p.lng')
+          ->AddSelect('(f.id) AS file_id')
+          ->AddSelect('(f.ext) AS file_ext')
+          ->AddSelect('f.width / f.height AS file_ratio')
+          ->AddSelect('(b.id) AS book_id')
           ->where($qb->expr()->in('p.book', $id))
           ->orderBy('f.id', 'DESC')
         ;
@@ -54,13 +62,21 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
         ;
   }
 
-    public function findPopularImages() {
-        $limit = 100;
+    public function findPopularImages($maxThumbNbr) {
+        $limit = $maxThumbNbr;
         $qb = $this->createQueryBuilder('p');
         $qb
-          ->innerJoin('p.file', 'f')
-          ->Select('p')
-          ->orderBy('f.id', 'ASC')
+          ->Join('p.file', 'f')
+          ->Join('p.book', 'b')
+          ->Select('p.title')
+          ->AddSelect('p.info')
+          ->AddSelect('p.lat')
+          ->AddSelect('p.lng')
+          ->AddSelect('(f.id) AS file_id')
+          ->AddSelect('(f.ext) AS file_ext')
+          ->AddSelect('f.width / f.height AS file_ratio')
+          ->AddSelect('(b.id) AS book_id')
+          ->orderBy('f.id', 'DESC')
           ->setMaxResults( $limit );
         ;
         return $qb
@@ -68,5 +84,6 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
           ->getResult()
         ;
   }
+  
 
 }

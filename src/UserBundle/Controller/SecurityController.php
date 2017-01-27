@@ -14,7 +14,7 @@ class SecurityController extends BaseController
     
     protected function renderLogin(array $data) {
         
-        $data['tabs'] = ['login', 'talk'];
+        $data['tabs'] = ['login'];
         $data['item'] = 'user';
         $data['title'] = 'user';
 

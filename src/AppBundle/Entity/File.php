@@ -43,6 +43,9 @@ class File {
      * @ORM\Column(name="height", type="integer")
      */
     private $height;
+    
+    // This field is aggregated. Not in DB table
+    private $ratio;
 
     private $file;
 
@@ -322,5 +325,14 @@ class File {
     public function getHeight()
     {
         return $this->height;
+    }
+
+    /**
+     * Get ratio
+     * @return \int
+     */
+    public function getRatio() {
+        $this->ratio = $this->width / $this->height;
+        return $this->ratio;
     }
 }

@@ -40,8 +40,8 @@
       {% endif %}
       {% for picture in pictures %}  
         <div class="col-xs-6 col-md-3">
-          <a href="{{ path('picture', {'book_id': picture.book.id, 'file_id': picture.file.id}) }}" class="thumbnail">
-            <img src="{{ ('/uploads/img/' ~ picture.file.id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
+          <a href="{{ path('picture', {'book_id': picture.book_id, 'file_id': picture.file_id}) }}" class="thumbnail">
+            <img src="{{ ('/uploads/img/' ~ picture.file_id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
           </a>
         </div>
       {% endfor %}

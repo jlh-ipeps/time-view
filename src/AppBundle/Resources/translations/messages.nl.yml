@@ -35,3 +35,6 @@ tab:
 file:
   file: File
   submit: Stuur
+
+registration:
+  required: Verplicht
