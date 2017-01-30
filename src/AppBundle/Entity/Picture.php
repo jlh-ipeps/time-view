@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Picture
@@ -74,7 +75,16 @@ class Picture {
      */
     private $country;
     
+    
+    private $pictures;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pictures[] = new ArrayCollection();
+    }
 
     /**
      * Set book
@@ -339,4 +349,13 @@ class Picture {
     {
         return $this->postalCode;
     }
+    
+    /**
+     * Get pictures
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPictures() {
+        return $this->file->pictures->toArray();
+    }
+    
 }

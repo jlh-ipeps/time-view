@@ -24,7 +24,7 @@ navbar:
   search: Suche
 
 tab:
-  books: bücher
+  books: Bücher
   gallery: Bilder
   map: Karte
   image: Bild
@@ -38,3 +38,11 @@ file:
 
 registration:
   required: Verpflicht
+
+form:
+  route: Straße
+  postalCode: Postleitzahl
+  locality: Ort
+  country: Land
+  submit: Abschicken
+  clear: Leeren

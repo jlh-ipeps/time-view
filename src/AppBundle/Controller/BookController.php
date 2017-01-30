@@ -20,6 +20,7 @@ class BookController extends Controller {
     $user = $this->getUser();
     $session = $this->get('session');
     $session->set('_locale', $request->getLocale());
+    \Locale::setDefault($request->getLocale());
     
     $em = $this->getDoctrine()->getManager();
     $bookRepo = $em->getRepository('AppBundle:Book');
@@ -85,7 +86,7 @@ class BookController extends Controller {
     if ($book->getUser() == $this->getUser()) {
         $session->set('book', $this->isMyBook($book_id, $mybooks, $session));
         $file = new File();
-        $form = $this->createForm(ImageType::class, $file);
+        $form = $this->createForm(ImageType::class, $file, array());
         $formview = $form->createView();
         if ($request->isMethod('POST')) {
             $picture = new Picture();

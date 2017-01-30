@@ -38,3 +38,11 @@ file:
 
 registration:
   required: Required
+
+form:
+  route: route
+  postalCode: Postal Code
+  locality: Locality
+  country: Country
+  submit: Submit
+  clear: Clear

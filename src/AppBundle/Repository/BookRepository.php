@@ -16,10 +16,11 @@ class BookRepository extends \Doctrine\ORM\EntityRepository {
       ->innerJoin('b.user', 'u')
       ->addSelect('u')
       ->where($qb->expr()->in('u.id', $user))
+      ->orderBy('b.title', 'ASC');
     ;
     return $qb
-      ->getQuery()
-      ->getResult()
+//      ->getQuery()
+//      ->getResult()
     ;
 
   }

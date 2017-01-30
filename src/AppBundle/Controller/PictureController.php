@@ -4,13 +4,18 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\PictureType;
+use AppBundle\Form\PictureBooksType;
+use AppBundle\Form\PicturePicturesBookType;
+use AppBundle\Form\PictureFileBooksType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class PictureController extends Controller
 {
   public function viewAction($book_id, $file_id, Request $request) {
       
+    $user = $this->getUser();
     $session = $this->get('session');
     $em = $this->getDoctrine()->getManager();
     
@@ -18,8 +23,14 @@ class PictureController extends Controller
     if (!$picture) {
         throw $this->createNotFoundException('This picture does not exist');
     }
-    $mapLat = null !== $picture->getLat() ? $picture->getLat() : $session->get('latitude');
-    $mapLng = null !== $picture->getLng() ? $picture->getLng() : $session->get('longitude');
+//    dump($picture->getFile()->getPictures());die();
+//    dump($picture->getPictures());die();
+    
+    
+//    $mapLat = null !== $picture->getLat() ? $picture->getLat() : $session->get('latitude');
+//    $mapLng = null !== $picture->getLng() ? $picture->getLng() : $session->get('longitude');
+    $mapLat = null !== $picture->getLat() ? $picture->getLat() : 0;
+    $mapLng = null !== $picture->getLng() ? $picture->getLng() : 0;
     $mapMarker = null !== $picture->getLat() ? true : 0;
     
     $book = $em->getRepository('AppBundle:Book')->find($book_id);
@@ -35,9 +46,10 @@ class PictureController extends Controller
 //        }
     }
     
+    
 //    dump($image);die();
     $item = "picture";
-    $tabs = ['picture','map','picture_tag','books'];
+    $tabs = ['picture','map_form','picture_tag','books'];
     
     $session->set('_locale', $request->getLocale());
     $session->set('picture', $file_id);
@@ -45,6 +57,14 @@ class PictureController extends Controller
     
     $form = $this->createForm(PictureType::class, $picture);
     $formview = $form->createView();
+    
+//    $booksForm = $this->createForm(PictureBooksType::class, $picture, array('userId' => 1));
+    $file = $picture->getFile();
+    $booksForm = $this->createForm(PictureFileBooksType::class, $file, array('userId' => 1));
+//    $booksForm = $this->createForm(PicturePicturesBookType::class, $picture, array('userId' => 1));
+    $booksFormView = $booksForm->createView();
+//    dump($booksForm);die();
+    
 //        if ($request->isXmlHttpRequest() || $request->isMethod('POST')) {
     if ($request->isXmlHttpRequest()) {
         try {
@@ -72,6 +92,8 @@ class PictureController extends Controller
         // picture
         'picture' => $picture,
         'form' => $formview,
+        // books tag
+        'booksForm' => $booksFormView,
         // map
         'mapjs' => $mapjs,
         'maplat' => $mapLat,

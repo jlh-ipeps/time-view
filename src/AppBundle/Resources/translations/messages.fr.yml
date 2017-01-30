@@ -38,3 +38,11 @@ file:
 
 registration:
   required: Obligatoire
+
+form:
+  route: Rue, place, etc.
+  postalCode: Code postal
+  locality: Localité
+  country: Pays
+  submit: Envoyer
+  clear: Vider

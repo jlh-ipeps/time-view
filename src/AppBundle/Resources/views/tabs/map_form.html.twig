@@ -1,0 +1,38 @@
+{# src/tvBundle/Resources/content/map.html.twig #}
+
+{% block map %}
+
+  <h3>{{ "tab.map"|trans }}</h3>
+  <div class="tab-content">
+    <div class="row">
+      <div class="col-md-8">
+        <div id="map_canvas"></div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+  {{ form(form) }}
+  {#{ form_widget(form) }#}
+        </div>
+      </div>  
+
+    </div>
+  </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&sensor=false&v=3&language={{ app.request.locale }}"></script>
+    <!-- hens.bes-webdeveloper-seraing.be 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrqh6qTEzamxWl6Ljp-aMb9-K9HFE-GbQ&callback=myMap"></script>
+    -->
+  <script src="{{ asset('bundles/app/js/' ~ mapjs) }}"></script>
+  <script>
+    var maplat = {{ maplat }};
+    var maplng = {{ maplng }};
+    var mapmarker = {{ mapmarker }};
+    var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
+//console.log(mapmarkers);
+$(document).ready(function() {
+    initMap(maplat, maplng, mapmarker, mapmarkers);
+ 
+});
+  </script>
+
+{% endblock map %}

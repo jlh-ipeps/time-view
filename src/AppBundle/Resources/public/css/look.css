@@ -33,3 +33,7 @@ button, input, optgroup, select, textarea {
     padding: 10px;
     margin-top: 25px;
 }
+
+.firstUpper:first-letter {
+  text-transform: uppercase;
+}

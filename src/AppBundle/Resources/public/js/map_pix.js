@@ -2,11 +2,17 @@
 
 function initMap(maplat, maplng, mapmarker, mapmarkers) {
 
-var myCenter = new google.maps.LatLng(maplat, maplng);
+
+myCenter = new google.maps.LatLng(maplat, maplng);
+
+myZoom = 13;
+if (maplat === 0) {
+  myZoom = 2;
+} 
 
 // setup mpa options
 var mapOptions = {
-  zoom: 13,
+  zoom: myZoom,
   center: myCenter,
   scrollwheel: false,
   mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -23,7 +29,7 @@ var address = {
 };
 var geoform;
 var marker;
-$(document).ready(function() {
+
     geoform = {
         street: document.getElementById('appbundle_picture_route'),
         postalCode: document.getElementById('appbundle_picture_postalCode'),
@@ -35,8 +41,9 @@ $(document).ready(function() {
     $("#geoform").submit(function(e){
         e.preventDefault();
         geocodeAddr();
+        ajaxSendForm();
     });
-});
+
 // recenter on map resize
 google.maps.event.addDomListener(window, "resize", function() {
   myCenter = map.getCenter();
@@ -44,8 +51,10 @@ google.maps.event.addDomListener(window, "resize", function() {
   map.setCenter(myCenter);
 });
 
-// set map size when map tab is clicked
-var maptab = document.getElementsByClassName("tab_map");
+
+// set map size when map tab is clicked 
+// maptab = ('tab_' + view name)
+var maptab = document.getElementsByClassName("tab_map_form");
 google.maps.event.addDomListener(maptab[0], "click", function() {
   setTimeout(function(){
     myCenter = map.getCenter();
@@ -72,10 +81,14 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
     placeMarker(event.latLng);
   });
 
+
   function placeMarker(latLng) {
-    map.setCenter(latLng);
+//    map.setCenter(latLng);
     if (marker) {
       marker.setPosition(latLng);
+//      if (map.getZoom() < 10) {
+//        map.setZoom() = 13;
+//      }
     } else {
        marker = new google.maps.Marker({
         position: latLng,
@@ -87,6 +100,7 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
       });
     }
     geocodeLoc(latLng);
+    ajaxSendForm();
   }
   
     function geocodeLoc(latLng) {
@@ -114,7 +128,7 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
                       geoform.country.value = address.country;
                     }
                 }
-                ajaxSendForm();
+//                ajaxSendForm();
             } else {
                 console.log(status);
             }
@@ -122,6 +136,7 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
     }
     
     function geocodeAddr() {
+                console.log('status');
         var latLng = {};
         var request = {
             address: geoform.street.value,
@@ -132,17 +147,23 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
             }
         };
         geocoder.geocode(request, function(results, status) {
+                console.log(status);
             if (status === 'OK') {
                 latLng = results[0].geometry.location;
+                var bounds = results[0].geometry.bounds;
                 if (request.address) {
                     placeMarker(latLng);
                 } else {
-                    map.setCenter(latLng);
-                    marker.setPosition(latLng);
+//                    map.setCenter(latLng);
+                    map.fitBounds(bounds);
+//                    marker.setPosition(latLng);
+//                    if (marker) { marker = null; }
 //                    marker.setMap(null);
-                    geoform.lat.value = latLng.lat();
-                    geoform.lng.value = latLng.lng();
-                    ajaxSendForm();
+//                    geoform.lat.value = latLng.lat();
+//                    geoform.lng.value = latLng.lng();
+                    geoform.lat.value = null;
+                    geoform.lng.value = null;
+//                    ajaxSendForm();
                 }
             } else {
                 console.log(status);
@@ -156,6 +177,17 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
             console.log(response);
         },'JSON');
     }
+  
+
+    $("#appbundle_picture_clear").click(function(e){
+        marker.setMap(null);
+        geoform.street.value = null;
+        geoform.postalCode.value = null;
+        geoform.locality.value = null;
+        geocodeAddr();
+        ajaxSendForm();
+    });
+
   
 }
 

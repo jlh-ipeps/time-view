@@ -38,3 +38,11 @@ file:
 
 registration:
   required: Verplicht
+
+form:
+  route: straat
+  postalCode: Postcode
+  locality: Plaats
+  country: Land
+  submit: Verzend
+  clear: Leeg

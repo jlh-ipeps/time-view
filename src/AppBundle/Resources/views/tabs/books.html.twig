@@ -4,9 +4,14 @@
 
   <h3>{{ "tab.books"|trans }}</h3>
   <div class="tab-content">
+    
+
     <div class="row">
       <div class="col-xs-12">
         <h4>{{ picture.title }}</h4>
+        
+        {{ form(booksForm)}}
+        
         <a href="{{ path('book', {'book_id': picture.book.id}) }}" class="item">
           {{ picture.book.title }}
         </a>
