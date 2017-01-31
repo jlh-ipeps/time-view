@@ -27,7 +27,7 @@ class User extends BaseUser
     }
     
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\LastSession")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\LastSession", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $session;

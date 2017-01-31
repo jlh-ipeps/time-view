@@ -47,6 +47,13 @@ class LastSession
      */
     private $uri;
 
+    /**
+     * @var string $account
+     * remember wish account is active in menu
+     * @ORM\Column(name="account", type="string", length=255, unique=false, nullable=true)
+     */
+    private $account;
+
 
     /**
      * Get id
@@ -152,5 +159,29 @@ class LastSession
     public function getUri()
     {
         return $this->uri;
+    }
+
+    /**
+     * Set account
+     *
+     * @param integer $account
+     *
+     * @return LastSession
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return integer
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 }

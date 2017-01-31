@@ -48,6 +48,10 @@ class File {
     private $ratio;
 
     private $file;
+    
+     public function __toString(){
+        return '/'.$this->getUploadDir().'/'.$this->id.'.'.$this->ext;
+    }
 
     public function getFile()  {
       return $this->file;

@@ -29,7 +29,7 @@ class BookController extends Controller {
     if ($this->getUser() == NULL) {
         $mybooks = NULL;
     } else {
-        $mybooks = $bookRepo->findBooksByUser($user->getId());
+        $mybooks = $bookRepo->findBooksByUser($user->getId())->getQuery()->getResult();
     }
     
     

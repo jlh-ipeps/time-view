@@ -10,8 +10,9 @@ picture : entity
   <div class="tab-content">
     <div class="row">
       <div class="col-xs-12">
-        <a href="{{ base_url }}uploads/img/{{ picture.file.id }}.jpeg" class="item">
-          <img src="{{ base_url }}uploads/img/{{ picture.file.id }}.jpeg" alt="...">
+        <a href="{{ asset(picture.file)}}" class="item">
+          <img src="{{ asset(picture.file)}}" alt="...">
+          
         </a>
       </div>
     </div>

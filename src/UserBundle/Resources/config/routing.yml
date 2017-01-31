@@ -5,7 +5,7 @@ register:
   path: /register/
   defaults: 
     _controller: FOSUserBundle:Registration:register
-
+    
 user_security_profile_show:
   path: /profile/
   defaults: 

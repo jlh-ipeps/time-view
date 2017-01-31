@@ -67,3 +67,8 @@ picture:
   path: /picture/{book_id}-{file_id}/
   defaults: 
     _controller: AppBundle:Picture:view
+
+admin:
+  path: /admin/
+  defaults:
+    _controller: AppBundle:Admin:view

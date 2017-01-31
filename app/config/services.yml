@@ -23,3 +23,14 @@ services:
         tags:
             - { name: 'monolog.logger', channel: 'security' }
             
+    user.post_persist.listener:
+        class: UserBundle\Listener\PrePersistListener
+        arguments: []
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }            
+
+#    user.session.listener:
+#        class: UserBundle\Listener\SessionListener
+#        arguments: ['@service_container', '@security.token_storage']
+#        tags:
+#          - { name: kernel.event_listener, event: kernel.request, method: updateSession }

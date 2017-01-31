@@ -6,6 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FormEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+
 
 class RegistrationController extends BaseController {
     /**
