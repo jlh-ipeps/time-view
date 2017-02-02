@@ -1,8 +1,6 @@
 
-function initMap(maplat, maplng, mapmarker, mapmarkers) {
+function initMap(maplat, maplng, mapmarker, mapmarkers, thumbUrlDir, pixPath) {
 
-    var thumbURL = '/web/thumb/uploads/img/';
-    var pictureURL = '/web/app_dev.php/en/picture/';
     var book_id = '1';
 
     var bounds = new google.maps.LatLngBounds();
@@ -69,7 +67,7 @@ function initMap(maplat, maplng, mapmarker, mapmarkers) {
     if (mapmarkers.length > 0) {
         for (m = 0; m < mapmarkers.length; m++) { 
             var mIcon = {
-                url: thumbURL + mapmarkers[m].file_id + '.' + mapmarkers[m].file_ext,
+                url: thumbUrlDir + mapmarkers[m].file_id + '.' + mapmarkers[m].file_ext,
                 scaledSize: new google.maps.Size(50 * mapmarkers[m].file_ratio, 50),
                 origin: new google.maps.Point(0,0),
                 anchor: new google.maps.Point(50, 25)
@@ -81,7 +79,7 @@ function initMap(maplat, maplng, mapmarker, mapmarkers) {
                 position: mLatlng,
                 icon: mIcon,
                 map: map,
-                url: pictureURL + book_id + '-' + mapmarkers[m].file_id + '/'
+                url: pixPath + book_id + '-' + mapmarkers[m].file_id + '/'
             });
             new google.maps.event.addListener(marker, 'click', function(event) {
                 window.location.href = this.url;

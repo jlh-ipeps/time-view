@@ -13,12 +13,15 @@
     -->
   <script src="{{ asset('bundles/app/js/' ~ mapjs) }}"></script>
   <script>
+    window.console.log('test');
+    var thumbUrlDir = "{{ thumbUrlDir|raw }}";
+    var uploadDir = "{{ uploadDir|raw }}";
     var maplat = {{ maplat }};
     var maplng = {{ maplng }};
     var mapmarker = {{ mapmarker }};
     var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
 //console.log(mapmarkers);
-    initMap(maplat, maplng, mapmarker, mapmarkers);
+    initMap(maplat, maplng, mapmarker, mapmarkers, thumbUrlDir);
   </script>
 
 {% endblock map %}

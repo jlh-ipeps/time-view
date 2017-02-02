@@ -1,5 +1,6 @@
 # app/config/security.yml
 security:
+  access_denied_url: user_security_login 
   encoders:
     FOS\UserBundle\Model\UserInterface: bcrypt
 

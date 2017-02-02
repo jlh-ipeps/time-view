@@ -17,6 +17,8 @@ class PictureController extends Controller
     $em = $this->getDoctrine()->getManager();
     
     $picture = $em->getRepository('AppBundle:Picture')->find(array("book" => $book_id, "file" => $file_id));
+//    dump($picture);die();
+
     if (!$picture) {
         throw $this->createNotFoundException('This picture does not exist');
     }

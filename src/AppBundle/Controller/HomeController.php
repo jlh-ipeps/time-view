@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\File;
 
 class HomeController extends Controller {
 
@@ -12,6 +13,12 @@ class HomeController extends Controller {
         $maxThumbNbr = 100;
         $session = $this->get('session');
         $session->set('_locale', $request->getLocale());
+
+        $file = new File();
+        $uploadDir = $file->getUploadDir() . '/';
+        $imagineCacheManager = $this->get('liip_imagine.cache.manager');
+        $thumbUrlDir = $imagineCacheManager->getBrowserPath($uploadDir, 'thumb');
+//dump($thumbUrlDir);die();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -59,6 +66,8 @@ class HomeController extends Controller {
             'pictures' => $pictures,
             'form' => NULL,
             // map
+            'thumbUrlDir' => $thumbUrlDir,
+            'uploadDir' => $uploadDir,
             'mapjs' => 'map_book.js',
             'maplat' => 50,
             'maplng' => 5,

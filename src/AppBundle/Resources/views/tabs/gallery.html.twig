@@ -41,7 +41,7 @@
       {% for picture in pictures %}  
         <div class="col-xs-6 col-md-3">
           <a href="{{ path('picture', {'book_id': picture.book_id, 'file_id': picture.file_id}) }}" class="thumbnail">
-            <img src="{{ asset('/uploads/img/' ~ picture.file_id ~ '.jpeg') | imagine_filter('thumb')}}" alt="...">
+            <img src="{{ asset(picture[0].file) | imagine_filter('thumb')}}" alt="...">
           </a>
         </div>
       {% endfor %}

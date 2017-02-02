@@ -81,7 +81,7 @@ liip_imagine:
             # use the default web path
             web_path:
                 web_root: "%kernel.root_dir%/../web"
-                cache_prefix: "."
+                cache_prefix: "media/cache"
     filter_sets:
         # use the default cache configuration
         cache: ~
