@@ -65,12 +65,14 @@ class BookController extends Controller {
         $tabs = ['gallery','map_book', 'tag', 'talk'];
     
         $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id, $maxThumbNbr);
+//dump($pictures);die();
+//dump($pictures[2]);die();
+//dump($pictures[2][0]->getFile());die();
+//dump($pictures[2][0]->getLat());die();
 
         // add $pitures to map
-        $mapmarkers = array_values(array_filter($pictures, function($p){return $p['lat'];})); 
-        // http://stackoverflow.com/questions/13928729/
         $serializer = $this->get('serializer');
-        $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
+        $jsonPictures = $serializer->serialize($pictures, 'json');
 
 //    
 //    $bounds = array(
@@ -137,12 +139,12 @@ class BookController extends Controller {
             'talks' => $talks,
             'talk_form' => $talk_formview,
             // map
+            'jsonPictures' => $jsonPictures,
             'thumbUrlDir' => $thumbUrlDir,
             'uploadDir' => $uploadDir,
             'maplat' => 50,
             'maplng' => 5,
-            'mapmarker' => 0,
-            'mapmarkers' => $jsonMapMarkers
+            'mapmarker' => 0
         ));
     }
 

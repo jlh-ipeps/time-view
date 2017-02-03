@@ -6,17 +6,22 @@
     <div id="map_canvas"></div>
   </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&language={{ app.request.locale }}"></script>
-    <script src="{{ asset('bundles/app/js/' ~ mapjs) }}"></script>
     <script>
-      window.console.log('test');
-      var thumbUrlDir = "{{ thumbUrlDir|raw }}";
+    </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&language={{ app.request.locale }}"></script>
+    <script>
       var maplat = {{ maplat }};
       var maplng = {{ maplng }};
       var mapmarker = {{ mapmarker }};
-      var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
-//console.log(mapmarkers);
-      initMap(maplat, maplng, mapmarker, mapmarkers, thumbUrlDir);
+      var book_id = "1";
+
+      var homeIcon = "{{ asset('bundles/app/img/home.png') }}";
+      var baseUrl = "{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseURL() }}/{{ locale}}";
+      var thumbUrlDir = "{{ thumbUrlDir|raw }}";
+      var jsonPictures = JSON.parse({{ jsonPictures|json_encode|raw }});
     </script>
+    <script src="{{ asset('bundles/app/js/map_home.js') }}"></script>
+
 
 {% endblock map %}

@@ -12,7 +12,8 @@ class HomeController extends Controller {
         
         $maxThumbNbr = 100;
         $session = $this->get('session');
-        $session->set('_locale', $request->getLocale());
+        $locale = $request->getLocale();
+        $session->set('_locale', $locale);
 
         $file = new File();
         $uploadDir = $file->getUploadDir() . '/';
@@ -37,10 +38,8 @@ class HomeController extends Controller {
 //        );
 
         // add $pitures to map
-        $mapmarkers = array_values(array_filter($pictures, function($p){return $p['lat'];})); 
-        // http://stackoverflow.com/questions/13928729/
         $serializer = $this->get('serializer');
-        $jsonMapMarkers = $serializer->serialize($mapmarkers, 'json');
+        $jsonPictures = $serializer->serialize($pictures, 'json');
 
         $item = "home";
         $tabs = ['gallery','map'];
@@ -59,6 +58,7 @@ class HomeController extends Controller {
 
         return $this->render('AppBundle:layout:content.html.twig', array(
             // content
+            'locale' => $locale,
             'item' => $item,
             'title' => $title,
             'tabs' => $tabs,
@@ -66,13 +66,13 @@ class HomeController extends Controller {
             'pictures' => $pictures,
             'form' => NULL,
             // map
+            'jsonPictures' => $jsonPictures,
             'thumbUrlDir' => $thumbUrlDir,
             'uploadDir' => $uploadDir,
             'mapjs' => 'map_book.js',
             'maplat' => 50,
             'maplng' => 5,
             'mapmarker' => 0,
-            'mapmarkers' => $jsonMapMarkers
         ));
     }
   

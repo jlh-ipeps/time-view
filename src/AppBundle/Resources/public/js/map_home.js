@@ -52,7 +52,7 @@
     });
 
     // set map size when map tab is clicked
-    var maptab = document.getElementsByClassName("tab_map_book");
+    var maptab = document.getElementsByClassName("tab_map_home");
     google.maps.event.addDomListener(maptab[0], "click", function() {
         setTimeout(function(){
             myCenter = map.getCenter();

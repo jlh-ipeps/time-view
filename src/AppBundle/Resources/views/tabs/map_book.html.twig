@@ -8,12 +8,11 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&language={{ app.request.locale }}"></script>
     <script>
-      var homeIcon = "{{ asset('/bundles/app/img/home.png') }}";
+      var homeIcon = "{{ asset('bundles/app/img/home.png') }}";
       var book_id = "{{ book_id }}";
       var baseUrl = "{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseURL() }}/{{ locale}}";
       var thumbUrlDir = "{{ thumbUrlDir|raw }}";
-      var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
-//console.log(baseUrl);
+      var jsonPictures = JSON.parse({{ jsonPictures|json_encode|raw }});
     </script>
     <script src="{{ asset('bundles/app/js/map_book.js') }}"></script>
 
