@@ -21,7 +21,8 @@ class BookController extends Controller {
 
         $user = $this->getUser();
         $session = $this->get('session');
-        $session->set('_locale', $request->getLocale());
+        $locale = $request->getLocale();
+        $session->set('_locale', $locale);
         \Locale::setDefault($request->getLocale());
     
         $file = new File();
@@ -61,7 +62,7 @@ class BookController extends Controller {
     
 
         $item = "book";
-        $tabs = ['gallery','map', 'tag', 'talk'];
+        $tabs = ['gallery','map_book', 'tag', 'talk'];
     
         $pictures = $em->getRepository('AppBundle:Picture')->findPicturesByBook($book_id, $maxThumbNbr);
 
@@ -122,6 +123,8 @@ class BookController extends Controller {
     
         return $this->render('AppBundle:layout:content.html.twig', array(
             // content
+            'locale' => $locale,
+            'book_id' => $book_id,
             'item' => $item,
             'title' => $book->getTitle(),
             'tabs' => $tabs,
@@ -136,7 +139,6 @@ class BookController extends Controller {
             // map
             'thumbUrlDir' => $thumbUrlDir,
             'uploadDir' => $uploadDir,
-            'mapjs' => 'map_book.js',
             'maplat' => 50,
             'maplng' => 5,
             'mapmarker' => 0,

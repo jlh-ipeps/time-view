@@ -7,16 +7,14 @@
   </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&language={{ app.request.locale }}"></script>
-    <script src="{{ asset('bundles/app/js/' ~ mapjs) }}"></script>
     <script>
-      window.console.log('test');
+      var homeIcon = "{{ asset('/bundles/app/img/home.png') }}";
+      var book_id = "{{ book_id }}";
+      var baseUrl = "{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseURL() }}/{{ locale}}";
       var thumbUrlDir = "{{ thumbUrlDir|raw }}";
-      var maplat = {{ maplat }};
-      var maplng = {{ maplng }};
-      var mapmarker = {{ mapmarker }};
       var mapmarkers = eval('(' + {{ mapmarkers|json_encode|raw }} + ')');
-//console.log(mapmarkers);
-      initMap(maplat, maplng, mapmarker, mapmarkers, thumbUrlDir);
+//console.log(baseUrl);
     </script>
+    <script src="{{ asset('bundles/app/js/map_book.js') }}"></script>
 
 {% endblock map %}

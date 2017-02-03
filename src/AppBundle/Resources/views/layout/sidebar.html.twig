@@ -68,21 +68,26 @@
           <i></i>
           <h3><span class="glyphicon glyphicon-user"></span> {{ "sidebar.myaccount"|trans }}</h3>
           <ul>
+{% if is_granted('ROLE_USER') -%}
             <li class="active">
-              <a href="{{path('user_security_profile_show')}}">Connection</a>
+              <a href="{{path('user_security_profile_show')}}">{{ 'sidebar.profil'|trans }}</a>
             </li>
             <li class="active">
-              <a href="{{path('user_security_login')}}">Login</a>
+              <a href="{{path('user_security_logout')}}">{{ 'layout.logout'|trans({},'FOSUserBundle') }}</a>
+            </li>
+{% else %}
+            <li class="active">
+              <a id="registrationLink" href="{{path('register')}}">{{ 'layout.register'|trans({},'FOSUserBundle') }}</a>
             </li>
             <li class="active">
-              <a href="{{path('user_security_logout')}}">Logout</a>
+              <a href="{{path('user_security_login')}}">{{ 'layout.login'|trans({},'FOSUserBundle') }}</a>
             </li>
-            <li class="active">
-              <a id="registrationLink" href="{{path('register')}}">Register</a>
-            </li>
+{%- endif %}
+{% if is_granted('ROLE_ADMIN') -%}
             <li class="active">
               <a id="registrationLink" href="{{path('admin')}}">Admin</a>
             </li>
+{%- endif %}
           </ul>
         </li>
 

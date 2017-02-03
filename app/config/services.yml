@@ -34,3 +34,10 @@ services:
 #        arguments: ['@service_container', '@security.token_storage']
 #        tags:
 #          - { name: kernel.event_listener, event: kernel.request, method: updateSession }
+
+            
+#    user.registration.form.type:
+#        class: UserBundle\Form\Type\RegistrationFormType
+#        arguments: ['%fos_user.model.user.class%']
+#        tags:
+#            - { name: form.type, alias: user_registration }
