@@ -155,9 +155,12 @@ class Picture {
      *
      * @return string
      */
-    public function getTitle()
-    {
-        return $this->title;
+    public function getTitle() {
+        $title = $this->title;
+        if ($title == NULL) {
+            $title = $this->getFile()->getAlt();
+        }
+        return $title;
     }
 
     /**

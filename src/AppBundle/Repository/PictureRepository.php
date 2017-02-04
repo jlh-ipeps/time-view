@@ -32,7 +32,7 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
         $qb
           ->innerJoin('p.file', 'f')
           ->Select('p')
-          ->orderBy('f.id', 'ASC')
+          ->orderBy('f.id', 'DESC')
           ->setMaxResults( $limit );
         ;
         return $qb

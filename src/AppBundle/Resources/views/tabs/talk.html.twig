@@ -16,7 +16,7 @@
         <div>
             <span>{{ talk.date|date('Y-m-d') }}</span>
             <span>{{ talk.date|date('H:i:s') }}</span>
-            <span><a href="#">{{ talk.username }}</a></span>
+            <span><a href="{{path('user_security_profile_show_byname', {'username':talk.username})}}">{{ talk.username }}</a></span>
         </div>
     </div>
       {% endfor %}

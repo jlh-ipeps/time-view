@@ -70,7 +70,7 @@
           <ul>
 {% if is_granted('ROLE_USER') -%}
             <li class="active">
-              <a href="{{path('user_security_profile_show')}}">{{ 'sidebar.profil'|trans }}</a>
+              <a href="{{path('user_security_profile_edit')}}">{{ 'sidebar.profil'|trans }}</a>
             </li>
             <li class="active">
               <a href="{{path('user_security_logout')}}">{{ 'layout.logout'|trans({},'FOSUserBundle') }}</a>

@@ -1,5 +1,5 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "AppBundle:layout:content.html.twig" %}
+{% set item='user' %}
+{% set title=user.username %}
+{% set tabs=['account'] %}
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Profile:show_content.html.twig" %}
-{% endblock fos_user_content %}

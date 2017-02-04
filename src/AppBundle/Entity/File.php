@@ -85,17 +85,16 @@ class File {
           return;
         }
 
-      // Le nom du fichier est son id, on doit juste stocker également son extension
-      // Pour faire propre, on devrait renommer cet attribut en « extension », plutôt que « ext »
-      $this->ext = $this->file->guessExtension();
+        // Le nom du fichier est son id, on doit juste stocker également son extension
+        // Pour faire propre, on devrait renommer cet attribut en « extension », plutôt que « ext »
+        $this->ext = $this->file->guessExtension();
 
-      // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
-      $this->alt = $this->file->getClientOriginalName();
-
-      // set width
-      list($width, $height) = getimagesize($this->file);
-      $this->width = $width;
-      $this->height = $height;
+        // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
+        $this->alt = basename($this->file->getClientOriginalName(), '.'.$this->file->getClientOriginalExtension());
+        // set width
+        list($width, $height) = getimagesize($this->file);
+        $this->width = $width;
+        $this->height = $height;
     }
 
     /**

@@ -121,7 +121,7 @@ $bounds = array(
         $jsonPictures = $serializer->serialize($pictures, 'json');
 
         $item = "home";
-        $tabs = ['map_here', 'gallery'];
+        $tabs = ['map_here', 'gallery_here'];
 
         $title = $this->translate('sidebar.' . $wich_home);
 
