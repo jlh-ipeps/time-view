@@ -126,7 +126,6 @@ class BookController extends Controller {
         return $this->render('AppBundle:layout:content.html.twig', array(
             // content
             'locale' => $locale,
-            'book_id' => $book_id,
             'item' => $item,
             'title' => $book->getTitle(),
             'tabs' => $tabs,

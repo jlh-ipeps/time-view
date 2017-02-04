@@ -19,6 +19,7 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
           ->where($qb->expr()->in('p.book', $id))
           ->orderBy('f.id', 'DESC')
         ;
+//dump($qb->getQuery()->getResult());die();
         return $qb
           ->getQuery()
           ->getResult()
@@ -65,6 +66,50 @@ class PictureRepository extends \Doctrine\ORM\EntityRepository {
           ->orderBy('f.id', 'DESC')
           ->setMaxResults( $limit );
         ;
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+  }
+  
+    public function findAjaxImages($bounds, $maxThumbNbr) {
+        
+        $limit = $maxThumbNbr;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->Join('p.file', 'f')
+            ->Join('p.book', 'b')
+            ->Select('p')
+            ->Where('p.lat IS NOT NULL')
+            ->andWhere('p.lng < :east')
+            ->andWhere('p.lng > :west')
+            ->andWhere('p.lat < :north')
+            ->andWhere('p.lat > :south')
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults( $limit );
+        $qb
+            ->setParameters($bounds);
+        ;
+//dump($qb->getQuery()->getResult());die();
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+  }
+  
+    public function findAjax2Images($maxThumbNbr) {
+        
+        $limit = $maxThumbNbr;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->Join('p.file', 'f')
+            ->Join('p.book', 'b')
+            ->Select('p')
+            ->Where('p.lat IS NOT NULL')
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults( $limit );
+        ;
+dump($qb->getQuery()->getResult());die();
         return $qb
           ->getQuery()
           ->getResult()

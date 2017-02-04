@@ -8,39 +8,47 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller {
     
-  public function geolocationAction(Request $request){
+    public function geolocationAction(Request $request){
+        
       
-    $nelat = $request->get('nelat');
-    $nelng = $request->get('nelng');
-    $swlat = $request->get('swlat');
-    $swlng = $request->get('swlng');
+        $bounds = array(
+            'north' => $request->get('north'),
+            'south' => $request->get('south'),
+            'west' => $request->get('west'),
+            'east' => $request->get('east'),
+        ); 
     
-    $markers = [];
-    for( $i = 0; $i<5; $i++ ) {
-        $markers[$i] = [
-            rand($nelat * 1000, $swlat * 1000) / 1000,
-            rand($nelng * 1000, $swlng * 1000) / 1000
-        ];
-    }
-      
-    try {
+        $maxThumbNbr = 100;
+        $em = $this->getDoctrine()->getManager();
+        $pictures = $em->getRepository('AppBundle:Picture')->findAjaxImages($bounds, $maxThumbNbr);
+        // add $pitures to map (serializer do too mmany queries
+        $serializer = $this->get('serializer');
+        $jsonPictures = $serializer->serialize($pictures, 'json');
 
-        return new JsonResponse([
-            'success' => true,
-            'markers' => $markers
-        ]);
+        try {
+            return new JsonResponse([
+                'success' => true,
+                'jsonPictures' => $jsonPictures,
+            ]);
 
-    } catch (\Exception $exception) {
-        return new JsonResponse([
-            'success' => false,
-            'code'    => $exception->getCode(),
-            'message' => $exception->getMessage(),
-        ]);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
     }
-  }
     
   public function bookAction(Request $request){
-      
+    
+    $bounds = array(
+        'north' => $request->get('nelat'),
+        'sud' => $request->get('swlat'),
+        'east' => $request->get('nelng'),
+        'west' => $request->get('swlng'),
+    ); 
+    
     $nelat = $request->get('nelat');
     $nelng = $request->get('nelng');
     $swlat = $request->get('swlat');

@@ -49,12 +49,12 @@ class SidebarController extends Controller {
                 ->using('free_geo_ip')
                 ->geocode($originalRequest->server->get('REMOTE_ADDR'))
             ;
-            $session->set('country', $addr->first()->getCountry()->getName());
+            $session->set('country', $addr->first()->getCountryCode());
             $session->set('latitude', $addr->first()->getLatitude());
             $session->set('longitude', $addr->first()->getLongitude());
 //            dump($addr);die();
-//            dump($session->get('latitude'));die();
         }
+//dump($session->get('country'));die();
 
         return $this->render('AppBundle:layout:sidebar.html.twig', array(
             'locales' => $locales,
