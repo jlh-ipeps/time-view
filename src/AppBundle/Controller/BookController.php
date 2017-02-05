@@ -45,15 +45,15 @@ class BookController extends Controller {
         $talk = new Talk();
         $talk_form = $this->createForm(TalkType::class, $talk);
         $talk_formview = $talk_form->createView();
-        if ($request->isMethod('POST')) {
-            $talk_form->handleRequest($request);
-            if ($talk_form->isValid()) {
-                $talk->setUser($user);
-                $talk->setBook($book);
-                $em->persist($talk);
-                $em->flush();
-            }
-        }
+//        if ($request->isMethod('POST')) {
+//            $talk_form->handleRequest($request);
+//            if ($talk_form->isValid()) {
+//                $talk->setUser($user);
+//                $talk->setBook($book);
+//                $em->persist($talk);
+//                $em->flush();
+//            }
+//        }
         $talkRepo = $em->getRepository('AppBundle:Talk');
         $talks = $talkRepo->findMessagesByBook($book_id);
 
@@ -73,6 +73,7 @@ class BookController extends Controller {
         // add $pitures to map
         $serializer = $this->get('serializer');
         $jsonPictures = $serializer->serialize($pictures, 'json');
+//        dump($jsonPictures);die();
 
 //    
 //    $bounds = array(
@@ -159,6 +160,24 @@ class BookController extends Controller {
         return $this->redirectToRoute('book', array('id' => $book->getId()));
     }
 
+    public function ajaxAction($book_id, Request $request) {
+
+        // to be done again
+        $action = $request->get('action');
+        
+        if ($action) {
+            $tag = $request->get('tag');
+            switch ($action) {
+                case 'beforeItemAdd':
+                    return $this->addTag($book_id, $tag);
+                case 'itemRemoved':
+                    return $this->removeTag($book_id, $tag);
+            }
+        } else {
+            return $this->addMessage($book_id, $request);
+        }
+    }
+    
     public function tagAction($book_id, Request $request) {
 
         $action = $request->get('action');        
@@ -218,6 +237,38 @@ class BookController extends Controller {
                 'message' => $exception->getMessage(),
             ]);
         }
+    }
+
+    public function addMessage($book_id, $request) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository('AppBundle:Book');
+            $book = $bookRepo->find($book_id);
+            $talk = new Talk();
+            $talk_form = $this->createForm(TalkType::class, $talk);
+            $talk_form->handleRequest($request);
+            if ($talk_form->isValid()) {
+                $talk->setUser($this->getUser());
+                $talk->setBook($book);
+                $em->persist($talk);
+                $em->flush();
+            }
+            $talk->{'username'} = $talk->getUser()->getUsername();
+            $block = $this->render('AppBundle:include:talk.html.twig', array(
+                'talk' => $talk
+            ))->getContent();
+            return new JsonResponse([
+                'success' => 'ok',
+                'block' => $block
+            ]);
+        } catch (Exception $ex) {
+            return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
+        
     }
 
 }

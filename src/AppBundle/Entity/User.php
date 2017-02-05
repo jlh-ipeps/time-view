@@ -24,6 +24,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->talks = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
     
     /**
@@ -36,6 +37,11 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Talk", mappedBy="user")
      */
     private $talks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book", mappedBy="user")
+     */
+    private $books;
 
 
     /**
@@ -94,5 +100,39 @@ class User extends BaseUser
     public function getTalks()
     {
         return $this->talks;
+    }
+
+    /**
+     * Add book
+     *
+     * @param \AppBundle\Entity\Book $book
+     *
+     * @return User
+     */
+    public function addBook(\AppBundle\Entity\Book $book)
+    {
+        $this->books[] = $book;
+
+        return $this;
+    }
+
+    /**
+     * Remove book
+     *
+     * @param \AppBundle\Entity\Book $book
+     */
+    public function removeBook(\AppBundle\Entity\Book $book)
+    {
+        $this->books->removeElement($book);
+    }
+
+    /**
+     * Get books
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooks()
+    {
+        return $this->books;
     }
 }

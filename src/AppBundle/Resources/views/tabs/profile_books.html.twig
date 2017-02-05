@@ -1,0 +1,21 @@
+{# src/AppBundle/Resources/tabs/profile_books.html.twig #}
+
+{% trans_default_domain 'messages' %}
+
+
+{% block profile_show %}
+
+  <h3>{{ "tab.books"|trans }}</h3>
+  <div class="tab-content">
+    <div class="row">
+      <div class="col-xs-12">
+        <ul>
+      {% for book in books %}  
+        <li><a href="{{ path('book', { 'book_id':book.id }) }}">{{ book.title }}</a></li>
+      {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock profile_show %}

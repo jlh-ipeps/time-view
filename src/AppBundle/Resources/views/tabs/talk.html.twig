@@ -7,22 +7,22 @@
     
     {{ form(talk_form) }}
   
-        <div>
+        <div id="msglist">
       {% for talk in talks %}  
-    <div>
-        <p class="message">
-          {{ talk.message }}
-        </p>
-        <div>
-            <span>{{ talk.date|date('Y-m-d') }}</span>
-            <span>{{ talk.date|date('H:i:s') }}</span>
-            <span><a href="{{path('user_security_profile_show_byname', {'username':talk.username})}}">{{ talk.username }}</a></span>
-        </div>
-    </div>
+          {% include "@App/ajax/talk.html.twig" %}
       {% endfor %}
         </div>      
   
   <script>
+    $("#talkform").submit(function(e){
+        e.preventDefault();
+        var formSerialize = $(this).serialize();
+        $.post('', formSerialize, function(response) {
+             $("#appbundle_talk_message").val('');
+             $("#msglist").prepend( response.block )
+//             console.log(response);
+       },'JSON');
+    });
   </script>
   
 </div>

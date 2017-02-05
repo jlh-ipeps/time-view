@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Book
  *
  * @ORM\Table(name="book")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookRepository")
+ * @ExclusionPolicy("all")
  */
 class Book {
 
@@ -19,6 +22,7 @@ class Book {
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -28,7 +32,7 @@ class Book {
     private $pictures;
   
     /**
-    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="books")
     * @ORM\JoinColumn(nullable=false)
     */
     private $user;

@@ -16,6 +16,6 @@
 /web/bundles/
 *~
 /web/uploads/
-/web/phpinfo.php
+/web/index.php
 /web/thumb/
 /web/media/

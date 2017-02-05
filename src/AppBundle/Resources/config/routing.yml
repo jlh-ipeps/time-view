@@ -46,7 +46,7 @@ search:
 book_ajax:
   path: /book/{book_id}/
   defaults: 
-    _controller: AppBundle:Book:tag
+    _controller: AppBundle:Book:ajax
   condition: "request.isXmlHttpRequest()"
 book_msg:
   path: /book/{book_id}/

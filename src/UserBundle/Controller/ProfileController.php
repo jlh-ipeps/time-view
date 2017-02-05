@@ -47,8 +47,18 @@ class ProfileController extends BaseController
         if ( $user == null){
             throw new NotFoundHttpException("username not valid");
         }
-         
-        return $this->render('FOSUserBundle:Profile:show.html.twig', array('user' => $user));
+        
+        $books = $user->getbooks();
+        
+        return $this->render('AppBundle:layout:content.html.twig', array(
+            // tabs system
+            'item' => "user",
+            'title' => $username,
+            'tabs' => ['profile_show', 'profile_books'],
+            // content
+            'user' => $user,
+            'books' => $books,
+        ));
     }
     
     /**

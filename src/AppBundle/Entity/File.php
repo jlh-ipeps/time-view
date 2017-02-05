@@ -5,10 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FileRepository")
  * @ORM\HasLifecycleCallbacks
+ * @ExclusionPolicy("all")
  */
 class File {
 
@@ -16,6 +20,7 @@ class File {
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -26,6 +31,7 @@ class File {
 
     /**
      * @ORM\Column(name="ext", type="string", length=5)
+     * @Expose
      */
     private $ext;
 
@@ -36,11 +42,13 @@ class File {
 
     /**
      * @ORM\Column(name="width", type="integer")
+     * @Expose
      */
     private $width;
 
     /**
      * @ORM\Column(name="height", type="integer")
+     * @Expose
      */
     private $height;
     
