@@ -17,6 +17,7 @@ class SecurityController extends BaseController
         $data['tabs'] = ['login'];
         $data['item'] = 'user';
         $data['title'] = 'user';
+        $data['formTitle'] = NULL;
 
         return $this->render('AppBundle:layout:content.html.twig', $data);
     }

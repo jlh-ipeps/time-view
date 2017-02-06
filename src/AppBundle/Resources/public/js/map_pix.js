@@ -128,6 +128,8 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
                       geoform.country.value = address.country;
                     }
                 }
+                address.bounds = results[0].geometry.viewport;
+                map.fitBounds(address.bounds);
 //                ajaxSendForm();
             } else {
                 console.log(status);
@@ -152,10 +154,10 @@ google.maps.event.addDomListener(maptab[0], "click", function() {
                 latLng = results[0].geometry.location;
                 var bounds = results[0].geometry.bounds;
                 if (request.address) {
+                    map.fitBounds(bounds);
                     placeMarker(latLng);
                 } else {
 //                    map.setCenter(latLng);
-                    map.fitBounds(bounds);
 //                    marker.setPosition(latLng);
 //                    if (marker) { marker = null; }
 //                    marker.setMap(null);

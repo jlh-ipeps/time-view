@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\PictureType;
+use AppBundle\Form\PictureTitleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -50,32 +51,52 @@ class PictureController extends Controller
     $session->set('picture', $file_id);
     $session->set('lastURI', $request->getRequestURI());
     
+    $owner =$picture->getBook()->getUser();
+    
     $form = $this->createForm(PictureType::class, $picture);
     $formview = $form->createView();
-//        if ($request->isXmlHttpRequest() || $request->isMethod('POST')) {
-    if ($request->isXmlHttpRequest()) {
-        try {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
+    
+    $formTitleView = NULL;
+    if ($owner == $user) {
+        $formTitle = $this->createForm(PictureTitleType::class, $picture);
+        $formTitleView = $formTitle->createView();
+    }
+    
+    if ($request->isMethod('POST')) {
+        if ($request->isXmlHttpRequest()) {
+            try {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $em->persist($picture);
+                    $em->flush();
+                }
+                return new JsonResponse([
+                    'success' => TRUE,
+                ]);
+            } catch (\Exception $exception) {
+                return new JsonResponse([
+                    'code'    => $exception->getCode(),
+                    'message' => $exception->getMessage(),
+                ]);
+            }
+        } else {
+            $formTitle->handleRequest($request);
+            if ($formTitle->isValid()) {
                 $em->persist($picture);
                 $em->flush();
             }
-            return new JsonResponse([
-                'success' => TRUE,
-            ]);
-        } catch (\Exception $exception) {
-            return new JsonResponse([
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage(),
-            ]);
         }
     }
 
+    $title = $picture->getTitle();
+
+    
     return $this->render('AppBundle:layout:content.html.twig', array(
         // content
         'item' => $item,
-        'title' => $picture->getTitle(),
+        'title' => $title,
         'tabs' => $tabs,
+        'formTitle' => $formTitleView,
         // picture
         'picture' => $picture,
         'form' => $formview,

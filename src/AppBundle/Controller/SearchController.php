@@ -30,6 +30,7 @@ class SearchController extends Controller
       'title' => $title,
       'subtitle' => $subtitle,
       'tabs' => $tabs,
+        'formTitle' => NULL,
       'pictures' => $pictures
     ));
   }

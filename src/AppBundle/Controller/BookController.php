@@ -140,6 +140,7 @@ class BookController extends Controller {
             'item' => $item,
             'title' => $book->getTitle(),
             'tabs' => $tabs,
+            'formTitle' => NULL,
             // gallery
             'pictures' => $pictures,
             'form' => $formview,

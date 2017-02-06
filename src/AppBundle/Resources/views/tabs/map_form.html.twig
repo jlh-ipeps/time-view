@@ -10,8 +10,20 @@
       </div>
       <div class="col-md-4">
         <div class="form-group">
-  {{ form(form) }}
-  {#{ form_widget(form) }#}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.route) }}
+    {{ form_row(form.postalCode) }}
+    {{ form_row(form.locality) }}
+    {{ form_row(form.country) }}
+    
+    {{ form_row(form.lat) }}
+    {{ form_row(form.lng) }}
+    
+    {{ form_row(form.submit) }}
+    {{ form_row(form.clear) }}
+{{ form_end(form) }}
         </div>
       </div>  
 

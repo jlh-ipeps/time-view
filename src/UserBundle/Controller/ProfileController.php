@@ -55,6 +55,7 @@ class ProfileController extends BaseController
             'item' => "user",
             'title' => $username,
             'tabs' => ['profile_show', 'profile_books'],
+            'formTitle' => NULL,
             // content
             'user' => $user,
             'books' => $books,

@@ -63,6 +63,7 @@ class HomeController extends Controller {
             'item' => $item,
             'title' => $title,
             'tabs' => $tabs,
+            'formTitle' => NULL,
             // home
             'pictures' => $pictures,
             'form' => NULL,
@@ -141,6 +142,7 @@ $bounds = array(
             'item' => $item,
             'title' => $title,
             'tabs' => $tabs,
+            'formTitle' => NULL,
             // home
             'pictures' => $pictures,
             'form' => NULL,
@@ -204,6 +206,7 @@ $bounds = array(
             'item' => $item,
             'title' => $title,
             'tabs' => $tabs,
+            'formTitle' => NULL,
             // home
             'pictures' => $pictures,
             'form' => NULL,

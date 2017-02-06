@@ -13,6 +13,7 @@ tabs : array (layouts)
 
 {% block content %}
 
+{% if not formTitle %}  
   <h2>
     <i class="glyphicon glyphicon-{{ item }}"></i>
     {#
@@ -23,7 +24,9 @@ tabs : array (layouts)
     </span>
     #}
   </h2>
-    
+{% else %}
+    {{ form(formTitle) }}
+{% endif %}
       
 
   <div class="tabPanel-widget">

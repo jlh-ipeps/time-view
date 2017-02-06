@@ -32,7 +32,8 @@ class AdminController extends Controller {
         // content
         'item' => $item,
         'tabs' => $tabs,
-        'title' => 'admin'
+        'title' => 'admin',
+        'formTitle' => NULL,
     ));
   }
 
