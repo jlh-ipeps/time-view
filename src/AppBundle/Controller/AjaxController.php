@@ -10,25 +10,33 @@ class AjaxController extends Controller {
     
     public function geolocationAction(Request $request){
         
-      
-        $bounds = array(
-            'north' => $request->get('north'),
-            'south' => $request->get('south'),
-            'west' => $request->get('west'),
-            'east' => $request->get('east'),
-        ); 
-    
-        $maxThumbNbr = 100;
-        $em = $this->getDoctrine()->getManager();
-        $pictures = $em->getRepository('AppBundle:Picture')->findAjaxImages($bounds, $maxThumbNbr);
-        // add $pitures to map (serializer do too mmany queries
-        $serializer = $this->get('serializer');
-        $jsonPictures = $serializer->serialize($pictures, 'json');
-
         try {
+            $bounds = array(
+                'north' => $request->get('north'),
+                'south' => $request->get('south'),
+                'west' => $request->get('west'),
+                'east' => $request->get('east'),
+            ); 
+
+            $maxThumbNbr = 100;
+            $em = $this->getDoctrine()->getManager();
+            $pictures = $em->getRepository('AppBundle:Picture')->findAjaxImages($bounds, $maxThumbNbr);
+            // add $pitures to map (serializer do too mmany queries
+            
+            $block = '';
+            foreach ($pictures as $picture) {
+                $block .= $this->render('AppBundle:ajax:gallery.html.twig', array(
+                    'picture' => $picture
+                ))->getContent();
+            }
+
+            $serializer = $this->get('serializer');
+            $jsonPictures = $serializer->serialize($pictures, 'json');
+
             return new JsonResponse([
                 'success' => true,
                 'jsonPictures' => $jsonPictures,
+                'block' => $block
             ]);
 
         } catch (\Exception $exception) {

@@ -47,3 +47,6 @@ form:
   country: Country
   submit: Submit
   clear: Clear
+  
+error:
+  upload: Can't upload this image

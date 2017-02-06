@@ -1,0 +1,6 @@
+
+        <div class="col-xs-6 col-md-3">
+          <a href="{{ path('picture', {'book_id': picture.book.id, 'file_id': picture.file.id}) }}" class="thumbnail">
+            <img src="{{ asset(picture.file) | imagine_filter('thumb')}}" alt="{{ picture.file.alt }}">
+          </a>
+        </div>

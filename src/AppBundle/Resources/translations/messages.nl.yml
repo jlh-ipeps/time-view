@@ -46,3 +46,6 @@ form:
   country: Land
   submit: Verzend
   clear: Leeg
+
+error:
+  upload: Kan niet uploaden dit beeld

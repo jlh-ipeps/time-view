@@ -47,3 +47,6 @@ form:
   country: Pays
   submit: Envoyer
   clear: Vider
+
+error:
+  upload: Cette image ne peut être chargée

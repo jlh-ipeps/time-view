@@ -24,6 +24,8 @@ class BookController extends Controller {
         $locale = $request->getLocale();
         $session->set('_locale', $locale);
         \Locale::setDefault($request->getLocale());
+        
+        $translator = $this->get('translator');
     
         $file = new File();
         $uploadDir = $file->getUploadDir() . '/';
@@ -108,21 +110,29 @@ class BookController extends Controller {
             if ($request->isMethod('POST')) {
                 $picture = new Picture();
                 $form->handleRequest($request);
-                if ($form->isValid()) {
-                    $file->addPicture($picture);
-                    $picture->setBook($book);
-                    $picture->setFile($file);
-                    $em->persist($picture);
-                    $em->persist($file);
-                    $em->flush();
-                    $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                    return $this->redirectToRoute('picture', array('book_id' => $book_id, 'file_id' => $picture->getFile()->getId()));
-                }
+                
+                    if ($form->isValid()) {
+                        $file->addPicture($picture);
+                        $picture->setBook($book);
+                        $picture->setFile($file);
+                        $em->persist($picture);
+                        $em->persist($file);
+                        try {
+                            $em->flush();
+                        } catch (\Exception $exc) {
+                            $session->getFlashBag()->add('error', $translator->trans('error.upload'));
+                            return $this->redirectToRoute('book', array('book_id' => $book->getId()));
+                        }
+                        return $this->redirectToRoute('picture', array('book_id' => $book_id, 'file_id' => $picture->getFile()->getId()));
+                    } else {
+                        $errorMsg = $form->get('file')->getErrors()[0]->getMessage();
+                        $session->getFlashBag()->add('error', $errorMsg);
+                        return $this->redirectToRoute('book', array('book_id' => $book->getId()));
+                    }
             }
         } else {
             $formview = NULL;
         }
-    
     
         return $this->render('AppBundle:layout:content.html.twig', array(
             // content
@@ -156,8 +166,7 @@ class BookController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($book);
         $em->flush();
-
-        return $this->redirectToRoute('book', array('id' => $book->getId()));
+        return $this->redirectToRoute('book', array('book_id' => $book->getId()));
     }
 
     public function ajaxAction($book_id, Request $request) {
@@ -254,7 +263,7 @@ class BookController extends Controller {
                 $em->flush();
             }
             $talk->{'username'} = $talk->getUser()->getUsername();
-            $block = $this->render('AppBundle:include:talk.html.twig', array(
+            $block = $this->render('AppBundle:ajax:talk.html.twig', array(
                 'talk' => $talk
             ))->getContent();
             return new JsonResponse([

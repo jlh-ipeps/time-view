@@ -47,3 +47,6 @@ form:
   country: Land
   submit: Abschicken
   clear: Leeren
+  
+error:
+  upload: Dieses Bild kann nicht hochgeladen werden

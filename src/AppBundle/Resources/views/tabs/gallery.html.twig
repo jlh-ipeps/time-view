@@ -9,7 +9,12 @@
       {% if form %}
         <div class="col-xs-6 col-md-3">
           <span class="thumbnail">
+            {{ form_start(form) }}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                {{ flashMessage }}
+            {% endfor %}
             {{ form(form) }}
+            {{ form_end(form) }}
           </span>
         </div>
 {#
@@ -39,11 +44,7 @@
 #}
       {% endif %}
       {% for picture in pictures %}  
-        <div class="col-xs-6 col-md-3">
-          <a href="{{ path('picture', {'book_id': picture.book.id, 'file_id': picture.file.id}) }}" class="thumbnail">
-            <img src="{{ asset(picture.file) | imagine_filter('thumb')}}" alt="{{ picture.file.alt }}">
-          </a>
-        </div>
+          {% include "@App/ajax/gallery.html.twig" %}
       {% endfor %}
 
     </div>
