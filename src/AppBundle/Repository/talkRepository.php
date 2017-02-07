@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
  */
 class talkRepository extends \Doctrine\ORM\EntityRepository {
     
-    public function findMessagesByBook(int $book) {
+    public function findMessagesByBook($book) {
         $qb = $this->createQueryBuilder('t');
         $qb
           ->innerJoin('t.user', 'u')
