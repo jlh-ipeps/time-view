@@ -13,10 +13,10 @@ class LoadLanguage implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $LanguageList = [
-            ['iso' => 'de', 'name', 'Deutch'],
-            ['iso' => 'en', 'name', 'English'],
-            ['iso' => 'fr', 'name', 'Français'],
-            ['iso' => 'nl', 'name', 'Nederlands'],
+            ['iso' => 'de', 'name' => 'Deutch'],
+            ['iso' => 'en', 'name' => 'English'],
+            ['iso' => 'fr', 'name' => 'Français'],
+            ['iso' => 'nl', 'name' => 'Nederlands'],
         ];
 
         foreach($LanguageList as $l) {
