@@ -21,8 +21,8 @@ class LoadLanguage implements FixtureInterface
 
         foreach($LanguageList as $l) {
             $language = new Languages();
-            $language->setIso($l.iso);
-            $language->setName($l.name);
+            $language->setIso($l['iso']);
+            $language->setName($l['name']);
             $manager->persist($language);
         }
         $manager->flush();
