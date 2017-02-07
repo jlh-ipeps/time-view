@@ -133,6 +133,14 @@ class File {
         $this->getUploadRootDir(), // Le répertoire de destination
         $this->id.'.'.$this->ext   // Le nom du fichier à créer, ici « id.extension »
       );
+      
+      if (null !== $this->file) {
+        $newFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->ext;
+        if (file_exists($newFile)) {
+          chmod($newFile, 644);
+        }
+      }
+      
     }
 
     /**
