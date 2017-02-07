@@ -6,19 +6,20 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Home;
+use AppBundle\Entity\Homes;
 
 class LoadHome implements FixtureInterface
 {
-    public function load(ObjectManager $manager)
-    {
-        $homes = ['here', 'new', 'popular', 'random'];
+    public function load(ObjectManager $manager) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $homesList = ['here', 'new', 'popular', 'random'];
 
-        foreach($homes as $h) {
-            $home = new Home();
+        foreach($homesList as $h) {
+            $home = new Homes();
             $home->setName($h);
-            $manager->persist($home);
+            $em->persist($home);
         }
-        $manager->flush();
+        $em->flush();
     }
 }
