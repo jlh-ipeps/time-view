@@ -40,7 +40,7 @@ class PictureTitleType extends AbstractType {
    * {@inheritdoc}
    */
   public function getBlockPrefix() {
-      return 'appbundle_Title';
+      return 'appbundle_Picture_Title';
   }
 
 }

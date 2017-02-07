@@ -116,5 +116,21 @@ dump($qb->getQuery()->getResult());die();
         ;
   }
   
+    public function findPicturesForAdmin($maxThumbNbr) {
+        $limit = $maxThumbNbr;
+        $qb = $this->createQueryBuilder('p');
+        $qb
+          ->Join('p.file', 'f')
+          ->Join('p.book', 'b')
+          ->Select('p')
+          ->orderBy('f.id', 'DESC')
+        ;
+//dump($qb->getQuery()->getResult());die();
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ;
+    }
+
 
 }

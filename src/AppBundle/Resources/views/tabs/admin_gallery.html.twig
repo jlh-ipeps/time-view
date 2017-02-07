@@ -1,0 +1,24 @@
+
+{% block admin %}
+
+<h3>Admin</h3>
+<div class="tab-content">     
+  
+    <div class="row gallery">
+      {% for picture in pictures %}  
+
+        <div class="col-xs-6 col-md-3">
+          <a href="{{ path('admin', {'file_id': picture.file.id}) }}" class="thumbnail">
+            <img src="{{ asset(picture.file) | imagine_filter('thumb')}}" alt="{{ picture.file.alt }}">
+          </a>
+        </div>
+          
+      {% endfor %}
+    </div>
+  <script>
+
+  </script>
+  
+</div>
+
+{% endblock admin %}

@@ -10,6 +10,7 @@ use AppBundle\Entity\Tag;
 use AppBundle\Entity\Talk;
 use AppBundle\Form\ImageType;
 use AppBundle\Form\TalkType;
+use AppBundle\Form\BookTitleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -102,17 +103,25 @@ class BookController extends Controller {
 ////dump($pictures, $mapmarkers);die();
 
         $session->set('lastURI', $request->getRequestURI());
-
+        $formTitleView = NULL;
         if ($book->getUser() == $this->getUser()) {
             $session->set('book', $book_id);
+            $formTitle = $this->createForm(BookTitleType::class, $book);
+            $formTitleView = $formTitle->createView();
             $form = $this->createForm(ImageType::class, $file, array());
             $formview = $form->createView();
             if ($request->isMethod('POST')) {
                 $picture = new Picture();
                 $form->handleRequest($request);
-                
+                $formTitle->handleRequest($request);
+                    if ($formTitle->isValid()) {
+                        $em->persist($book);
+                        $em->flush();
+                        return $this->redirectToRoute('book', array('book_id' => $book->getId()));
+                    }
                     if ($form->isValid()) {
                         $file->addPicture($picture);
+                        $file->setUser($user);
                         $picture->setBook($book);
                         $picture->setFile($file);
                         $em->persist($picture);
@@ -140,7 +149,7 @@ class BookController extends Controller {
             'item' => $item,
             'title' => $book->getTitle(),
             'tabs' => $tabs,
-            'formTitle' => NULL,
+            'formTitle' => $formTitleView,
             // gallery
             'pictures' => $pictures,
             'form' => $formview,

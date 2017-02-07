@@ -7,15 +7,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class BookType extends AbstractType {
+class BookTitleType extends AbstractType {
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
       $builder
-              ->add('Title', TextType::class)
-              ;
+              ->add('Title', TextType::class, array(
+                "label" => false,
+                'required' => false,
+            ))
+            ->add('submit', SubmitType::class, array(
+                "label"=>"form.submit",
+            ))
+        ;
   }
   /**
    * {@inheritdoc}
@@ -30,7 +36,7 @@ class BookType extends AbstractType {
    * {@inheritdoc}
    */
   public function getBlockPrefix() {
-      return 'appbundle_book';
+      return 'appbundle_book_title';
   }
 
 }

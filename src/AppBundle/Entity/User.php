@@ -6,12 +6,13 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  */
-class User extends BaseUser
+class User extends BaseUser implements AdvancedUserInterface
 {
     /**
      * @ORM\Id
@@ -25,6 +26,7 @@ class User extends BaseUser
         parent::__construct();
         $this->talks = new ArrayCollection();
         $this->books = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
     
     /**
@@ -43,6 +45,10 @@ class User extends BaseUser
      */
     private $books;
 
+    /**
+     * @ORM\OneToMany(targetEntity="File", mappedBy="user")
+     */
+    protected $users;
 
     /**
      * Set session
@@ -135,4 +141,49 @@ class User extends BaseUser
     {
         return $this->books;
     }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\Picture $user
+     *
+     * @return User
+     */
+    public function addUser(\AppBundle\Entity\Picture $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\Picture $user
+     */
+    public function removeUser(\AppBundle\Entity\Picture $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+    
+//    /**
+//     * Get lock status
+//     *
+//     * @return boolean 
+//     */
+//    public function getLocked()
+//    {
+//        return $this->locked;
+//    }
+    
 }

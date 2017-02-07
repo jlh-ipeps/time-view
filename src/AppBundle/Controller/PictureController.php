@@ -84,17 +84,18 @@ class PictureController extends Controller
             if ($formTitle->isValid()) {
                 $em->persist($picture);
                 $em->flush();
+                return $this->redirectToRoute('picture', array('book_id' => $book_id, 'file_id' => $picture->getFile()->getId()));
             }
         }
     }
 
-    $title = $picture->getTitle();
+
 
     
     return $this->render('AppBundle:layout:content.html.twig', array(
         // content
         'item' => $item,
-        'title' => $title,
+        'title' => $picture->getTitle(),
         'tabs' => $tabs,
         'formTitle' => $formTitleView,
         // picture

@@ -68,7 +68,14 @@ picture:
   defaults: 
     _controller: AppBundle:Picture:view
 
+admin_file:
+  path: /admin/file/{file_id}
+  defaults: { _controller: AppBundle:Admin:file }
+  
+admin_user:
+  path: /admin/user/{user_id}
+  defaults: { _controller: AppBundle:Admin:user }
+  
 admin:
-  path: /admin/
-  defaults:
-    _controller: AppBundle:Admin:view
+  path: /admin/{file_id}
+  defaults: { _controller: AppBundle:Admin:view, file_id: -1 }
