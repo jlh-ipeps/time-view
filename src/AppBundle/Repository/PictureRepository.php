@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
  */
 class PictureRepository extends \Doctrine\ORM\EntityRepository {
 
-    public function findPicturesByBook(int $id, $maxThumbNbr) {
+    public function findPicturesByBook($id, $maxThumbNbr) {
         $qb = $this->createQueryBuilder('p');
         $qb
           ->Join('p.file', 'f')

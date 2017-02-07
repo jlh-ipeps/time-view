@@ -9,7 +9,7 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class BookRepository extends \Doctrine\ORM\EntityRepository {
-  public function findBooksByUser(int $user) {
+  public function findBooksByUser($user) {
 
     $qb = $this->createQueryBuilder('b');
     $qb
@@ -25,7 +25,7 @@ class BookRepository extends \Doctrine\ORM\EntityRepository {
 
   }
   
-  public function findTagsByBook(int $book) {
+  public function findTagsByBook($book) {
       
     $qb = $this->createQueryBuilder('b');
     $qb
