@@ -29,9 +29,7 @@ class SidebarController extends Controller {
             
         if ($user) {
             $bookRepo = $em->getRepository('AppBundle:Book');
-//            $mybooks = $bookRepo->findBooksByUser($this->getUser()->getId())->getQuery()->getResult();
             $mybooks = $this->getUser()->getBooks();
-//            dump($mybooks2, $mybooks);die();
 
             $sessionRepo = $em->getRepository('AppBundle:LastSession');
 
