@@ -137,7 +137,7 @@ class File {
       if (null !== $this->file) {
         $newFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->ext;
         if (file_exists($newFile)) {
-          chmod($newFile, 644);
+          chmod($newFile, 0644);
         }
       }
       
