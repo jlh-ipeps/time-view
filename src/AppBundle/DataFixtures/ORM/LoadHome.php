@@ -12,14 +12,13 @@ class LoadHome implements FixtureInterface
 {
     public function load(ObjectManager $manager) {
         
-        $em = $this->getDoctrine()->getManager();
         $homesList = ['here', 'new', 'popular', 'random'];
 
         foreach($homesList as $h) {
             $home = new Homes();
             $home->setName($h);
-            $em->persist($home);
+            $manager->persist($home);
         }
-        $em->flush();
+        $manager->flush();
     }
 }
