@@ -86,6 +86,10 @@ liip_imagine:
                 web_root: ~
 #                web_root: "%kernel.root_dir%/../web"
                 cache_prefix: "media/cache"
+    loaders:
+        default:
+          filesystem:
+            data_root: "%kernel.root_dir%/../web/uploads/img"
     filter_sets:
         # use the default cache configuration
         cache: ~
