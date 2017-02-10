@@ -83,13 +83,16 @@ liip_imagine:
         default:
             # use the default web path
             web_path:
+                # tumbnails root path
                 web_root: "%kernel.root_dir%/../web"
                 cache_prefix: "."
     loaders:
         default:
           filesystem:
+            # images root path
 #            data_root: "%kernel.root_dir%/../web/uploads/img"
-            data_root: "%kernel.root_dir%/../web"
+#            data_root: "%kernel.root_dir%/../web"
+            data_root: "/home/hens/www"
     filter_sets:
         # use the default cache configuration
         cache: ~
