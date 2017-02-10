@@ -92,7 +92,7 @@ liip_imagine:
             # images root path
 #            data_root: "%kernel.root_dir%/../web/uploads/img"
 #            data_root: "%kernel.root_dir%/../web"
-            data_root: "/home/hens/www"
+            data_root: "/home/hens/www/1"
     filter_sets:
         # use the default cache configuration
         cache: ~
