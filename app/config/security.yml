@@ -17,6 +17,18 @@ security:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
+      
+    admin:
+      pattern: /admin
+      form_login:                 
+        provider:    fos_userbundle  
+        check_path: user_security_check
+        login_path: user_security_login 
+      logout:
+        path:   user_security_logout
+      anonymous:       false    
+      logout:          true
+ 
     main:
       anonymous: true
       pattern: "^/%languages%/"
@@ -46,6 +58,7 @@ security:
     - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: "/admin/", role: ROLE_ADMIN }
+#    - { path: "/admin/", role: ROLE_ADMIN }
+    - { path: /admin, role: ROLE_ADMIN }
     - { path: "^/%languages%/book/$", role: ROLE_USER }
     - { path: "^/%languages%/book/", role: ROLE_USER, methods: [POST, PUT] }

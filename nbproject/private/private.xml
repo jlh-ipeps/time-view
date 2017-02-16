@@ -3,9 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< cfd7f601ce1018b92b4b9ab0f1cf989d42ad69c7
             <file>file:/home/ipeps/Documents/Time-View/app/config/config.yml</file>
             <file>file:/home/ipeps/Documents/Time-View/web/app.php</file>
             <file>file:/home/ipeps/Documents/Time-View/app/config/config_prod.yml</file>
+||||||| merged common ancestors
+            <file>file:/home/ipeps/Documents/Time-View/web/config.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/PictureController.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/DataFixtures/ORM/LoadLanguage.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Entity/User.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/app/config/parameters.yml</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/tabs/admin_picture.html.twig</file>
+            <file>file:/home/ipeps/Documents/Time-View/web/index.html</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Controller/AdminController.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/Resources/views/tabs/admin_gallery.html.twig</file>
+            <file>file:/home/ipeps/Documents/Time-View/src/AppBundle/DataFixtures/ORM/LoadHome.php</file>
+=======
+            <file>file:/home/ipeps/Documents/Time-View/web/config.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/app/config/parameters.yml.dist</file>
+            <file>file:/home/ipeps/Documents/Time-View/web/app.php</file>
+            <file>file:/home/ipeps/Documents/Time-View/app/config/config_prod.yml</file>
+>>>>>>> security app.php admin
         </group>
     </open-files>
 </project-private>
